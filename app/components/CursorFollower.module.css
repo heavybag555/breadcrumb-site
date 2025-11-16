@@ -1,0 +1,43 @@
+.cursor {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background-color: #000;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease, mix-blend-mode 0.2s ease, background-color 0.2s ease;
+  will-change: transform, mix-blend-mode;
+  left: 0;
+  top: 0;
+  opacity: 1;
+}
+
+.cursorOverText {
+  /* Change to white for better difference blend effect */
+  background-color: #fff !important;
+}
+
+.trail {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.9) 0%, rgba(40, 40, 40, 0.5) 40%, rgba(100, 100, 100, 0.2) 70%, transparent 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  filter: blur(3px);
+  will-change: transform, opacity, mix-blend-mode;
+  transition: opacity 0.15s ease, mix-blend-mode 0.2s ease, filter 0.2s ease, background 0.2s ease;
+  left: 0;
+  top: 0;
+}
+
+.trailOverText {
+  /* More solid, intense gradient when over text */
+  background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 30%, rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0.3) 100%) !important;
+  /* Reduce blur for sharper, more intense effect */
+  filter: blur(1.5px) !important;
+}

@@ -3,8 +3,8 @@
   background-color: #EAEAEA;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   padding: 48px 200px;
   box-sizing: border-box;
 }
@@ -23,7 +23,7 @@
   flex-direction: column;
   gap: 24px;
   align-items: flex-start;
-  width: 400px;
+  width: 1048px;
 }
 
 .title {
@@ -52,12 +52,17 @@
 .abbreviation {
   flex-shrink: 0;
   margin: 0;
+  font-size: 48px;
+  width: 150px;
+  white-space: nowrap;
 }
 
 .text {
-  flex: 1 0 0;
+  flex-shrink: 0;
   margin: 0;
   white-space: pre-wrap;
+  font-size: 48px;
+  width: 850px;
 }
 
 .navigation {
