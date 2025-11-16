@@ -7,7 +7,6 @@ export default function CursorFollower() {
   const cursorRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(true)
   const [isOverText, setIsOverText] = useState(false)
-  const [isTouchDevice, setIsTouchDevice] = useState(false)
   
   // Animation frame refs
   const animationFrameRef = useRef<number>()
@@ -53,23 +52,6 @@ export default function CursorFollower() {
   }
 
   useEffect(() => {
-    // Detect touch device
-    const checkTouchDevice = () => {
-      return (
-        'ontouchstart' in window ||
-        navigator.maxTouchPoints > 0 ||
-        (window.matchMedia && window.matchMedia('(pointer: coarse)').matches)
-      )
-    }
-    
-    const touchDevice = checkTouchDevice()
-    setIsTouchDevice(touchDevice)
-    
-    // Don't initialize cursor on touch devices
-    if (touchDevice) {
-      return
-    }
-    
     // Initialize positions
     const initX = typeof window !== 'undefined' ? window.innerWidth / 2 : 0
     const initY = typeof window !== 'undefined' ? window.innerHeight / 2 : 0
@@ -133,11 +115,6 @@ export default function CursorFollower() {
       }
     }
   }, [])
-
-  // Don't render cursor on touch devices
-  if (isTouchDevice) {
-    return null
-  }
 
   return (
     <div
