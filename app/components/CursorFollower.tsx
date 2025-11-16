@@ -35,10 +35,10 @@ export default function CursorFollower() {
       
       // Check if element has direct text content (not just in children)
       const hasDirectText = Array.from(current.childNodes).some(
-        node => node.nodeType === Node.TEXT_NODE && node.textContent?.trim().length > 0
+        node => node.nodeType === Node.TEXT_NODE && (node.textContent?.trim()?.length ?? 0) > 0
       )
       
-      if (hasDirectText && current.textContent?.trim().length > 0) {
+      if (hasDirectText && (current.textContent?.trim()?.length ?? 0) > 0) {
         const computedStyle = window.getComputedStyle(current)
         if (computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden') {
           return true
