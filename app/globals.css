@@ -46,8 +46,10 @@ body > *:not(style):not([class*="cursor"]) {
   z-index: 1;
 }
 
-/* Hide default cursor */
-body,
-* {
-  cursor: none !important;
+/* Hide default cursor on desktop only */
+@media (hover: hover) and (pointer: fine) {
+  body,
+  * {
+    cursor: none !important;
+  }
 }
