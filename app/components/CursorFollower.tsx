@@ -6,51 +6,12 @@ import styles from './CursorFollower.module.css'
 export default function CursorFollower() {
   const cursorRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(true)
-  const [isOverText, setIsOverText] = useState(false)
   const [isTouchDevice, setIsTouchDevice] = useState(false)
   
   // Animation frame refs
   const animationFrameRef = useRef<number>()
   const mousePositionRef = useRef({ x: 0, y: 0 })
   const cursorPositionRef = useRef({ x: 0, y: 0 })
-  
-  // Check if element is a text element by walking up the DOM tree
-  const isTextElement = (element: Element | null): boolean => {
-    if (!element) return false
-    
-    // Walk up the DOM tree to find text elements
-    let current: Element | null = element
-    const textElementTags = ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'SPAN', 'A', 'LI', 'LABEL', 'BUTTON', 'STRONG', 'EM', 'B', 'I', 'U']
-    
-    while (current && current !== document.body) {
-      // Skip cursor elements
-      if (current.classList?.contains('cursor')) {
-        current = current.parentElement
-        continue
-      }
-      
-      // Check if it's a text element
-      if (textElementTags.includes(current.tagName)) {
-        return true
-      }
-      
-      // Check if element has direct text content (not just in children)
-      const hasDirectText = Array.from(current.childNodes).some(
-        node => node.nodeType === Node.TEXT_NODE && (node.textContent?.trim()?.length ?? 0) > 0
-      )
-      
-      if (hasDirectText && (current.textContent?.trim()?.length ?? 0) > 0) {
-        const computedStyle = window.getComputedStyle(current)
-        if (computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden') {
-          return true
-        }
-      }
-      
-      current = current.parentElement
-    }
-    
-    return false
-  }
 
   useEffect(() => {
     // Detect touch device
@@ -100,12 +61,6 @@ export default function CursorFollower() {
       }
 
       // Check if cursor is over text element (use cursor's actual position for blend mode)
-      const elementUnderCursor = document.elementFromPoint(
-        cursorPositionRef.current.x,
-        cursorPositionRef.current.y
-      )
-      setIsOverText(isTextElement(elementUnderCursor))
-
       // Extremely smooth cursor movement with fine-tuned easing
       const ease = 0.12
       const dx = mousePositionRef.current.x - cursorPositionRef.current.x
@@ -143,10 +98,10 @@ export default function CursorFollower() {
   return (
     <div
       ref={cursorRef}
-      className={`${styles.cursor} ${isOverText ? styles.cursorOverText : ''}`}
+      className={styles.cursor}
       style={{
         opacity: isVisible ? 1 : 0,
-        mixBlendMode: isOverText ? 'difference' : 'normal',
+        mixBlendMode: 'normal',
       }}
     />
   )

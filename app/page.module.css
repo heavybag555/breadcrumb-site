@@ -32,9 +32,27 @@
   font-weight: 500;
   font-size: 13px;
   line-height: normal;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.1px;
   color: #5D75E0;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.titlePrimary,
+.titleSeparator,
+.titleSecondary {
+  color: inherit;
+}
+
+.titlePrimary,
+.titleSecondary {
+  font-weight: 500;
+}
+
+.titleSeparator {
+  color: rgba(93, 117, 224, 0.4);
 }
 
 .description {
@@ -46,7 +64,7 @@
   font-weight: 400;
   font-size: 13px;
   line-height: normal;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.1px;
   color: #5D75E0;
 }
 
@@ -72,10 +90,10 @@
   align-items: flex-start;
   width: 400px;
   font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: normal;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.1px;
   color: #5D75E0;
 }
 

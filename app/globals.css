@@ -33,12 +33,17 @@ body {
     "Helvetica Neue", sans-serif;
   font-size: 13px;
   line-height: normal;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.1px;
   color: #5d75e0;
   background-color: #eaeaea;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
+  cursor: none;
+}
+
+body * {
+  cursor: none;
 }
 
 body > *:not(style) {

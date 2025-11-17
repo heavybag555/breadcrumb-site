@@ -5,9 +5,13 @@ export default function Home() {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.intro}>
-          <h1 className={styles.title}>Breadcrumb STUDIO</h1>
+          <h1 className={styles.title}>
+            <span className={styles.titlePrimary}>Breadcrumb STUDIO</span>
+            <span className={styles.titleSeparator}>/</span>
+            <span className={styles.titleSecondary}>Hello World</span>
+          </h1>
           <div className={styles.description}>
-            <p className={styles.abbreviation}>BC–S</p>
+            <p className={styles.abbreviation}>BC/S</p>
             <p className={styles.text}>
               is an independent digital, creative, and web studio based in Los Angeles.
             </p>
