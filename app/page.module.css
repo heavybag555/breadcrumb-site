@@ -1,6 +1,6 @@
 .container {
   min-height: 100vh;
-  background-color: #EAEAEA;
+  background-color: #eaeaea;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,12 +28,12 @@
 }
 
 .title {
-  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 500;
   font-size: 13px;
   line-height: normal;
   letter-spacing: -0.1px;
-  color: #5D75E0;
+  color: #5d75e0;
   margin: 0;
   display: flex;
   align-items: center;
@@ -60,12 +60,12 @@
   gap: 48px;
   align-items: flex-start;
   width: 100%;
-  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 400;
   font-size: 13px;
   line-height: normal;
   letter-spacing: -0.1px;
-  color: #5D75E0;
+  color: #5d75e0;
 }
 
 .abbreviation {
@@ -89,16 +89,16 @@
   gap: 24px;
   align-items: flex-start;
   width: 400px;
-  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 500;
   font-size: 13px;
   line-height: normal;
   letter-spacing: -0.1px;
-  color: #5D75E0;
+  color: #5d75e0;
 }
 
 .navLink {
-  color: #5D75E0;
+  color: #5d75e0;
   text-decoration: none;
   flex-shrink: 0;
   transition: opacity 0.2s ease;
@@ -190,4 +190,3 @@
     font-size: 13px;
   }
 }
-
