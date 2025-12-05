@@ -1,0 +1,74 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.button {
+  background: none;
+  border: none;
+  color: #edecec;
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.buttonOpen {
+  opacity: 1 !important;
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  padding: 0;
+  min-width: 160px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 10;
+}
+
+.menuOpen {
+  opacity: 1;
+  visibility: visible;
+}
+
+.menuItem {
+  padding: 0;
+  margin-bottom: 8px;
+  font-size: 13px;
+  line-height: 17px;
+  color: #edecec;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: opacity;
+  position: relative;
+  cursor: pointer;
+}
+
+.menuItem::after {
+  content: "•";
+  position: absolute;
+  right: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.menuItem:hover::after {
+  opacity: 1;
+}
+
+.menuItem:last-child {
+  margin-bottom: 0;
+}
+

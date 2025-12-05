@@ -58,18 +58,39 @@
   color: #edecec;
 }
 
+.whatWeDoDesktop {
+  display: inline-block;
+}
+
+.whatWeDoMobile {
+  display: none;
+}
+
 .tagline {
   white-space: nowrap;
 }
 
+.desktopTagline {
+  display: inline;
+}
+
+.mobileTagline {
+  display: none;
+}
+
 .workLink {
-  color: rgba(237, 236, 236, 0.5);
+  background-color: #1b1911;
+  color: #ff3900;
+  padding: 6px 8px;
+  border-radius: 6px;
   text-decoration: none;
-  transition: color 0.2s ease, opacity 0.2s ease;
+  font-size: 13px;
+  line-height: 17px;
+  transition: opacity 0.2s ease;
 }
 
 .workLink:hover {
-  color: rgba(237, 236, 236, 0.8);
+  opacity: 0.9;
 }
 
 .contact {
@@ -84,6 +105,12 @@
 
 .reachLabel {
   white-space: nowrap;
+}
+
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .email {
@@ -110,6 +137,14 @@
   .taglineGroup {
     flex-wrap: wrap;
   }
+
+  .whatWeDoDesktop {
+    display: none;
+  }
+
+  .whatWeDoMobile {
+    display: block;
+  }
 }
 
 @media (max-width: 640px) {
@@ -120,5 +155,13 @@
   .tagline,
   .workLink {
     white-space: normal;
+  }
+
+  .desktopTagline {
+    display: none;
+  }
+
+  .mobileTagline {
+    display: inline;
   }
 }
