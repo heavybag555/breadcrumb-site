@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import CursorFollower from './components/CursorFollower'
 
 export const metadata: Metadata = {
   title: 'Breadcrumb Studio',
@@ -18,7 +17,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <CursorFollower />
         {children}
       </body>
     </html>

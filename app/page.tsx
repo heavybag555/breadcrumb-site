@@ -1,28 +1,47 @@
-import styles from './page.module.css'
+import { Inter } from "next/font/google";
+import styles from "./page.module.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <div className={styles.intro}>
-          <h1 className={styles.title}>
-            <span className={styles.titlePrimary}>Breadcrumb STUDIO</span>
-            <span className={styles.titleSeparator}>/</span>
-            <span className={styles.titleSecondary}>Hello World</span>
-          </h1>
-          <div className={styles.description}>
-            <p className={styles.abbreviation}>BC/S</p>
-            <p className={styles.text}>
-              is an independent digital, creative, and web studio based in Los Angeles.
-            </p>
-          </div>
+    <main className={`${inter.className} ${styles.page}`}>
+      <div className={styles.navRow}>
+        <div className={styles.brandWrap}>
+          <a className={styles.brand} href="/">
+            Breadcrumb Studio
+          </a>
+          <img
+            className={styles.portrait}
+            src="/images/me.jpg"
+            alt="Portrait"
+          />
         </div>
-        <nav className={styles.navigation}>
-          <a href="mailto:breadcrumb.la@gmail.com" className={styles.navLink}>Contact</a>
-          <a href="https://www.instagram.com/studio.breadcrumb?igsh=YzBkMWMxajNtd3E4&utm_source=qr" className={styles.navLink} target="_blank" rel="noopener noreferrer">Work</a>
-        </nav>
-      </div>
-    </div>
-  )
-}
 
+        <div className={styles.taglineGroup}>
+          <span className={styles.tagline}>
+            Web, Photo, and Interaction Studio based in Los Angeles, CA.
+          </span>
+          <a
+            className={styles.workLink}
+            href="https://www.instagram.com/studio.breadcrumb?igsh=YzBkMWMxajNtd3E4&utm_source=qr"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            [View our work]
+          </a>
+        </div>
+
+        <div className={styles.contact}>
+          <span className={styles.reachLabel}>Reach:</span>
+          <a className={styles.email} href="mailto:breadcrumb.la@gmail.com">
+            breadcrumb.la@gmail.com
+          </a>
+        </div>
+      </div>
+    </main>
+  );
+}
