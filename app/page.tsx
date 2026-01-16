@@ -56,7 +56,7 @@ export default function Home() {
           <div className={styles.buttonGroup}>
             <a
               className={styles.workLink}
-              href="https://www.instagram.com/studio.breadcrumb?igsh=YzBkMWMxajNtd3E4&utm_source=qr"
+              href="https://www.instagram.com/studio________bc/"
               target="_blank"
               rel="noopener noreferrer"
             >
