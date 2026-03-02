@@ -1,6 +1,6 @@
-# Breadcrumb Studio
+# 2U4U Studio
 
-A single-page website for Breadcrumb Studio, an independent digital, creative, and web studio based in Los Angeles.
+A single-page website for 2U4U Studio, an independent digital, creative, and web studio based in Los Angeles.
 
 ## Getting Started
 

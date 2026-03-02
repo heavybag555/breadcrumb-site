@@ -15,7 +15,7 @@ export default function Home() {
         <div className={styles.brandWrap}>
           <a className={styles.brand} href="/">
             <AnimatedText delay={0} stagger={0.06}>
-              Breadcrumb Studio
+              2U4U Studio
             </AnimatedText>
           </a>
           <img
@@ -56,7 +56,7 @@ export default function Home() {
           <div className={styles.buttonGroup}>
             <a
               className={styles.workLink}
-              href="https://www.instagram.com/studio________bc/"
+              href="https://www.instagram.com/2u4u.studio/"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -64,9 +64,9 @@ export default function Home() {
                 Our work
               </AnimatedText>
             </a>
-            <a className={styles.email} href="mailto:breadcrumb.la@gmail.com">
+            <a className={styles.email} href="mailto:2you4youstudio@gmail.com">
               <AnimatedText delay={1.3} stagger={0.03}>
-                breadcrumb.la@gmail.com
+                2you4youstudio@gmail.com
               </AnimatedText>
             </a>
           </div>
