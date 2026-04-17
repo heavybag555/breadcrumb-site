@@ -1,13 +1,13 @@
 /* ──────────────────────────────────────────────
    HomePage.module.css
    Block flow layout — required for site-wide sticky.
-   6-column proportions | 120px side padding | 20px gutter
+   8-column proportions | 200px side padding | 20px gutter
    ────────────────────────────────────────────── */
 
 /* ── Page wrapper (block flow, NOT flex) ── */
 
 .page {
-  padding: 0 120px;
+  padding: 0 200px;
   min-height: 100vh;
   position: relative;
 }
@@ -33,8 +33,8 @@
   position: fixed;
   top: 20px;
   padding-top: 20px;
-  left: 120px;
-  right: 120px;
+  left: 200px;
+  right: 200px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -182,55 +182,52 @@
 /* ── Project grid ── */
 
 .projectRow {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
   gap: 20px;
-  align-items: flex-start;
+  align-items: start;
   width: 100%;
 }
 
-.projectCardLarge {
+.projectDetails {
+  grid-column: 7 / 9;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  align-items: flex-start;
+  padding-top: 8px;
+}
+
+.projectDetailsLeft {
+  grid-column: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.projectRowLeft .projectImage {
+  grid-column: 3 / 9;
+}
+
+.projectTitleRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.projectTitleRow:hover {
+  opacity: 0.85;
+}
+
+.projectTitleRow .ctaArrow {
   flex-shrink: 0;
-  width: calc((4 / 6) * 100% - 10px);
+  color: #595959;
 }
 
-.projectCardSmall {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: flex-start;
-  flex: 1 0 0;
-  min-width: 0;
-}
-
-.projectCardSmallLeft {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: flex-start;
-  flex: 1 0 0;
-  min-width: 0;
-}
-
-.projectCardLargeRight {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: flex-start;
-  flex-shrink: 0;
-  width: calc((4 / 6) * 100% - 10px);
-}
-
-.projectCardThird {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: flex-start;
-  flex: 1 0 0;
-  min-width: 0;
+.projectRowSpacing {
+  margin-top: 80px;
 }
 
 .projectMeta {
@@ -242,7 +239,6 @@
   font-weight: var(--body-weight);
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
-  white-space: nowrap;
 }
 
 .projectTitle {
@@ -253,24 +249,26 @@
   color: #595959;
 }
 
+.projectProcess {
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
+  color: #595959;
+}
+
 .projectImage {
+  grid-column: 1 / 7;
   display: block;
   width: 100%;
-  aspect-ratio: 500 / 400;
-  background-color: rgba(89, 89, 89, 0.2);
   overflow: hidden;
   position: relative;
 }
 
 .projectImage img {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.projectImage:hover img {
-  transform: scale(1.03);
+  height: auto;
 }
 
 .projectTags {
@@ -280,23 +278,12 @@
 }
 
 .tag {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 8px 4px;
-  border: 1px solid #595959;
   font-size: var(--caption-size);
   font-weight: var(--caption-weight);
   line-height: var(--caption-lh);
   letter-spacing: var(--caption-ls);
-  color: #595959;
+  color: #FF6700;
   white-space: nowrap;
-  transition: border-color 0.2s ease, color 0.2s ease;
-}
-
-.tag:hover {
-  border-color: #7a7a7a;
-  color: #7a7a7a;
 }
 
 /* ── Info panels (gray boxes) ── */
@@ -306,8 +293,8 @@
   gap: 20px;
   align-items: flex-start;
   padding: 20px;
-  /* Middle 4 of 6 columns — same width as .projectCardLarge, centered */
-  width: calc((4 / 6) * 100% - 10px);
+  /* Middle 5 of 8 columns — same width as .projectCardLarge, centered */
+  width: calc((5 / 8) * 100% - 10px);
   margin-left: auto;
   margin-right: auto;
   background-color: rgba(89, 89, 89, 0.2);
@@ -388,15 +375,82 @@
   letter-spacing: var(--body-ls);
 }
 
+/* ── Project detail row (4-col, info-page structure) ── */
+
+.detailRow {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px 0;
+  width: 100%;
+  border-top: 1px solid #353535;
+  margin-bottom: 24px;
+}
+
+.detailCol {
+  flex: 0 0 calc(25% - 15px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.detailClientName {
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
+  color: #fff;
+  margin: 0;
+}
+
+.detailTags {
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
+  color: #595959;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.detailBody {
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
+  color: #595959;
+}
+
+.detailDomain {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
+  color: #FF6700;
+  transition: opacity 0.2s ease;
+}
+
+.detailDomain:hover {
+  opacity: 0.7;
+}
+
+.detailDomainArrow {
+  flex-shrink: 0;
+}
+
 /* ── Footer ── */
 
 .footer {
   display: flex;
   gap: 20px;
   align-items: flex-start;
-  padding: 4px 120px;
-  width: calc(100% + 240px);
-  margin-left: -120px;
+  padding: 4px 200px;
+  width: calc(100% + 400px);
+  margin-left: -200px;
   height: auto;
   background-color: #000;
   font-size: var(--body-size);
@@ -489,13 +543,12 @@
     width: calc(100% + 120px);
   }
 
-  .projectCardLarge,
-  .projectCardLargeRight {
-    width: calc((3 / 5) * 100% - 10px);
+  .projectRow {
+    grid-template-columns: repeat(8, 1fr);
   }
 
   .infoPanel {
-    width: calc((3 / 5) * 100% - 10px);
+    width: calc((5 / 7) * 100% - 10px);
   }
 }
 
@@ -527,16 +580,32 @@
   }
 
   .projectRow {
+    grid-template-columns: 1fr;
+  }
+
+  .projectImage {
+    grid-column: 1 / -1;
+  }
+
+  .projectDetails {
+    grid-column: 1 / -1;
+  }
+
+  .projectDetailsLeft {
+    grid-column: 1 / -1;
+  }
+
+  .projectRowLeft .projectImage {
+    grid-column: 1 / -1;
+  }
+
+  .detailRow {
     flex-direction: column;
   }
 
-  .projectCardLarge,
-  .projectCardLargeRight,
-  .projectCardSmall,
-  .projectCardSmallLeft,
-  .projectCardThird {
+  .detailCol {
+    flex: 0 0 auto;
     width: 100%;
-    flex: none;
   }
 
   .infoPanel {

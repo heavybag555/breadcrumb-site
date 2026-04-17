@@ -4,11 +4,18 @@ import type { Project } from './types'
 const PROJECT_FIELDS = `
   _id,
   title,
+  clientName,
   subtitle,
+  process,
+  bio,
+  stack,
+  domain,
   href,
-  "imageUrl": image.asset->url,
+  "imageUrl": images[0].asset->url,
+  "imageUrls": images[].asset->url,
   tags,
-  order
+  order,
+  year
 `
 
 export async function getHomepageProjects(): Promise<Project[]> {

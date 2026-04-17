@@ -159,6 +159,20 @@ export default function InfoPage() {
             </p>
           </div>
           <div className={styles.col}>
+            <div className={styles.scopeBlock}>
+              <p className={styles.scopeTitle}>Services</p>
+              <p className={styles.bodyText}>{SERVICES.join(', ')}</p>
+            </div>
+            <div className={styles.scopeBlock}>
+              <p className={styles.scopeTitle}>Stack</p>
+              <p className={styles.bodyText}>{STACK.join(', ')}</p>
+            </div>
+            <div className={styles.scopeBlock}>
+              <p className={styles.scopeTitle}>Interests</p>
+              <p className={styles.bodyText}>{INTERESTS.join(', ')}</p>
+            </div>
+          </div>
+          <div className={styles.col}>
             <p className={styles.subHeading}>Contact</p>
             <a
               href="https://www.instagram.com/2u4u.studio/"
@@ -210,6 +224,14 @@ export default function InfoPage() {
               home.
             </p>
           </div>
+          <div className={styles.col}>
+            <p className={styles.scopeTitle}>Principles</p>
+            {PRINCIPLES.map((pr, i) => (
+              <p key={pr} className={styles.bodyText}>
+                <span className={styles.principleNum}>{String(i + 1).padStart(2, '0')}</span> {pr}
+              </p>
+            ))}
+          </div>
         </div>
 
         {/* ── Contribution to Humanity ── */}
@@ -244,35 +266,6 @@ export default function InfoPage() {
               from communities like Hemet, California has someone a few steps
               ahead who is willing to have a real conversation.
             </p>
-          </div>
-        </div>
-
-        {/* ── Scope ── */}
-        <div className={styles.infoRow}>
-          <div className={styles.col}>
-            <p className={styles.rowLabel}>Scope</p>
-          </div>
-          <div className={styles.col}>
-            <div className={styles.scopeBlock}>
-              <p className={styles.scopeTitle}>Services</p>
-              <p className={styles.bodyText}>{SERVICES.join(', ')}</p>
-            </div>
-            <div className={styles.scopeBlock}>
-              <p className={styles.scopeTitle}>Stack</p>
-              <p className={styles.bodyText}>{STACK.join(', ')}</p>
-            </div>
-            <div className={styles.scopeBlock}>
-              <p className={styles.scopeTitle}>Interests</p>
-              <p className={styles.bodyText}>{INTERESTS.join(', ')}</p>
-            </div>
-          </div>
-          <div className={styles.col}>
-            <p className={styles.scopeTitle}>Principles</p>
-            {PRINCIPLES.map((pr, i) => (
-              <p key={pr} className={styles.bodyText}>
-                <span className={styles.principleNum}>{String(i + 1).padStart(2, '0')}</span> {pr}
-              </p>
-            ))}
           </div>
         </div>
       </div>

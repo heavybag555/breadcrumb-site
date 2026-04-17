@@ -1,0 +1,23 @@
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 0 var(--page-padding);
+  padding-bottom: 24px;
+}
+
+.text {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.detail {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--color-text-dim);
+}

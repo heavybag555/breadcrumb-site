@@ -1,0 +1,38 @@
+.footer {
+  padding: var(--page-padding);
+  padding-top: 80px;
+  padding-bottom: 40px;
+}
+
+.inner {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--color-border);
+  padding-top: 24px;
+}
+
+.copyright {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--color-text-dim);
+  letter-spacing: 0.01em;
+}
+
+.right {
+  display: flex;
+  gap: 24px;
+}
+
+.link {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--color-text-muted);
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: var(--color-text);
+}

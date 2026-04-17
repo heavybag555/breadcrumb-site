@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { animate } from 'animejs'
 import styles from './HomePage.module.css'
 import type { Project } from '@/sanity/types'
@@ -107,40 +107,93 @@ function useReveal() {
   return ref
 }
 
-/* ── Project Card ── */
+/* ── Project Detail Row (4-col, info-page style) ── */
 
-function ProjectCard({
-  project,
-  className,
-}: {
-  project: Project | null
-  className: string
-}) {
+function ProjectDetailRow({ project }: { project: Project }) {
   const ref = useReveal()
-  const title = project?.title ?? 'Untitled'
-  const subtitle = project?.subtitle ?? ''
-  const imageUrl = project?.imageUrl ?? null
-  const tags = project?.tags ?? []
-  const href = project?.href ?? '#'
+  const clientName = project.clientName || project.title
+  const tags = project.tags ?? []
+  const year = project.year ?? ''
+  const bio = project.bio ?? ''
+  const stack = project.stack ?? []
+  const domain = project.domain ?? ''
+  const href = project.href ?? '#'
 
   return (
-    <div ref={ref} className={`${className} ${styles.reveal}`} suppressHydrationWarning>
-      <div className={styles.projectMeta}>
-        <p className={styles.projectTitle}>{title}</p>
-        {subtitle && <p className={styles.projectSubtitle}>{subtitle}</p>}
+    <div ref={ref} className={`${styles.detailRow} ${styles.reveal}`}>
+      <div className={styles.detailCol}>
+        <p className={styles.detailClientName}>{clientName}</p>
+        {(tags.length > 0 || year) && (
+          <p className={styles.detailTags}>
+            {[...tags, ...(year ? [year] : [])].join(', ')}
+          </p>
+        )}
       </div>
-      <a href={href} className={styles.projectImage}>
+      <div className={styles.detailCol}>
+        {bio && <p className={styles.detailBody}>{bio}</p>}
+      </div>
+      <div className={styles.detailCol}>
+        {stack.length > 0 && <p className={styles.detailBody}>{stack.join(', ')}</p>}
+      </div>
+      <div className={styles.detailCol}>
+        {domain && (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.detailDomain}
+          >
+            {domain}
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              className={styles.detailDomainArrow}
+            >
+              <path
+                d="M3 11L11 3M11 3H4.5M11 3V9.5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
+        )}
+      </div>
+    </div>
+  )
+}
+
+/* ── Project Card ── */
+
+function ProjectCard({ project, side = 'right' }: { project: Project | null; side?: 'left' | 'right' }) {
+  const ref = useReveal()
+  const title = project?.title ?? 'Untitled'
+  const imageUrl = project?.imageUrl ?? null
+  const href = project?.href ?? '#'
+
+  const isLeft = side === 'left'
+  const rowClass = `${styles.projectRow} ${isLeft ? styles.projectRowLeft : ''} ${styles.reveal}`
+
+  const detailsContent = (
+    <div className={styles.projectMeta}>
+      <p className={styles.projectProcess}>
+        {project?.process || 'Write a paragraph about the process here.'}
+      </p>
+    </div>
+  )
+
+  return (
+    <div ref={ref} className={rowClass} suppressHydrationWarning>
+      {isLeft && <div className={styles.projectDetailsLeft}>{detailsContent}</div>}
+      <a href={href} className={styles.projectImage} target="_blank" rel="noopener noreferrer">
         {imageUrl && <img src={imageUrl} alt={title} loading="lazy" />}
       </a>
-      {tags.length > 0 && (
-        <div className={styles.projectTags}>
-          {tags.map((tag) => (
-            <span key={tag} className={styles.tag}>
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
+      {!isLeft && <div className={styles.projectDetails}>{detailsContent}</div>}
     </div>
   )
 }
@@ -279,11 +332,6 @@ export default function HomePage({ projects }: { projects: Project[] }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const p = useCallback(
-    (i: number): Project | null => projects[i] ?? null,
-    [projects],
-  )
-
   return (
     <main ref={pageRef} className={styles.page} suppressHydrationWarning>
       {/* ── Brand: always sticky at top-left ── */}
@@ -353,26 +401,16 @@ export default function HomePage({ projects }: { projects: Project[] }) {
         {', the studio works across development, design, art direction, and photography — under one roof, one voice, one standard of care.'}
       </div>
 
-      {/* ── Recent Work (row 1: large left + small right) ── */}
-      <section className={styles.contentSection}>
-        <div className={styles.projectRow}>
-          <ProjectCard project={p(0)} className={styles.projectCardLarge} />
-          <ProjectCard project={p(1)} className={styles.projectCardSmall} />
+      {/* ── Work: detail row + image card per project ── */}
+      {projects.map((project, i) => (
+        <div
+          key={project._id}
+          className={i === 0 ? styles.contentSection : styles.projectRowSpacing}
+        >
+          <ProjectDetailRow project={project} />
+          <ProjectCard project={project} side={i % 2 === 0 ? 'right' : 'left'} />
         </div>
-      </section>
-
-      {/* ── Projects row 2: small left + large right ── */}
-      <div className={`${styles.projectRow} ${styles.contentSection}`}>
-        <ProjectCard project={p(2)} className={styles.projectCardSmallLeft} />
-        <ProjectCard project={p(3)} className={styles.projectCardLargeRight} />
-      </div>
-
-      {/* ── Projects row 3: three equal columns ── */}
-      <div className={`${styles.projectRow} ${styles.contentSection}`}>
-        <ProjectCard project={p(4)} className={styles.projectCardThird} />
-        <ProjectCard project={p(5)} className={styles.projectCardThird} />
-        <ProjectCard project={p(6)} className={styles.projectCardThird} />
-      </div>
+      ))}
 
       {/* ── Footer ── */}
       <footer className={`${styles.footer} ${styles.contentSection}`}>
