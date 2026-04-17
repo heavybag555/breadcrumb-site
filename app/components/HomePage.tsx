@@ -305,12 +305,13 @@ export default function HomePage({ projects }: { projects: Project[] }) {
           <a href="/writing" className={styles.navBtn}>
             Writing
           </a>
-        </nav>
-        <div className={styles.ctaCol}>
-          <a href="mailto:2you4youstudio@gmail.com" className={styles.ctaBtn}>
-            Get in touch
+          <a href="mailto:2you4youstudio@gmail.com" className={styles.ctaLink}>
+            Connect
+            <svg className={styles.ctaArrow} width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </a>
-        </div>
+        </nav>
       </div>
 
       {/* ── Assembly paragraph: sticky merged view ── */}
@@ -378,20 +379,6 @@ export default function HomePage({ projects }: { projects: Project[] }) {
         <div className={styles.footerCol}>
           <a href="/" className={styles.footerLink}>
             2u4u.studio
-          </a>
-          <a
-            href="https://www.instagram.com/2u4u.studio/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.footerLink}
-          >
-            Instagram
-          </a>
-          <a
-            href="mailto:2you4youstudio@gmail.com"
-            className={styles.footerLink}
-          >
-            2you4youstudio@gmail.com
           </a>
         </div>
         <div className={styles.footerColCenter}>

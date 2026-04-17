@@ -114,12 +114,13 @@ export default function InfoPage() {
           <a href="/writing" className={styles.navBtn}>
             Writing
           </a>
-        </nav>
-        <div className={styles.ctaCol}>
-          <a href="mailto:2you4youstudio@gmail.com" className={styles.ctaBtn}>
-            Get in touch
+          <a href="mailto:2you4youstudio@gmail.com" className={styles.ctaLink}>
+            Connect
+            <svg className={styles.ctaArrow} width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </a>
-        </div>
+        </nav>
       </div>
 
       {/* ── Info sections ── */}
@@ -147,8 +148,7 @@ export default function InfoPage() {
               interaction design, art direction, and photography, operating at
               the intersection of technical precision and editorial craft.
             </p>
-          </div>
-          <div className={styles.col}>
+            <div className={styles.paraSpacer} />
             <p className={styles.bodyText}>
               He is currently completing postgraduate work in Interaction Design
               at ArtCenter College of Design. His long-term ambition is to
@@ -157,6 +157,23 @@ export default function InfoPage() {
               generously, and make space for people who weren&#39;t expected to
               be in the room.
             </p>
+          </div>
+          <div className={styles.col}>
+            <p className={styles.subHeading}>Contact</p>
+            <a
+              href="https://www.instagram.com/2u4u.studio/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.bodyLink}
+            >
+              Instagram <span className={styles.linkArrow}>↗</span>
+            </a>
+            <a
+              href="mailto:2you4youstudio@gmail.com"
+              className={styles.bodyLink}
+            >
+              2you4youstudio@gmail.com <span className={styles.linkArrow}>↗</span>
+            </a>
           </div>
         </div>
 
@@ -238,21 +255,15 @@ export default function InfoPage() {
           <div className={styles.col}>
             <div className={styles.scopeBlock}>
               <p className={styles.scopeTitle}>Services</p>
-              {SERVICES.map((s) => (
-                <p key={s} className={styles.bodyText}>{s}</p>
-              ))}
+              <p className={styles.bodyText}>{SERVICES.join(', ')}</p>
             </div>
             <div className={styles.scopeBlock}>
               <p className={styles.scopeTitle}>Stack</p>
-              {STACK.map((s) => (
-                <p key={s} className={styles.bodyText}>{s}</p>
-              ))}
+              <p className={styles.bodyText}>{STACK.join(', ')}</p>
             </div>
             <div className={styles.scopeBlock}>
               <p className={styles.scopeTitle}>Interests</p>
-              {INTERESTS.map((s) => (
-                <p key={s} className={styles.bodyText}>{s}</p>
-              ))}
+              <p className={styles.bodyText}>{INTERESTS.join(', ')}</p>
             </div>
           </div>
           <div className={styles.col}>
@@ -271,20 +282,6 @@ export default function InfoPage() {
         <div className={styles.footerCol}>
           <a href="/" className={styles.footerLink}>
             2u4u.studio
-          </a>
-          <a
-            href="https://www.instagram.com/2u4u.studio/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.footerLink}
-          >
-            Instagram
-          </a>
-          <a
-            href="mailto:2you4youstudio@gmail.com"
-            className={styles.footerLink}
-          >
-            2you4youstudio@gmail.com
           </a>
         </div>
         <div className={styles.footerColCenter}>

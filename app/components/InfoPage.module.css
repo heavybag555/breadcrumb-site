@@ -52,12 +52,11 @@
 
 .nav {
   display: flex;
-  gap: 4px;
   align-items: center;
   justify-content: flex-end;
   pointer-events: auto;
-  margin-left: calc((3 / 6) * 100%);
-  width: calc((2 / 6) * 100%);
+  margin-left: auto;
+  gap: 4px;
 }
 
 .navBtn {
@@ -84,37 +83,32 @@
   color: #595959;
 }
 
-.ctaCol {
-  position: absolute;
-  right: 0;
-  top: 20px;
-  pointer-events: auto;
-}
-
-.ctaBtn {
+.ctaLink {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 4px;
   padding: 6px 12px 4px;
-  border-radius: 6px;
-  background-color: #595959;
   font-size: var(--body-size);
   font-weight: var(--body-weight);
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
   white-space: nowrap;
-  color: #0e0e0e;
-  transition: background-color 0.2s ease;
+  color: #FF6700;
+  transition: opacity 0.2s ease;
 }
 
-.ctaBtn:hover {
-  background-color: #6a6a6a;
+.ctaLink:hover {
+  opacity: 0.7;
+}
+
+.ctaArrow {
+  flex-shrink: 0;
 }
 
 /* ── Content sections (scroll normally) ── */
 
 .contentSection {
-  margin-top: 200px;
+  margin-top: 120px;
   position: relative;
 }
 
@@ -124,9 +118,9 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
-  margin-top: 400px;
+  margin-top: 120px;
 }
 
 /* ── Single info row (3-column) ── */
@@ -136,8 +130,8 @@
   gap: 20px;
   align-items: flex-start;
   padding: 20px 0;
-  width: 100%;
-  border-top: 1px solid #595959;
+  width: 50%;
+  border-top: 1px solid #353535;
 }
 
 .col {
@@ -157,10 +151,23 @@
 }
 
 .subHeading {
-  color: #FF6700;
+  color: #595959;
 }
 
 .bodyText {
+  color: #353535;
+}
+
+.bodyLink {
+  color: #FF6700;
+  transition: opacity 0.2s ease;
+}
+
+.bodyLink:hover {
+  opacity: 0.7;
+}
+
+.linkArrow {
   color: #595959;
 }
 
@@ -182,11 +189,11 @@
 }
 
 .scopeTitle {
-  color: #FF6700;
+  color: #595959;
 }
 
 .principleNum {
-  color: #FF6700;
+  color: #595959;
 }
 
 /* ── Footer ── */
@@ -195,11 +202,11 @@
   display: flex;
   gap: 20px;
   align-items: flex-start;
-  padding: 20px 120px;
+  padding: 4px 120px;
   width: calc(100% + 240px);
   margin-left: -120px;
   height: auto;
-  background-color: rgba(89, 89, 89, 0.2);
+  background-color: #000;
   font-size: var(--body-size);
   font-weight: var(--body-weight);
   line-height: var(--body-lh);
@@ -235,7 +242,7 @@
 
 .footerCenter {
   text-align: center;
-  width: 362px;
+  white-space: nowrap;
 }
 
 .footerLink {
@@ -263,7 +270,11 @@
   }
 
   .sections {
-    margin-top: 240px;
+    margin-top: 120px;
+  }
+
+  .infoRow {
+    width: 66%;
   }
 
   .contentSection {
@@ -271,7 +282,7 @@
   }
 
   .footer {
-    padding: 20px 60px;
+    padding: 4px 60px;
     margin-left: -60px;
     width: calc(100% + 120px);
   }
@@ -289,29 +300,25 @@
 
   .nav {
     width: 100%;
-    order: 3;
-  }
-
-  .ctaCol {
-    flex: none;
   }
 
   .sections {
-    margin-top: 160px;
+    margin-top: 120px;
   }
 
   .contentSection {
-    margin-top: 80px;
+    margin-top: 120px;
   }
 
   .infoRow {
+    width: 100%;
     flex-direction: column;
   }
 
   .footer {
     flex-direction: column;
     height: auto;
-    padding: 24px;
+    padding: 4px 24px;
     margin-left: -24px;
     width: calc(100% + 48px);
     gap: 32px;
@@ -328,6 +335,6 @@
 
   .footerCenter {
     text-align: left;
-    width: 100%;
+    white-space: normal;
   }
 }
