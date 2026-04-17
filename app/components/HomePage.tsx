@@ -182,7 +182,6 @@ export default function HomePage({ projects }: { projects: Project[] }) {
   const firstContentRef = useRef<HTMLDivElement>(null)
 
   const [navVisible, setNavVisible] = useState(true)
-  const [textHidden, setTextHidden] = useState(false)
   const lastScrollY = useRef(0)
 
   // Measure paragraph-flow offsets, set text-indent on floats,
@@ -301,14 +300,17 @@ export default function HomePage({ projects }: { projects: Project[] }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Hide the sticky assembly/floats before they overlap with the
-  // first project content, and reveal again when the end spacer
-  // (bottom of page) scrolls into view.
+  // Smoothly fade the sticky assembly/floats as they approach
+  // project content, and fade back in at the page bottom.
+  // Uses a distance-based opacity ramp instead of a hard toggle.
   useEffect(() => {
+    const FADE_ZONE = 120
+
     let ticking = false
     const update = () => {
       const firstContent = firstContentRef.current
-      if (!firstContent) return
+      const pageEl = pageRef.current
+      if (!firstContent || !pageEl) return
 
       const lastFloat = floatRefs[floatRefs.length - 1].current
       const floatStickyTop = lastFloat ? parseFloat(lastFloat.style.top || '0') : 0
@@ -316,7 +318,7 @@ export default function HomePage({ projects }: { projects: Project[] }) {
       const assemblyBottom = floatStickyTop + floatHeight
 
       const firstRect = firstContent.getBoundingClientRect()
-      const overlaps = firstRect.top < assemblyBottom + 40
+      const distance = firstRect.top - assemblyBottom
 
       let atBottom = false
       const spacer = endSpacerRef.current
@@ -326,7 +328,18 @@ export default function HomePage({ projects }: { projects: Project[] }) {
         atBottom = rect.top < vh * 0.5
       }
 
-      setTextHidden(overlaps && !atBottom)
+      let opacity: number
+      if (atBottom) {
+        opacity = 1
+      } else if (distance >= FADE_ZONE) {
+        opacity = 1
+      } else if (distance <= 0) {
+        opacity = 0
+      } else {
+        opacity = distance / FADE_ZONE
+      }
+
+      pageEl.style.setProperty('--text-fade', String(opacity))
     }
     const onScroll = () => {
       if (ticking) return
@@ -379,7 +392,7 @@ export default function HomePage({ projects }: { projects: Project[] }) {
   return (
     <main
       ref={pageRef}
-      className={`${styles.page} ${textHidden ? styles.textHidden : ''}`}
+      className={styles.page}
       suppressHydrationWarning
     >
       {/* ── Brand: always sticky at top-left ── */}
