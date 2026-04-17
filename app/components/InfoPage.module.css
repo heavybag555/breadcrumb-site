@@ -59,6 +59,34 @@
   gap: 4px;
 }
 
+.navButtons {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-radius: 6px;
+  background-color: #000;
+  pointer-events: none;
+  z-index: 0;
+  transform: translate3d(0, 0, 0);
+  transition: transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    width 520ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform, width;
+}
+
+.navButtons > .navBtn {
+  position: relative;
+  z-index: 1;
+}
+
 .navBtn {
   display: flex;
   align-items: center;

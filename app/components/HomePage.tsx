@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import styles from './HomePage.module.css'
 import type { Project } from '@/sanity/types'
 
@@ -181,9 +181,6 @@ export default function HomePage({ projects }: { projects: Project[] }) {
   const bgFillRef = useRef<HTMLDivElement>(null)
   const firstContentRef = useRef<HTMLDivElement>(null)
 
-  const [navVisible, setNavVisible] = useState(true)
-  const lastScrollY = useRef(0)
-
   // Measure paragraph-flow offsets, set text-indent on floats,
   // position assembly sticky top, and set float sticky tops
   // to match where each span sits inside the assembly.
@@ -275,27 +272,6 @@ export default function HomePage({ projects }: { projects: Project[] }) {
     }
 
     check()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  // Nav show/hide on scroll direction
-  useEffect(() => {
-    let ticking = false
-    const onScroll = () => {
-      if (ticking) return
-      ticking = true
-      requestAnimationFrame(() => {
-        const y = window.scrollY
-        if (y < 100) {
-          setNavVisible(true)
-        } else {
-          setNavVisible(y < lastScrollY.current)
-        }
-        lastScrollY.current = y
-        ticking = false
-      })
-    }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -399,29 +375,6 @@ export default function HomePage({ projects }: { projects: Project[] }) {
       <p ref={brandRef} className={styles.brand}>
         2u4u Studio.
       </p>
-
-      {/* ── Nav overlay: fixed, transparent, show/hide ── */}
-      <div
-        className={`${styles.navOverlay} ${navVisible ? '' : styles.navHidden}`}
-      >
-        <nav className={styles.nav}>
-          <a href="/" className={`${styles.navBtn} ${styles.navBtnActive}`}>
-            Work
-          </a>
-          <a href="/info" className={styles.navBtn}>
-            Info
-          </a>
-          <a href="/writing" className={styles.navBtn}>
-            Writing
-          </a>
-          <a href="mailto:2you4youstudio@gmail.com" className={styles.ctaLink}>
-            Connect
-            <svg className={styles.ctaArrow} width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </a>
-        </nav>
-      </div>
 
       {/* ── Assembly paragraph: sticky merged view ── */}
       <div ref={assemblyRef} className={styles.assembly}>

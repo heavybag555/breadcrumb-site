@@ -48,10 +48,10 @@
   --body-ls: -0.25px;
 
   /* Caption — 11px / 700 / 9px line-height / -0.44px letter-spacing */
-  --caption-size: 12px;
-  --caption-weight: 600;
+  --caption-size: 11px;
+  --caption-weight: 500;
   --caption-lh: 13px;
-  --caption-ls: -0.25px;
+  --caption-ls: -0.05px;
 
   /* Motion — heavy, natural buttery easing.
      Curve is a deep ease-out (expo/quint) so interactions feel
