@@ -6,7 +6,8 @@
     "dev": "next dev -p 4000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "tsx scripts/seed-sanity.ts"
   },
   "dependencies": {
     "@mux/mux-video": "^0.30.6",
@@ -24,8 +25,10 @@
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "dotenv": "^17.4.2",
     "eslint": "^10.2.0",
     "eslint-config-next": "^16.2.4",
+    "tsx": "^4.21.0",
     "typescript": "^6.0.2"
   }
 }
