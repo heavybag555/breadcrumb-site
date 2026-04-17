@@ -9,13 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mux/mux-video": "^0.30.6",
     "@sanity/client": "^7.21.0",
     "@sanity/image-url": "^1.2.0",
     "animejs": "^4.3.6",
     "next": "^16.2.4",
+    "next-sanity": "^11.6.13",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "sanity": "^3.99.0"
+    "sanity": "^4.22.0",
+    "styled-components": "^6.4.0"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
