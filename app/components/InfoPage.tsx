@@ -214,7 +214,11 @@ export default function InfoPage() {
               that has historically underrepresented the communities it claims to
               design for.
             </p>
-            <div className={styles.paraSpacer} />
+            <img
+              src="/images/family.jpg"
+              alt="Family"
+              className={styles.colImage}
+            />
             <p className={styles.bodyText}>
               The goal is to close that gap — not as a mission statement, but as
               a structural commitment embedded in every project, every client
