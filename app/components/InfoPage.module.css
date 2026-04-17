@@ -40,11 +40,13 @@
   align-items: flex-start;
   z-index: 50;
   pointer-events: none;
+  opacity: 1;
+  transition: opacity var(--dur-l) var(--ease-butter);
+  will-change: opacity;
 }
 
 .navHidden {
   opacity: 0;
-  transform: translateY(-20px);
   pointer-events: none !important;
 }
 
@@ -69,6 +71,8 @@
   letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: #595959;
+  transition: color var(--dur-m) var(--ease-butter),
+    background-color var(--dur-m) var(--ease-butter);
 }
 
 .navBtnActive {
@@ -77,20 +81,22 @@
 }
 
 .navBtn:hover {
-  color: #595959;
+  color: #fff;
 }
 
 .ctaLink {
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 6px 12px 4px;
+  padding: 6px 0 4px 12px;
   font-size: var(--body-size);
   font-weight: var(--body-weight);
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: #FF6700;
+  transition: color var(--dur-m) var(--ease-butter),
+    opacity var(--dur-m) var(--ease-butter);
 }
 
 .ctaLink:hover {
@@ -99,6 +105,12 @@
 
 .ctaArrow {
   flex-shrink: 0;
+  transition: transform var(--dur-l) var(--ease-butter);
+  will-change: transform;
+}
+
+.ctaLink:hover .ctaArrow {
+  transform: translate(3px, -3px);
 }
 
 /* ── Content sections (scroll normally) ── */
@@ -156,6 +168,7 @@
 
 .bodyLink {
   color: #FF6700;
+  transition: opacity var(--dur-m) var(--ease-butter);
 }
 
 .bodyLink:hover {
@@ -238,6 +251,10 @@
 .footerCenter {
   text-align: center;
   white-space: nowrap;
+}
+
+.footerLink {
+  transition: opacity var(--dur-m) var(--ease-butter);
 }
 
 .footerLink:hover {

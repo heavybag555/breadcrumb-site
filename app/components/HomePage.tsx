@@ -101,7 +101,7 @@ function ProjectDetailRow({ project }: { project: Project }) {
       <div className={styles.detailCol}>
         {stack.length > 0 && <p className={styles.detailBody}>{stack.join(', ')}</p>}
       </div>
-      <div className={styles.detailCol}>
+      <div className={`${styles.detailCol} ${styles.detailColDomain}`}>
         {domain && (
           <a
             href={href}

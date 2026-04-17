@@ -41,11 +41,13 @@
   align-items: flex-start;
   z-index: 50;
   pointer-events: none;
+  opacity: 1;
+  transition: opacity var(--dur-l) var(--ease-butter);
+  will-change: opacity;
 }
 
 .navHidden {
   opacity: 0;
-  transform: translateY(-20px);
   pointer-events: none !important;
 }
 
@@ -70,6 +72,8 @@
   letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: #595959;
+  transition: color var(--dur-m) var(--ease-butter),
+    background-color var(--dur-m) var(--ease-butter);
 }
 
 .navBtnActive {
@@ -78,20 +82,22 @@
 }
 
 .navBtn:hover {
-  color: #595959;
+  color: #fff;
 }
 
 .ctaLink {
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 6px 12px 4px;
+  padding: 6px 0 4px 12px;
   font-size: var(--body-size);
   font-weight: var(--body-weight);
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: #FF6700;
+  transition: color var(--dur-m) var(--ease-butter),
+    opacity var(--dur-m) var(--ease-butter);
 }
 
 .ctaLink:hover {
@@ -100,6 +106,12 @@
 
 .ctaArrow {
   flex-shrink: 0;
+  transition: transform var(--dur-l) var(--ease-butter);
+  will-change: transform;
+}
+
+.ctaLink:hover .ctaArrow {
+  transform: translate(3px, -3px);
 }
 
 /* ── Assembly paragraph ──
@@ -121,7 +133,7 @@
   pointer-events: none;
   width: 50%;
   mix-blend-mode: exclusion;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--dur-l) var(--ease-butter);
 }
 
 .assemblyBrandPrefix {
@@ -130,6 +142,7 @@
 
 .assemblySpan {
   opacity: 0;
+  transition: opacity var(--dur-m) var(--ease-butter);
 }
 
 .assemblySpanVisible {
@@ -165,7 +178,7 @@
   z-index: 30;
   width: 50%;
   mix-blend-mode: exclusion;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--dur-m) var(--ease-butter);
 }
 
 .floatHidden {
@@ -223,6 +236,7 @@
   align-items: center;
   gap: 4px;
   text-decoration: none;
+  transition: opacity var(--dur-m) var(--ease-butter);
 }
 
 .projectTitleRow:hover {
@@ -232,6 +246,11 @@
 .projectTitleRow .ctaArrow {
   flex-shrink: 0;
   color: #595959;
+  transition: transform var(--dur-l) var(--ease-butter);
+}
+
+.projectTitleRow:hover .ctaArrow {
+  transform: translate(3px, -3px);
 }
 
 .projectRowSpacing {
@@ -296,6 +315,14 @@
   overflow: hidden;
   position: relative;
   border-radius: 8px;
+  transition: opacity var(--dur-l) var(--ease-butter),
+    filter var(--dur-l) var(--ease-butter);
+  will-change: opacity, filter;
+}
+
+.projectImage:hover {
+  opacity: 0.92;
+  filter: brightness(1.04);
 }
 
 .projectImage img {
@@ -428,6 +455,10 @@
   align-items: flex-start;
 }
 
+.detailColDomain {
+  align-items: flex-end;
+}
+
 .detailClientName {
   font-size: var(--body-size);
   font-weight: var(--body-weight);
@@ -464,6 +495,7 @@
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
   color: #FF6700;
+  transition: opacity var(--dur-m) var(--ease-butter);
 }
 
 .detailDomain:hover {
@@ -472,6 +504,12 @@
 
 .detailDomainArrow {
   flex-shrink: 0;
+  transition: transform var(--dur-l) var(--ease-butter);
+  will-change: transform;
+}
+
+.detailDomain:hover .detailDomainArrow {
+  transform: translate(3px, -3px);
 }
 
 /* ── Footer ── */
@@ -521,6 +559,10 @@
 .footerCenter {
   text-align: center;
   white-space: nowrap;
+}
+
+.footerLink {
+  transition: opacity var(--dur-m) var(--ease-butter);
 }
 
 .footerLink:hover {
