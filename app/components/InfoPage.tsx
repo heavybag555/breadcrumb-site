@@ -137,6 +137,11 @@ export default function InfoPage() {
           </div>
           <div className={styles.col}>
             <p className={styles.subHeading}>Contact</p>
+            <img
+              src="/images/benuribe.jpg"
+              alt="Benjamin Uribe"
+              className={styles.colImage}
+            />
             <a
               href="https://www.instagram.com/2u4u.studio/"
               target="_blank"

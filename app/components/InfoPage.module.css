@@ -200,6 +200,16 @@
   color: #595959;
 }
 
+/* ── Full-width image inside a column ── */
+
+.colImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  margin: 8px 0;
+}
+
 .principleNum {
   color: #595959;
 }
