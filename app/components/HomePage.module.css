@@ -17,9 +17,10 @@
 .brand {
   position: sticky;
   top: 20px;
-  font-size: 32px;
-  line-height: 36px;
-  letter-spacing: -0.96px;
+  font-size: var(--heading-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+  letter-spacing: var(--heading-ls);
   color: #595959;
   padding-top: 20px;
   z-index: 60;
@@ -59,11 +60,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 16px;
+  padding: 6px 12px 4px;
   border-radius: 6px;
-  font-size: 18px;
-  line-height: 20px;
-  letter-spacing: -0.54px;
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: #353535;
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -89,12 +91,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 16px;
+  padding: 6px 12px 4px;
   border-radius: 6px;
   background-color: #595959;
-  font-size: 18px;
-  line-height: 20px;
-  letter-spacing: -0.54px;
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: #0e0e0e;
   transition: background-color 0.2s ease;
@@ -112,14 +115,16 @@
 
 .assembly {
   position: sticky;
-  font-size: 32px;
-  line-height: 36px;
-  letter-spacing: -0.96px;
+  font-size: var(--heading-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+  letter-spacing: var(--heading-ls);
   color: #595959;
   z-index: 31;
   height: 0;
   overflow: visible;
   pointer-events: none;
+  width: 50%;
 }
 
 .assemblyBrandPrefix {
@@ -134,6 +139,14 @@
   opacity: 1;
 }
 
+.profilePic {
+  display: inline;
+  width: var(--heading-size);
+  height: var(--heading-size);
+  object-fit: cover;
+  vertical-align: middle;
+}
+
 /* ── Sticky sentence fragments ──
    Each sentence is its own sticky block with text-indent.
    When it reaches the assembly zone it hides and the
@@ -142,12 +155,14 @@
 
 .float {
   position: sticky;
-  font-size: 32px;
-  line-height: 36px;
-  letter-spacing: -0.96px;
+  font-size: var(--heading-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+  letter-spacing: var(--heading-ls);
   color: #595959;
   margin-top: 400px;
   z-index: 30;
+  width: 50%;
 }
 
 .floatHidden {
@@ -165,9 +180,10 @@
 /* ── Project grid ── */
 
 .sectionLabel {
-  font-size: 32px;
-  line-height: 36px;
-  letter-spacing: -0.96px;
+  font-size: var(--heading-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+  letter-spacing: var(--heading-ls);
   color: #595959;
   width: 100%;
   margin-bottom: 40px;
@@ -230,9 +246,10 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  font-size: 18px;
-  line-height: 20px;
-  letter-spacing: -0.54px;
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
   white-space: nowrap;
 }
 
@@ -276,9 +293,10 @@
   justify-content: center;
   padding: 6px 8px 4px;
   border: 1px solid #595959;
-  font-size: 11px;
-  line-height: 9px;
-  letter-spacing: -0.44px;
+  font-size: var(--caption-size);
+  font-weight: var(--caption-weight);
+  line-height: var(--caption-lh);
+  letter-spacing: var(--caption-ls);
   color: #595959;
   white-space: nowrap;
   transition: border-color 0.2s ease, color 0.2s ease;
@@ -298,8 +316,9 @@
   padding: 20px;
   width: 100%;
   background-color: #595959;
-  font-size: 32px;
-  letter-spacing: -0.96px;
+  font-size: var(--heading-size);
+  font-weight: var(--heading-weight);
+  letter-spacing: var(--heading-ls);
 }
 
 .infoColumn {
@@ -311,7 +330,7 @@
 }
 
 .infoLabel {
-  line-height: 36px;
+  line-height: var(--heading-lh);
   color: #353535;
   width: 100%;
 }
@@ -322,7 +341,7 @@
 }
 
 .infoList p {
-  line-height: 36px;
+  line-height: var(--heading-lh);
 }
 
 /* ── Principles block ── */
@@ -347,12 +366,13 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  font-size: 32px;
-  letter-spacing: -0.96px;
+  font-size: var(--heading-size);
+  font-weight: var(--heading-weight);
+  letter-spacing: var(--heading-ls);
 }
 
 .principlesLabel {
-  line-height: 36px;
+  line-height: var(--heading-lh);
   color: #353535;
   width: 100%;
 }
@@ -363,12 +383,12 @@
 }
 
 .principlesList p {
-  line-height: 36px;
-  font-size: 32px;
+  line-height: var(--heading-lh);
+  font-size: var(--heading-size);
 }
 
 .dash {
-  letter-spacing: -0.96px;
+  letter-spacing: var(--heading-ls);
 }
 
 /* ── Footer ── */
@@ -380,11 +400,12 @@
   padding: 20px 120px;
   width: calc(100% + 240px);
   margin-left: -120px;
-  height: 400px;
+  height: auto;
   background-color: #595959;
-  font-size: 18px;
-  line-height: 20px;
-  letter-spacing: -0.54px;
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
   color: #0e0e0e;
 }
 
@@ -498,13 +519,11 @@
 
   .float {
     margin-top: 160px;
-    font-size: 24px;
-    line-height: 30px;
+    width: 100%;
   }
 
   .assembly {
-    font-size: 24px;
-    line-height: 30px;
+    width: 100%;
   }
 
   .contentSection {
@@ -526,24 +545,10 @@
 
   .infoPanel {
     flex-direction: column;
-    font-size: 24px;
-  }
-
-  .infoPanel p {
-    line-height: 30px;
   }
 
   .principles {
     width: 100%;
-  }
-
-  .principlesInner {
-    font-size: 24px;
-  }
-
-  .principlesList p {
-    font-size: 24px;
-    line-height: 30px;
   }
 
   .footer {

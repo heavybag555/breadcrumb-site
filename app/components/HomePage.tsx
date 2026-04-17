@@ -8,7 +8,6 @@ import type { Project } from '@/sanity/types'
 const STICKY_LINES = [
   'A one-person web, interaction, and photography practice based in Los Angeles.',
   'Founded by Benjamin Uribe, the studio works across development, design, art direction, and photography — under one roof, one voice, one standard of care.',
-  'The work is grounded in a simple belief: coherence is a competitive advantage. When the same person who writes the code also directs the shoot and builds the identity system, nothing gets lost in translation.',
 ]
 
 const SERVICES = [
@@ -46,8 +45,17 @@ const PRINCIPLES = [
  * Renders the brand text + all sentences as one flowing paragraph in a
  * hidden element, then uses getClientRects() to find the x-position
  * where each sentence fragment would naturally start.
+ *
+ * Reads font metrics from the live assembly element so the measurement
+ * stays in sync with whatever CSS declares (including media queries).
  */
-function measureParagraphOffsets(contentWidth: number, brandText: string): number[] {
+function measureParagraphOffsets(
+  contentWidth: number,
+  brandText: string,
+  assemblyEl: HTMLElement,
+): number[] {
+  const cs = getComputedStyle(assemblyEl)
+
   const m = document.createElement('div')
   Object.assign(m.style, {
     position: 'absolute',
@@ -55,19 +63,30 @@ function measureParagraphOffsets(contentWidth: number, brandText: string): numbe
     top: '0',
     left: '0',
     width: `${contentWidth}px`,
-    fontFamily: '"Univers Next Pro", sans-serif',
-    fontWeight: '700',
-    fontSize: '32px',
-    lineHeight: '36px',
-    letterSpacing: '-0.96px',
+    fontFamily: cs.fontFamily,
+    fontWeight: cs.fontWeight,
+    fontSize: cs.fontSize,
+    lineHeight: cs.lineHeight,
+    letterSpacing: cs.letterSpacing,
     wordWrap: 'break-word',
   })
 
+  const imgSize = parseFloat(cs.fontSize) || 32
+  const imgPlaceholder =
+    `<span style="display:inline-block;width:${imgSize}px;height:${imgSize}px;vertical-align:middle;"></span>`
+
   m.innerHTML =
     `<span data-brand>${brandText} </span>` +
-    STICKY_LINES.map(
-      (line, i) => `<span data-f="${i}">${line}</span>${i < STICKY_LINES.length - 1 ? ' ' : ''}`,
-    ).join('')
+    STICKY_LINES.map((line, i) => {
+      let html = line
+      if (i === 1) {
+        html = line.replace(
+          'Benjamin Uribe,',
+          `Benjamin Uribe ${imgPlaceholder},`,
+        )
+      }
+      return `<span data-f="${i}">${html}</span>${i < STICKY_LINES.length - 1 ? ' ' : ''}`
+    }).join('')
 
   document.body.appendChild(m)
   const cRect = m.getBoundingClientRect()
@@ -195,10 +214,8 @@ export default function HomePage({ projects }: { projects: Project[] }) {
   const spanRefs = [
     useRef<HTMLSpanElement>(null),
     useRef<HTMLSpanElement>(null),
-    useRef<HTMLSpanElement>(null),
   ]
   const floatRefs = [
-    useRef<HTMLDivElement>(null),
     useRef<HTMLDivElement>(null),
     useRef<HTMLDivElement>(null),
   ]
@@ -226,14 +243,10 @@ export default function HomePage({ projects }: { projects: Project[] }) {
     }
 
     function measure() {
-      const cs = getComputedStyle(pageEl!)
-      const contentWidth =
-        pageEl!.clientWidth -
-        parseFloat(cs.paddingLeft) -
-        parseFloat(cs.paddingRight)
+      const assemblyWidth = assemblyEl!.clientWidth
 
       const brandText = brandRef.current?.textContent ?? '2u4u Studio'
-      const offsets = measureParagraphOffsets(contentWidth, brandText)
+      const offsets = measureParagraphOffsets(assemblyWidth, brandText, assemblyEl!)
 
       floatRefs.forEach((ref, i) => {
         const el = ref.current
@@ -375,10 +388,9 @@ export default function HomePage({ projects }: { projects: Project[] }) {
           {STICKY_LINES[0]}{' '}
         </span>
         <span ref={spanRefs[1]} className={styles.assemblySpan}>
-          {STICKY_LINES[1]}{' '}
-        </span>
-        <span ref={spanRefs[2]} className={styles.assemblySpan}>
-          {STICKY_LINES[2]}
+          {'Founded by Benjamin Uribe '}
+          <img src="/images/benuribe.jpg" alt="Benjamin Uribe" className={styles.profilePic} />
+          {', the studio works across development, design, art direction, and photography — under one roof, one voice, one standard of care.'}
         </span>
       </div>
 
@@ -389,7 +401,9 @@ export default function HomePage({ projects }: { projects: Project[] }) {
 
       {/* ── Sentence 2: sticks at its paragraph position ── */}
       <div ref={floatRefs[1]} className={styles.float}>
-        {STICKY_LINES[1]}
+        {'Founded by Benjamin Uribe '}
+        <img src="/images/benuribe.jpg" alt="Benjamin Uribe" className={styles.profilePic} />
+        {', the studio works across development, design, art direction, and photography — under one roof, one voice, one standard of care.'}
       </div>
 
       {/* ── Recent Work (row 1: large left + small right) ── */}
@@ -400,11 +414,6 @@ export default function HomePage({ projects }: { projects: Project[] }) {
           <ProjectCard project={p(1)} className={styles.projectCardSmall} />
         </div>
       </section>
-
-      {/* ── Sentence 3: sticks at its paragraph position ── */}
-      <div ref={floatRefs[2]} className={styles.float}>
-        {STICKY_LINES[2]}
-      </div>
 
       {/* ── Services / Interest panel ── */}
       <div className={`${styles.infoPanel} ${styles.contentSection}`}>
