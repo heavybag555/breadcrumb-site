@@ -1,12 +1,11 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { animate } from 'animejs'
 import styles from './HomePage.module.css'
 import type { Project } from '@/sanity/types'
 
 const STICKY_LINES = [
-  'A one-person web, interaction, and photography practice based in Los Angeles.',
+  'A web, interaction, and photography practice based in Los Angeles.',
   'Founded by Benjamin Uribe, the studio works across development, design, art direction, and photography — under one roof, one voice, one standard of care.',
 ]
 
@@ -45,7 +44,7 @@ function measureParagraphOffsets(
     `<span style="display:inline-block;width:${imgSize}px;height:${imgSize}px;vertical-align:middle;"></span>`
 
   const line0Measured =
-    'A one-person <span style="opacity:0.5">web, interaction, and photography</span> practice based in <span style="opacity:0.5">Los Angeles</span>.'
+    'A <span style="color:#353535">web, interaction, and photography</span> practice based in <span style="color:#353535">Los Angeles</span>.'
 
   m.innerHTML =
     `<span data-brand>${brandText} </span>` +
@@ -54,7 +53,7 @@ function measureParagraphOffsets(
       if (i === 1) {
         html = html.replace(
           'Benjamin Uribe,',
-          `<span style="opacity:0.5">Benjamin Uribe</span> ${imgPlaceholder},`,
+          `<span style="color:#353535">Benjamin Uribe</span> ${imgPlaceholder},`,
         )
       }
       return `<span data-f="${i}">${html}</span>${i < STICKY_LINES.length - 1 ? ' ' : ''}`
@@ -75,52 +74,19 @@ function measureParagraphOffsets(
   return offsets
 }
 
-/* ── Intersection-observer reveal hook ── */
-
-function useReveal() {
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add(styles.revealVisible)
-          animate(el, {
-            opacity: [0, 1],
-            translateY: [20, 0],
-            duration: 700,
-            ease: 'outCubic',
-          })
-          observer.unobserve(el)
-        }
-      },
-      { threshold: 0.15 },
-    )
-
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
-  return ref
-}
-
 /* ── Project Detail Row (4-col, info-page style) ── */
 
 function ProjectDetailRow({ project }: { project: Project }) {
-  const ref = useReveal()
   const clientName = project.clientName || project.title
   const tags = project.tags ?? []
   const year = project.year ?? ''
-  const bio = project.bio ?? ''
+  const process = project.process ?? ''
   const stack = project.stack ?? []
   const domain = project.domain ?? ''
   const href = project.href ?? '#'
 
   return (
-    <div ref={ref} className={`${styles.detailRow} ${styles.reveal}`}>
+    <div className={styles.detailRow}>
       <div className={styles.detailCol}>
         <p className={styles.detailClientName}>{clientName}</p>
         {(tags.length > 0 || year) && (
@@ -130,7 +96,7 @@ function ProjectDetailRow({ project }: { project: Project }) {
         )}
       </div>
       <div className={styles.detailCol}>
-        {bio && <p className={styles.detailBody}>{bio}</p>}
+        {process && <p className={styles.detailBody}>{process}</p>}
       </div>
       <div className={styles.detailCol}>
         {stack.length > 0 && <p className={styles.detailBody}>{stack.join(', ')}</p>}
@@ -171,24 +137,23 @@ function ProjectDetailRow({ project }: { project: Project }) {
 /* ── Project Card ── */
 
 function ProjectCard({ project, side = 'right' }: { project: Project | null; side?: 'left' | 'right' }) {
-  const ref = useReveal()
   const title = project?.title ?? 'Untitled'
   const imageUrl = project?.imageUrl ?? null
   const href = project?.href ?? '#'
 
   const isLeft = side === 'left'
-  const rowClass = `${styles.projectRow} ${isLeft ? styles.projectRowLeft : ''} ${styles.reveal}`
+  const rowClass = `${styles.projectRow} ${isLeft ? styles.projectRowLeft : ''}`
 
   const detailsContent = (
     <div className={styles.projectMeta}>
       <p className={styles.projectProcess}>
-        {project?.process || 'Write a paragraph about the process here.'}
+        {project?.bio || 'Write a short bio for this project here.'}
       </p>
     </div>
   )
 
   return (
-    <div ref={ref} className={rowClass} suppressHydrationWarning>
+    <div className={rowClass} suppressHydrationWarning>
       {isLeft && <div className={styles.projectDetailsLeft}>{detailsContent}</div>}
       <a href={href} className={styles.projectImage} target="_blank" rel="noopener noreferrer">
         {imageUrl && <img src={imageUrl} alt={title} loading="lazy" />}
@@ -212,8 +177,12 @@ export default function HomePage({ projects }: { projects: Project[] }) {
     useRef<HTMLDivElement>(null),
     useRef<HTMLDivElement>(null),
   ]
+  const endSpacerRef = useRef<HTMLDivElement>(null)
+  const bgFillRef = useRef<HTMLDivElement>(null)
+  const firstContentRef = useRef<HTMLDivElement>(null)
 
   const [navVisible, setNavVisible] = useState(true)
+  const [textHidden, setTextHidden] = useState(false)
   const lastScrollY = useRef(0)
 
   // Measure paragraph-flow offsets, set text-indent on floats,
@@ -232,7 +201,7 @@ export default function HomePage({ projects }: { projects: Project[] }) {
     function measure() {
       const assemblyWidth = assemblyEl!.clientWidth
 
-      const brandText = brandRef.current?.textContent ?? '2u4u Studio'
+      const brandText = brandRef.current?.textContent ?? '2u4u Studio.'
       const offsets = measureParagraphOffsets(assemblyWidth, brandText, assemblyEl!)
 
       floatRefs.forEach((ref, i) => {
@@ -332,11 +301,90 @@ export default function HomePage({ projects }: { projects: Project[] }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Hide the sticky assembly/floats before they overlap with the
+  // first project content, and reveal again when the end spacer
+  // (bottom of page) scrolls into view.
+  useEffect(() => {
+    let ticking = false
+    const update = () => {
+      const firstContent = firstContentRef.current
+      if (!firstContent) return
+
+      const lastFloat = floatRefs[floatRefs.length - 1].current
+      const floatStickyTop = lastFloat ? parseFloat(lastFloat.style.top || '0') : 0
+      const floatHeight = lastFloat?.offsetHeight || 0
+      const assemblyBottom = floatStickyTop + floatHeight
+
+      const firstRect = firstContent.getBoundingClientRect()
+      const overlaps = firstRect.top < assemblyBottom + 40
+
+      let atBottom = false
+      const spacer = endSpacerRef.current
+      if (spacer) {
+        const rect = spacer.getBoundingClientRect()
+        const vh = window.innerHeight
+        atBottom = rect.top < vh * 0.5
+      }
+
+      setTextHidden(overlaps && !atBottom)
+    }
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        update()
+        ticking = false
+      })
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
+
+  // End-of-page background fade: opacity 1 when the end spacer has
+  // fully scrolled into view (top at viewport top); fades to 0 as the
+  // user scrolls upward out of the spacer region.
+  useEffect(() => {
+    let ticking = false
+    const update = () => {
+      const spacer = endSpacerRef.current
+      const bg = bgFillRef.current
+      if (!spacer || !bg) return
+      const rect = spacer.getBoundingClientRect()
+      const vh = window.innerHeight
+      const opacity = Math.max(0, Math.min(1, 1 - rect.top / vh))
+      bg.style.opacity = String(opacity)
+    }
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        update()
+        ticking = false
+      })
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
+
   return (
-    <main ref={pageRef} className={styles.page} suppressHydrationWarning>
+    <main
+      ref={pageRef}
+      className={`${styles.page} ${textHidden ? styles.textHidden : ''}`}
+      suppressHydrationWarning
+    >
       {/* ── Brand: always sticky at top-left ── */}
       <p ref={brandRef} className={styles.brand}>
-        2u4u Studio
+        2u4u Studio.
       </p>
 
       {/* ── Nav overlay: fixed, transparent, show/hide ── */}
@@ -365,10 +413,10 @@ export default function HomePage({ projects }: { projects: Project[] }) {
       {/* ── Assembly paragraph: sticky merged view ── */}
       <div ref={assemblyRef} className={styles.assembly}>
         <span className={styles.assemblyBrandPrefix} aria-hidden="true">
-          2u4u Studio{' '}
+          2u4u Studio.{' '}
         </span>
         <span ref={spanRefs[0]} className={styles.assemblySpan}>
-          A one-person{' '}
+          A{' '}
           <span className={styles.assemblyMuted}>
             web, interaction, and photography
           </span>{' '}
@@ -385,7 +433,7 @@ export default function HomePage({ projects }: { projects: Project[] }) {
 
       {/* ── Sentence 1: sticks at its paragraph position ── */}
       <div ref={floatRefs[0]} className={styles.float}>
-        A one-person{' '}
+        A{' '}
         <span className={styles.assemblyMuted}>
           web, interaction, and photography
         </span>{' '}
@@ -405,12 +453,19 @@ export default function HomePage({ projects }: { projects: Project[] }) {
       {projects.map((project, i) => (
         <div
           key={project._id}
+          ref={i === 0 ? firstContentRef : undefined}
           className={i === 0 ? styles.contentSection : styles.projectRowSpacing}
         >
           <ProjectDetailRow project={project} />
           <ProjectCard project={project} side={i % 2 === 0 ? 'right' : 'left'} />
         </div>
       ))}
+
+      {/* ── End-of-work breathing room: full empty viewport before footer ── */}
+      <div ref={endSpacerRef} className={styles.endSpacer} aria-hidden="true" />
+
+      {/* ── Fixed background image revealed when the end spacer is in view ── */}
+      <div ref={bgFillRef} className={styles.bgFill} aria-hidden="true" />
 
       {/* ── Footer ── */}
       <footer className={`${styles.footer} ${styles.contentSection}`}>

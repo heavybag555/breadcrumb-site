@@ -7,7 +7,6 @@
   padding-bottom: 32px;
   max-width: var(--page-max-width);
   margin: 0 auto;
-  opacity: 0;
 }
 
 .siteName {
@@ -15,7 +14,6 @@
   font-size: 14px;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  transition: opacity 0.2s ease;
 }
 
 .siteName:hover {
@@ -33,7 +31,6 @@
   font-size: 14px;
   letter-spacing: 0.01em;
   color: var(--color-text-muted);
-  transition: color 0.2s ease;
 }
 
 .navLink:hover {

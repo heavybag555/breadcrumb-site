@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { animate, stagger } from 'animejs'
 import styles from './InfoPage.module.css'
 
 const SERVICES = [
@@ -36,7 +35,6 @@ const PRINCIPLES = [
 ]
 
 export default function InfoPage() {
-  const sectionsRef = useRef<HTMLDivElement>(null)
   const [navVisible, setNavVisible] = useState(true)
   const lastScrollY = useRef(0)
 
@@ -58,41 +56,6 @@ export default function InfoPage() {
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  useEffect(() => {
-    const el = sectionsRef.current
-    if (!el) return
-
-    const rows = el.querySelectorAll(`.${styles.infoRow}`)
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const cols = entry.target.querySelectorAll(`.${styles.col}`)
-            animate(cols, {
-              opacity: [0, 1],
-              translateY: [16, 0],
-              delay: stagger(100),
-              duration: 600,
-              ease: 'outCubic',
-            })
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.1 },
-    )
-
-    rows.forEach((row) => {
-      const cols = row.querySelectorAll(`.${styles.col}`)
-      cols.forEach((col) => {
-        ;(col as HTMLElement).style.opacity = '0'
-      })
-      observer.observe(row)
-    })
-
-    return () => observer.disconnect()
   }, [])
 
   return (
@@ -124,7 +87,7 @@ export default function InfoPage() {
       </div>
 
       {/* ── Info sections ── */}
-      <div ref={sectionsRef} className={styles.sections}>
+      <div className={styles.sections}>
         {/* ── Information ── */}
         <div className={styles.infoRow}>
           <div className={styles.col}>

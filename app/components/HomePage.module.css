@@ -21,10 +21,11 @@
   font-weight: var(--heading-weight);
   line-height: var(--heading-lh);
   letter-spacing: var(--heading-ls);
-  color: #595959;
+  color: #ffffff;
   padding-top: 20px;
   z-index: 60;
   width: fit-content;
+  mix-blend-mode: exclusion;
 }
 
 /* ── Nav overlay — fixed, show/hide on scroll direction ── */
@@ -40,8 +41,6 @@
   align-items: flex-start;
   z-index: 50;
   pointer-events: none;
-  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navHidden {
@@ -71,7 +70,6 @@
   letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: #595959;
-  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .navBtnActive {
@@ -94,7 +92,6 @@
   letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: #FF6700;
-  transition: opacity 0.2s ease;
 }
 
 .ctaLink:hover {
@@ -117,12 +114,14 @@
   font-weight: var(--heading-weight);
   line-height: var(--heading-lh);
   letter-spacing: var(--heading-ls);
-  color: #595959;
+  color: #ffffff;
   z-index: 31;
   height: 0;
   overflow: visible;
   pointer-events: none;
   width: 50%;
+  mix-blend-mode: exclusion;
+  transition: opacity 0.3s ease;
 }
 
 .assemblyBrandPrefix {
@@ -138,7 +137,7 @@
 }
 
 .assemblyMuted {
-  opacity: 0.2;
+  color: #808080;
 }
 
 .profilePic {
@@ -161,13 +160,23 @@
   font-weight: var(--heading-weight);
   line-height: var(--heading-lh);
   letter-spacing: var(--heading-ls);
-  color: #595959;
+  color: #ffffff;
   margin-top: 400px;
   z-index: 30;
   width: 50%;
+  mix-blend-mode: exclusion;
+  transition: opacity 0.3s ease;
 }
 
 .floatHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Hide the sticky text before it overlaps with project content.
+   Reverts when the page reaches the bottom (end spacer in view). */
+.textHidden .assembly,
+.textHidden .float {
   opacity: 0;
   pointer-events: none;
 }
@@ -214,7 +223,6 @@
   align-items: center;
   gap: 4px;
   text-decoration: none;
-  transition: opacity 0.2s ease;
 }
 
 .projectTitleRow:hover {
@@ -227,7 +235,31 @@
 }
 
 .projectRowSpacing {
-  margin-top: 80px;
+  margin-top: 200px;
+}
+
+/* ── Full-viewport empty space after the last project ── */
+
+.endSpacer {
+  height: 100vh;
+  width: 100%;
+}
+
+/* ── Background image that fades in at the bottom of the page ── */
+
+.bgFill {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/images/background.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .projectMeta {
@@ -263,6 +295,7 @@
   width: 100%;
   overflow: hidden;
   position: relative;
+  border-radius: 8px;
 }
 
 .projectImage img {
@@ -431,7 +464,6 @@
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
   color: #FF6700;
-  transition: opacity 0.2s ease;
 }
 
 .detailDomain:hover {
@@ -491,26 +523,8 @@
   white-space: nowrap;
 }
 
-.footerLink {
-  transition: opacity 0.2s ease;
-}
-
 .footerLink:hover {
   opacity: 0.7;
-}
-
-/* ── Reveal animation ── */
-
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.revealVisible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* ── Responsive ── */

@@ -30,7 +30,6 @@
   font-size: 12px;
   font-weight: 300;
   color: var(--color-text-muted);
-  transition: color 0.2s ease;
 }
 
 .link:hover {

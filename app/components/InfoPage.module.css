@@ -40,8 +40,6 @@
   align-items: flex-start;
   z-index: 50;
   pointer-events: none;
-  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navHidden {
@@ -71,7 +69,6 @@
   letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: #595959;
-  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .navBtnActive {
@@ -94,7 +91,6 @@
   letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: #FF6700;
-  transition: opacity 0.2s ease;
 }
 
 .ctaLink:hover {
@@ -160,7 +156,6 @@
 
 .bodyLink {
   color: #FF6700;
-  transition: opacity 0.2s ease;
 }
 
 .bodyLink:hover {
@@ -243,10 +238,6 @@
 .footerCenter {
   text-align: center;
   white-space: nowrap;
-}
-
-.footerLink {
-  transition: opacity 0.2s ease;
 }
 
 .footerLink:hover {
