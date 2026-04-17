@@ -1,0 +1,571 @@
+/* ──────────────────────────────────────────────
+   HomePage.module.css
+   Block flow layout — required for site-wide sticky.
+   6-column proportions | 120px side padding | 20px gutter
+   ────────────────────────────────────────────── */
+
+/* ── Page wrapper (block flow, NOT flex) ── */
+
+.page {
+  padding: 0 120px;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ── Brand — always sticky at top-left ── */
+
+.brand {
+  position: sticky;
+  top: 20px;
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: -0.96px;
+  color: #595959;
+  padding-top: 20px;
+  z-index: 60;
+  width: fit-content;
+}
+
+/* ── Nav overlay — fixed, show/hide on scroll direction ── */
+
+.navOverlay {
+  position: fixed;
+  top: 20px;
+  left: 120px;
+  right: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 50;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navHidden {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none !important;
+}
+
+.nav {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: -0.54px;
+  white-space: nowrap;
+  color: #353535;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.navBtnActive {
+  background-color: #000;
+  color: #595959;
+}
+
+.navBtn:hover {
+  color: #595959;
+}
+
+.ctaCol {
+  position: absolute;
+  right: 0;
+  top: 0;
+  pointer-events: auto;
+}
+
+.ctaBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 6px;
+  background-color: #595959;
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: -0.54px;
+  white-space: nowrap;
+  color: #0e0e0e;
+  transition: background-color 0.2s ease;
+}
+
+.ctaBtn:hover {
+  background-color: #6a6a6a;
+}
+
+/* ── Assembly paragraph ──
+   A single sticky container with inline <span>s so sentences
+   merge into one flowing paragraph when stuck. Spans start
+   invisible; a scroll check swaps each float for its span.
+   ─────────────────────────────────── */
+
+.assembly {
+  position: sticky;
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: -0.96px;
+  color: #595959;
+  z-index: 31;
+  height: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.assemblyBrandPrefix {
+  visibility: hidden;
+}
+
+.assemblySpan {
+  opacity: 0;
+}
+
+.assemblySpanVisible {
+  opacity: 1;
+}
+
+/* ── Sticky sentence fragments ──
+   Each sentence is its own sticky block with text-indent.
+   When it reaches the assembly zone it hides and the
+   matching assembly span takes over (merged paragraph).
+   ─────────────────────────────────── */
+
+.float {
+  position: sticky;
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: -0.96px;
+  color: #595959;
+  margin-top: 400px;
+  z-index: 30;
+}
+
+.floatHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Content sections (scroll normally) ── */
+
+.contentSection {
+  margin-top: 400px;
+  position: relative;
+}
+
+/* ── Project grid ── */
+
+.sectionLabel {
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: -0.96px;
+  color: #595959;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.projectRow {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.projectCardLarge {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  flex-shrink: 0;
+  width: calc((4 / 6) * 100% - 10px);
+}
+
+.projectCardSmall {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.projectCardSmallLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.projectCardLargeRight {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  flex-shrink: 0;
+  width: calc((4 / 6) * 100% - 10px);
+}
+
+.projectCardThird {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.projectMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: -0.54px;
+  white-space: nowrap;
+}
+
+.projectTitle {
+  color: #fff;
+}
+
+.projectSubtitle {
+  color: #595959;
+}
+
+.projectImage {
+  display: block;
+  width: 100%;
+  aspect-ratio: 500 / 400;
+  background-color: #595959;
+  overflow: hidden;
+  position: relative;
+}
+
+.projectImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.projectImage:hover img {
+  transform: scale(1.03);
+}
+
+.projectTags {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px 4px;
+  border: 1px solid #595959;
+  font-size: 11px;
+  line-height: 9px;
+  letter-spacing: -0.44px;
+  color: #595959;
+  white-space: nowrap;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.tag:hover {
+  border-color: #7a7a7a;
+  color: #7a7a7a;
+}
+
+/* ── Info panels (gray boxes) ── */
+
+.infoPanel {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px;
+  width: 100%;
+  background-color: #595959;
+  font-size: 32px;
+  letter-spacing: -0.96px;
+}
+
+.infoColumn {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.infoLabel {
+  line-height: 36px;
+  color: #353535;
+  width: 100%;
+}
+
+.infoList {
+  width: 100%;
+  color: #0e0e0e;
+}
+
+.infoList p {
+  line-height: 36px;
+}
+
+/* ── Principles block ── */
+
+.principlesWrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.principles {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  width: 482px;
+  background-color: #595959;
+}
+
+.principlesInner {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 32px;
+  letter-spacing: -0.96px;
+}
+
+.principlesLabel {
+  line-height: 36px;
+  color: #353535;
+  width: 100%;
+}
+
+.principlesList {
+  width: 100%;
+  color: #000;
+}
+
+.principlesList p {
+  line-height: 36px;
+  font-size: 32px;
+}
+
+.dash {
+  letter-spacing: -0.96px;
+}
+
+/* ── Footer ── */
+
+.footer {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px 120px;
+  width: calc(100% + 240px);
+  margin-left: -120px;
+  height: 400px;
+  background-color: #595959;
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: -0.54px;
+  color: #0e0e0e;
+}
+
+.footerCol {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footerColCenter {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footerColRight {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding-right: 24px;
+}
+
+.footerCenter {
+  text-align: center;
+  width: 362px;
+}
+
+.footerLink {
+  transition: opacity 0.2s ease;
+}
+
+.footerLink:hover {
+  opacity: 0.7;
+}
+
+/* ── Reveal animation ── */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.revealVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 1200px) {
+  .page {
+    padding: 0 60px;
+  }
+
+  .navOverlay {
+    left: 60px;
+    right: 60px;
+  }
+
+  .nav {
+    width: auto;
+  }
+
+  .float {
+    margin-top: 240px;
+  }
+
+  .contentSection {
+    margin-top: 240px;
+  }
+
+  .footer {
+    padding: 20px 60px;
+    margin-left: -60px;
+    width: calc(100% + 120px);
+  }
+
+  .projectCardLarge,
+  .projectCardLargeRight {
+    width: calc((3 / 5) * 100% - 10px);
+  }
+}
+
+@media (max-width: 900px) {
+  .page {
+    padding: 0 24px;
+  }
+
+  .navOverlay {
+    left: 24px;
+    right: 24px;
+  }
+
+  .nav {
+    width: 100%;
+    order: 3;
+  }
+
+  .ctaCol {
+    flex: none;
+  }
+
+  .float {
+    margin-top: 160px;
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .assembly {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .contentSection {
+    margin-top: 160px;
+  }
+
+  .projectRow {
+    flex-direction: column;
+  }
+
+  .projectCardLarge,
+  .projectCardLargeRight,
+  .projectCardSmall,
+  .projectCardSmallLeft,
+  .projectCardThird {
+    width: 100%;
+    flex: none;
+  }
+
+  .infoPanel {
+    flex-direction: column;
+    font-size: 24px;
+  }
+
+  .infoPanel p {
+    line-height: 30px;
+  }
+
+  .principles {
+    width: 100%;
+  }
+
+  .principlesInner {
+    font-size: 24px;
+  }
+
+  .principlesList p {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .footer {
+    flex-direction: column;
+    height: auto;
+    padding: 24px;
+    margin-left: -24px;
+    width: calc(100% + 48px);
+    gap: 32px;
+  }
+
+  .footerColCenter {
+    align-items: flex-start;
+  }
+
+  .footerColRight {
+    align-items: flex-start;
+    padding-right: 0;
+  }
+
+  .footerCenter {
+    text-align: left;
+    width: 100%;
+  }
+}
