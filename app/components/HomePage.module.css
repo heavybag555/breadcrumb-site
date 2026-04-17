@@ -32,10 +32,11 @@
 .navOverlay {
   position: fixed;
   top: 20px;
+  padding-top: 20px;
   left: 120px;
   right: 120px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   z-index: 50;
   pointer-events: none;
@@ -53,7 +54,10 @@
   display: flex;
   gap: 4px;
   align-items: center;
+  justify-content: flex-end;
   pointer-events: auto;
+  margin-left: calc((3 / 6) * 100%);
+  width: calc((2 / 6) * 100%);
 }
 
 .navBtn {
@@ -83,7 +87,7 @@
 .ctaCol {
   position: absolute;
   right: 0;
-  top: 0;
+  top: 20px;
   pointer-events: auto;
 }
 
@@ -139,6 +143,10 @@
   opacity: 1;
 }
 
+.assemblyMuted {
+  opacity: 0.2;
+}
+
 .profilePic {
   display: inline;
   width: var(--heading-size);
@@ -173,21 +181,11 @@
 /* ── Content sections (scroll normally) ── */
 
 .contentSection {
-  margin-top: 400px;
+  margin-top: 200px;
   position: relative;
 }
 
 /* ── Project grid ── */
-
-.sectionLabel {
-  font-size: var(--heading-size);
-  font-weight: var(--heading-weight);
-  line-height: var(--heading-lh);
-  letter-spacing: var(--heading-ls);
-  color: #595959;
-  width: 100%;
-  margin-bottom: 40px;
-}
 
 .projectRow {
   display: flex;
@@ -265,7 +263,7 @@
   display: block;
   width: 100%;
   aspect-ratio: 500 / 400;
-  background-color: #595959;
+  background-color: rgba(89, 89, 89, 0.2);
   overflow: hidden;
   position: relative;
 }
@@ -314,11 +312,15 @@
   gap: 20px;
   align-items: flex-start;
   padding: 20px;
-  width: 100%;
-  background-color: #595959;
-  font-size: var(--heading-size);
-  font-weight: var(--heading-weight);
-  letter-spacing: var(--heading-ls);
+  /* Middle 4 of 6 columns — same width as .projectCardLarge, centered */
+  width: calc((4 / 6) * 100% - 10px);
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(89, 89, 89, 0.2);
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
 }
 
 .infoColumn {
@@ -330,18 +332,18 @@
 }
 
 .infoLabel {
-  line-height: var(--heading-lh);
+  line-height: var(--body-lh);
   color: #353535;
   width: 100%;
 }
 
 .infoList {
   width: 100%;
-  color: #0e0e0e;
+  color: #595959;
 }
 
 .infoList p {
-  line-height: var(--heading-lh);
+  line-height: var(--body-lh);
 }
 
 /* ── Principles block ── */
@@ -357,7 +359,7 @@
   align-items: flex-start;
   padding: 20px;
   width: 482px;
-  background-color: #595959;
+  background-color: rgba(89, 89, 89, 0.2);
 }
 
 .principlesInner {
@@ -366,29 +368,30 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  font-size: var(--heading-size);
-  font-weight: var(--heading-weight);
-  letter-spacing: var(--heading-ls);
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
 }
 
 .principlesLabel {
-  line-height: var(--heading-lh);
+  line-height: var(--body-lh);
   color: #353535;
   width: 100%;
 }
 
 .principlesList {
   width: 100%;
-  color: #000;
+  color: #595959;
 }
 
 .principlesList p {
-  line-height: var(--heading-lh);
-  font-size: var(--heading-size);
+  line-height: var(--body-lh);
+  font-size: var(--body-size);
 }
 
 .dash {
-  letter-spacing: var(--heading-ls);
+  letter-spacing: var(--body-ls);
 }
 
 /* ── Footer ── */
@@ -401,12 +404,12 @@
   width: calc(100% + 240px);
   margin-left: -120px;
   height: auto;
-  background-color: #595959;
+  background-color: rgba(89, 89, 89, 0.2);
   font-size: var(--body-size);
   font-weight: var(--body-weight);
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
-  color: #0e0e0e;
+  color: #595959;
 }
 
 .footerCol {
@@ -483,7 +486,7 @@
   }
 
   .contentSection {
-    margin-top: 240px;
+    margin-top: 120px;
   }
 
   .footer {
@@ -494,6 +497,10 @@
 
   .projectCardLarge,
   .projectCardLargeRight {
+    width: calc((3 / 5) * 100% - 10px);
+  }
+
+  .infoPanel {
     width: calc((3 / 5) * 100% - 10px);
   }
 }
@@ -527,7 +534,7 @@
   }
 
   .contentSection {
-    margin-top: 160px;
+    margin-top: 80px;
   }
 
   .projectRow {
@@ -545,6 +552,7 @@
 
   .infoPanel {
     flex-direction: column;
+    width: 100%;
   }
 
   .principles {

@@ -75,14 +75,17 @@ function measureParagraphOffsets(
   const imgPlaceholder =
     `<span style="display:inline-block;width:${imgSize}px;height:${imgSize}px;vertical-align:middle;"></span>`
 
+  const line0Measured =
+    'A one-person <span style="opacity:0.5">web, interaction, and photography</span> practice based in <span style="opacity:0.5">Los Angeles</span>.'
+
   m.innerHTML =
     `<span data-brand>${brandText} </span>` +
     STICKY_LINES.map((line, i) => {
-      let html = line
+      let html = i === 0 ? line0Measured : line
       if (i === 1) {
-        html = line.replace(
+        html = html.replace(
           'Benjamin Uribe,',
-          `Benjamin Uribe ${imgPlaceholder},`,
+          `<span style="opacity:0.5">Benjamin Uribe</span> ${imgPlaceholder},`,
         )
       }
       return `<span data-f="${i}">${html}</span>${i < STICKY_LINES.length - 1 ? ' ' : ''}`
@@ -385,10 +388,16 @@ export default function HomePage({ projects }: { projects: Project[] }) {
           2u4u Studio{' '}
         </span>
         <span ref={spanRefs[0]} className={styles.assemblySpan}>
-          {STICKY_LINES[0]}{' '}
+          A one-person{' '}
+          <span className={styles.assemblyMuted}>
+            web, interaction, and photography
+          </span>{' '}
+          practice based in{' '}
+          <span className={styles.assemblyMuted}>Los Angeles</span>.{' '}
         </span>
         <span ref={spanRefs[1]} className={styles.assemblySpan}>
-          {'Founded by Benjamin Uribe '}
+          Founded by{' '}
+          <span className={styles.assemblyMuted}>Benjamin Uribe</span>{' '}
           <img src="/images/benuribe.jpg" alt="Benjamin Uribe" className={styles.profilePic} />
           {', the studio works across development, design, art direction, and photography — under one roof, one voice, one standard of care.'}
         </span>
@@ -396,19 +405,24 @@ export default function HomePage({ projects }: { projects: Project[] }) {
 
       {/* ── Sentence 1: sticks at its paragraph position ── */}
       <div ref={floatRefs[0]} className={styles.float}>
-        {STICKY_LINES[0]}
+        A one-person{' '}
+        <span className={styles.assemblyMuted}>
+          web, interaction, and photography
+        </span>{' '}
+        practice based in{' '}
+        <span className={styles.assemblyMuted}>Los Angeles</span>.
       </div>
 
       {/* ── Sentence 2: sticks at its paragraph position ── */}
       <div ref={floatRefs[1]} className={styles.float}>
-        {'Founded by Benjamin Uribe '}
+        Founded by{' '}
+        <span className={styles.assemblyMuted}>Benjamin Uribe</span>{' '}
         <img src="/images/benuribe.jpg" alt="Benjamin Uribe" className={styles.profilePic} />
         {', the studio works across development, design, art direction, and photography — under one roof, one voice, one standard of care.'}
       </div>
 
       {/* ── Recent Work (row 1: large left + small right) ── */}
       <section className={styles.contentSection}>
-        <p className={styles.sectionLabel}>Recent Work</p>
         <div className={styles.projectRow}>
           <ProjectCard project={p(0)} className={styles.projectCardLarge} />
           <ProjectCard project={p(1)} className={styles.projectCardSmall} />

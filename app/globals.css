@@ -13,7 +13,7 @@
 :root {
   /* Heading — 32px / 700 / 36px line-height / -0.96px letter-spacing */
   --heading-size: 24px;
-  --heading-weight: 700;
+  --heading-weight: 500;
   --heading-lh: 26px;
   --heading-ls: -0.96px;
 
