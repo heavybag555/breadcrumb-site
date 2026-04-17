@@ -1,4 +1,5 @@
 import { createClient, type SanityClient } from '@sanity/client'
+import imageUrlBuilder from '@sanity/image-url'
 
 let _client: SanityClient | null = null
 
@@ -15,7 +16,14 @@ export function sanityClient(): SanityClient {
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
     apiVersion: '2024-01-01',
     useCdn: true,
+    token: process.env.SANITY_API_TOKEN,
   })
 
   return _client
+}
+
+const builder = () => imageUrlBuilder(sanityClient())
+
+export function urlFor(source: any) {
+  return builder().image(source)
 }

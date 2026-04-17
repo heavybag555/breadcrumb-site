@@ -1,0 +1,333 @@
+/* ──────────────────────────────────────────────
+   InfoPage.module.css
+   Block flow layout — matches work page header/footer.
+   6-column proportions | 120px side padding | 20px gutter
+   ────────────────────────────────────────────── */
+
+/* ── Page wrapper (block flow, NOT flex — required for sticky) ── */
+
+.page {
+  padding: 0 120px;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ── Brand — always sticky at top-left ── */
+
+.brand {
+  position: sticky;
+  top: 20px;
+  font-size: var(--heading-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+  letter-spacing: var(--heading-ls);
+  color: #595959;
+  padding-top: 20px;
+  z-index: 60;
+  width: fit-content;
+}
+
+/* ── Nav overlay — fixed, show/hide on scroll direction ── */
+
+.navOverlay {
+  position: fixed;
+  top: 20px;
+  padding-top: 20px;
+  left: 120px;
+  right: 120px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  z-index: 50;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navHidden {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none !important;
+}
+
+.nav {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: auto;
+  margin-left: calc((3 / 6) * 100%);
+  width: calc((2 / 6) * 100%);
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px 4px;
+  border-radius: 6px;
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
+  white-space: nowrap;
+  color: #595959;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.navBtnActive {
+  background-color: #000;
+  color: #595959;
+}
+
+.navBtn:hover {
+  color: #595959;
+}
+
+.ctaCol {
+  position: absolute;
+  right: 0;
+  top: 20px;
+  pointer-events: auto;
+}
+
+.ctaBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px 4px;
+  border-radius: 6px;
+  background-color: #595959;
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
+  white-space: nowrap;
+  color: #0e0e0e;
+  transition: background-color 0.2s ease;
+}
+
+.ctaBtn:hover {
+  background-color: #6a6a6a;
+}
+
+/* ── Content sections (scroll normally) ── */
+
+.contentSection {
+  margin-top: 200px;
+  position: relative;
+}
+
+/* ── Info sections container ── */
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 400px;
+}
+
+/* ── Single info row (3-column) ── */
+
+.infoRow {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px 0;
+  width: 100%;
+  border-top: 1px solid #595959;
+}
+
+.col {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
+}
+
+.rowLabel {
+  color: #595959;
+}
+
+.subHeading {
+  color: #FF6700;
+}
+
+.bodyText {
+  color: #595959;
+}
+
+.paraSpacer {
+  height: 20px;
+}
+
+/* ── Scope row sub-blocks ── */
+
+.scopeBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.scopeBlock:last-child {
+  margin-bottom: 0;
+}
+
+.scopeTitle {
+  color: #FF6700;
+}
+
+.principleNum {
+  color: #FF6700;
+}
+
+/* ── Footer ── */
+
+.footer {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px 120px;
+  width: calc(100% + 240px);
+  margin-left: -120px;
+  height: auto;
+  background-color: rgba(89, 89, 89, 0.2);
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
+  color: #595959;
+}
+
+.footerCol {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footerColCenter {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footerColRight {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding-right: 24px;
+}
+
+.footerCenter {
+  text-align: center;
+  width: 362px;
+}
+
+.footerLink {
+  transition: opacity 0.2s ease;
+}
+
+.footerLink:hover {
+  opacity: 0.7;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 1200px) {
+  .page {
+    padding: 0 60px;
+  }
+
+  .navOverlay {
+    left: 60px;
+    right: 60px;
+  }
+
+  .nav {
+    width: auto;
+  }
+
+  .sections {
+    margin-top: 240px;
+  }
+
+  .contentSection {
+    margin-top: 120px;
+  }
+
+  .footer {
+    padding: 20px 60px;
+    margin-left: -60px;
+    width: calc(100% + 120px);
+  }
+}
+
+@media (max-width: 900px) {
+  .page {
+    padding: 0 24px;
+  }
+
+  .navOverlay {
+    left: 24px;
+    right: 24px;
+  }
+
+  .nav {
+    width: 100%;
+    order: 3;
+  }
+
+  .ctaCol {
+    flex: none;
+  }
+
+  .sections {
+    margin-top: 160px;
+  }
+
+  .contentSection {
+    margin-top: 80px;
+  }
+
+  .infoRow {
+    flex-direction: column;
+  }
+
+  .footer {
+    flex-direction: column;
+    height: auto;
+    padding: 24px;
+    margin-left: -24px;
+    width: calc(100% + 48px);
+    gap: 32px;
+  }
+
+  .footerColCenter {
+    align-items: flex-start;
+  }
+
+  .footerColRight {
+    align-items: flex-start;
+    padding-right: 0;
+  }
+
+  .footerCenter {
+    text-align: left;
+    width: 100%;
+  }
+}

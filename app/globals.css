@@ -3,6 +3,30 @@
 @font-face {
   font-family: "Univers Next Pro";
   font-style: normal;
+  font-weight: 300;
+  src: url("/fonts/univers/Univers Next Pro Light.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Univers Next Pro";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/univers/UniversNextProRegular.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Univers Next Pro";
+  font-style: normal;
+  font-weight: 500;
+  src: url("/fonts/univers/Univers Next Pro Medium.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Univers Next Pro";
+  font-style: normal;
   font-weight: 700;
   src: url("/fonts/univers/UniversNextProBold.ttf") format("truetype");
   font-display: swap;
@@ -18,10 +42,10 @@
   --heading-ls: -0.96px;
 
   /* Body — 18px / 700 / 20px line-height / -0.54px letter-spacing */
-  --body-size: 15px;
+  --body-size: 13px;
   --body-weight: 500;
-  --body-lh: 18px;
-  --body-ls: -0.54px;
+  --body-lh: 15px;
+  --body-ls: -0.25px;
 
   /* Caption — 11px / 700 / 9px line-height / -0.44px letter-spacing */
   --caption-size: 11px;

@@ -71,7 +71,7 @@
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
   white-space: nowrap;
-  color: #353535;
+  color: #595959;
   transition: color 0.2s ease, background-color 0.2s ease;
 }
 
@@ -333,7 +333,7 @@
 
 .infoLabel {
   line-height: var(--body-lh);
-  color: #353535;
+  color: #FF6700;
   width: 100%;
 }
 
@@ -376,7 +376,7 @@
 
 .principlesLabel {
   line-height: var(--body-lh);
-  color: #353535;
+  color: #FF6700;
   width: 100%;
 }
 

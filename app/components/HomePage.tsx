@@ -1,44 +1,13 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { animate, stagger } from 'animejs'
+import { animate } from 'animejs'
 import styles from './HomePage.module.css'
 import type { Project } from '@/sanity/types'
 
 const STICKY_LINES = [
   'A one-person web, interaction, and photography practice based in Los Angeles.',
   'Founded by Benjamin Uribe, the studio works across development, design, art direction, and photography — under one roof, one voice, one standard of care.',
-]
-
-const SERVICES = [
-  'Web design & development',
-  'Interaction design & prototyping',
-  'Art direction',
-  'Photography',
-  'Design systems',
-]
-
-const INTEREST = [
-  'Artist platform',
-  'Technology & software',
-  'Architecture & built environment',
-  'Cultural organizations',
-  'Product startups',
-]
-
-const STACK = ['Next.JS', 'Figma', 'React', 'Tailwind', 'Sanity']
-
-const PRINCIPLES = [
-  'Every project is a case study.',
-  'Coherence is a competitive advantage.',
-  'Ship something real before you call it a prototype.',
-  'The work should be traceable back to a decision, not a preference.',
-  'Quality is structural, not cosmetic.',
-  'Get close to the material — code is clay.',
-  "Urgency isn't always useful. Pause, think, then act.",
-  "Knowledge is most meaningful when it's given away.",
-  'Treat the end product as your own.',
-  'The community is the client too.',
 ]
 
 /**
@@ -138,38 +107,6 @@ function useReveal() {
   return ref
 }
 
-/* ── Staggered children reveal ── */
-
-function useStaggerReveal() {
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          animate(el.children, {
-            opacity: [0, 1],
-            translateY: [12, 0],
-            delay: stagger(60),
-            duration: 500,
-            ease: 'outCubic',
-          })
-          observer.unobserve(el)
-        }
-      },
-      { threshold: 0.1 },
-    )
-
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
-  return ref
-}
-
 /* ── Project Card ── */
 
 function ProjectCard({
@@ -225,12 +162,6 @@ export default function HomePage({ projects }: { projects: Project[] }) {
 
   const [navVisible, setNavVisible] = useState(true)
   const lastScrollY = useRef(0)
-
-  const servicesRef = useStaggerReveal()
-  const interestRef = useStaggerReveal()
-  const stackRef = useStaggerReveal()
-  const interest2Ref = useStaggerReveal()
-  const principlesRef = useStaggerReveal()
 
   // Measure paragraph-flow offsets, set text-indent on floats,
   // position assembly sticky top, and set float sticky tops
@@ -429,51 +360,10 @@ export default function HomePage({ projects }: { projects: Project[] }) {
         </div>
       </section>
 
-      {/* ── Services / Interest panel ── */}
-      <div className={`${styles.infoPanel} ${styles.contentSection}`}>
-        <div className={styles.infoColumn}>
-          <p className={styles.infoLabel}>Services</p>
-          <div ref={servicesRef} className={styles.infoList}>
-            {SERVICES.map((s) => (
-              <p key={s} style={{ opacity: 0 }}>
-                {s}
-              </p>
-            ))}
-          </div>
-        </div>
-        <div className={styles.infoColumn}>
-          <p className={styles.infoLabel}>Interest</p>
-          <div ref={interestRef} className={styles.infoList}>
-            {INTEREST.map((s) => (
-              <p key={s} style={{ opacity: 0 }}>
-                {s}
-              </p>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* ── Projects row 2: small left + large right ── */}
       <div className={`${styles.projectRow} ${styles.contentSection}`}>
         <ProjectCard project={p(2)} className={styles.projectCardSmallLeft} />
         <ProjectCard project={p(3)} className={styles.projectCardLargeRight} />
-      </div>
-
-      {/* ── Principles block ── */}
-      <div className={`${styles.principlesWrap} ${styles.contentSection}`}>
-        <div className={styles.principles}>
-          <div className={styles.principlesInner}>
-            <p className={styles.principlesLabel}>Principles</p>
-            <div ref={principlesRef} className={styles.principlesList}>
-              {PRINCIPLES.map((pr) => (
-                <p key={pr} style={{ opacity: 0 }}>
-                  <span className={styles.dash}>––</span>
-                  {pr}
-                </p>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* ── Projects row 3: three equal columns ── */}
@@ -481,30 +371,6 @@ export default function HomePage({ projects }: { projects: Project[] }) {
         <ProjectCard project={p(4)} className={styles.projectCardThird} />
         <ProjectCard project={p(5)} className={styles.projectCardThird} />
         <ProjectCard project={p(6)} className={styles.projectCardThird} />
-      </div>
-
-      {/* ── Stack / Interest panel ── */}
-      <div className={`${styles.infoPanel} ${styles.contentSection}`}>
-        <div className={styles.infoColumn}>
-          <p className={styles.infoLabel}>Stack</p>
-          <div ref={stackRef} className={styles.infoList}>
-            {STACK.map((s) => (
-              <p key={s} style={{ opacity: 0 }}>
-                {s}
-              </p>
-            ))}
-          </div>
-        </div>
-        <div className={styles.infoColumn}>
-          <p className={styles.infoLabel}>Interest</p>
-          <div ref={interest2Ref} className={styles.infoList}>
-            {INTEREST.map((s) => (
-              <p key={s} style={{ opacity: 0 }}>
-                {s}
-              </p>
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* ── Footer ── */}
