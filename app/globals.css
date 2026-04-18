@@ -39,13 +39,13 @@
   --heading-size: 24px;
   --heading-weight: 500;
   --heading-lh: 26px;
-  --heading-ls: -0.35px;
+  --heading-ls: -0.45px;
 
   /* Body — 18px / 700 / 20px line-height / -0.54px letter-spacing */
   --body-size: 13px;
   --body-weight: 500;
   --body-lh: 15px;
-  --body-ls: -0.25px;
+  --body-ls: -0.10px;
 
   /* Caption — 11px / 700 / 9px line-height / -0.44px letter-spacing */
   --caption-size: 11px;

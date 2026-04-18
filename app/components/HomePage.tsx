@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import styles from './HomePage.module.css'
-import type { Project } from '@/sanity/types'
+import type { Project, PhotoProject, WorkItem } from '@/sanity/types'
 
 const STICKY_LINES = [
   'A web, interaction, and photography practice based in Los Angeles.',
@@ -163,9 +163,58 @@ function ProjectCard({ project, side = 'right' }: { project: Project | null; sid
   )
 }
 
+/* ── Photo Detail Row ── */
+
+function PhotoDetailRow({ photo }: { photo: PhotoProject }) {
+  const title = photo.title
+  const location = photo.location ?? ''
+  const year = photo.year ?? ''
+
+  return (
+    <div className={styles.photoDetailRow}>
+      <p className={styles.detailClientName}>{title}</p>
+      {(location || year) && (
+        <p className={styles.detailTags}>
+          {[location, year].filter(Boolean).join(', ')}
+        </p>
+      )}
+    </div>
+  )
+}
+
+/* ── Photo Card (side-by-side pair) ── */
+
+function PhotoCard({ photo, photoIndex }: { photo: PhotoProject; photoIndex: number }) {
+  const title = photo.title
+  const entries = photo.imageEntries ?? []
+  const urls = photo.imageUrls ?? []
+  const entry1 = entries[0] ?? { url: urls[0] ?? null, wide: false }
+  const entry2 = entries[1] ?? { url: urls[1] ?? null, wide: false }
+
+  const hasMix = entry1.wide !== entry2.wide
+  const swap = hasMix && photoIndex % 2 === 1
+  const first = swap ? entry2 : entry1
+  const second = swap ? entry1 : entry2
+
+  return (
+    <div className={styles.photoRow}>
+      {first.url && (
+        <div className={`${styles.photoImage} ${first.wide ? styles.photoImageWide : styles.photoImageStandard}`}>
+          <img src={first.url} alt={`${title} — 1`} loading="lazy" />
+        </div>
+      )}
+      {second.url && (
+        <div className={`${styles.photoImage} ${second.wide ? styles.photoImageWide : styles.photoImageStandard}`}>
+          <img src={second.url} alt={`${title} — 2`} loading="lazy" />
+        </div>
+      )}
+    </div>
+  )
+}
+
 /* ── Main HomePage ── */
 
-export default function HomePage({ projects }: { projects: Project[] }) {
+export default function HomePage({ projects }: { projects: WorkItem[] }) {
   const pageRef = useRef<HTMLElement>(null)
   const brandRef = useRef<HTMLParagraphElement>(null)
   const assemblyRef = useRef<HTMLDivElement>(null)
@@ -416,16 +465,37 @@ export default function HomePage({ projects }: { projects: Project[] }) {
       </div>
 
       {/* ── Work: detail row + image card per project ── */}
-      {projects.map((project, i) => (
-        <div
-          key={project._id}
-          ref={i === 0 ? firstContentRef : undefined}
-          className={i === 0 ? styles.contentSection : styles.projectRowSpacing}
-        >
-          <ProjectDetailRow project={project} />
-          <ProjectCard project={project} side={i % 2 === 0 ? 'right' : 'left'} />
-        </div>
-      ))}
+      {(() => {
+        let webIndex = 0
+        let photoIndex = 0
+        return projects.map((item, i) => {
+          const isPhoto = item._type === 'photoProject'
+          const currentWebIndex = webIndex
+          const currentPhotoIndex = photoIndex
+          if (isPhoto) photoIndex++
+          else webIndex++
+
+          return (
+            <div
+              key={item._id}
+              ref={i === 0 ? firstContentRef : undefined}
+              className={i === 0 ? styles.contentSection : styles.projectRowSpacing}
+            >
+              {isPhoto ? (
+                <>
+                  <PhotoDetailRow photo={item as PhotoProject} />
+                  <PhotoCard photo={item as PhotoProject} photoIndex={currentPhotoIndex} />
+                </>
+              ) : (
+                <>
+                  <ProjectDetailRow project={item as Project} />
+                  <ProjectCard project={item as Project} side={currentWebIndex % 2 === 0 ? 'right' : 'left'} />
+                </>
+              )}
+            </div>
+          )
+        })
+      })()}
 
       {/* ── End-of-work breathing room: full empty viewport before footer ── */}
       <div ref={endSpacerRef} className={styles.endSpacer} aria-hidden="true" />

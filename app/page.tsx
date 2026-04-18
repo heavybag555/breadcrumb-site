@@ -1,13 +1,15 @@
-import { getHomepageProjects } from '@/sanity/queries'
-import type { Project } from '@/sanity/types'
+import { getWorkItems } from '@/sanity/queries'
+import type { Project, PhotoProject, WorkItem } from '@/sanity/types'
 import HomePage from './components/HomePage'
 
-const LOCAL_PROJECTS: Project[] = [
+const LOCAL_WORK_ITEMS: WorkItem[] = [
   {
     _id: 'local-1',
+    _type: 'project',
     title: 'broosk.online',
     clientName: 'Broosk Saib',
     subtitle: 'Portfolio & Design',
+    medium: 'web',
     bio: 'Kurdish-Swedish creative director and designer working at the intersection of fashion, music, and digital culture.',
     stack: ['Next.js', 'React', 'Sanity'],
     domain: 'broosk.online',
@@ -23,10 +25,33 @@ const LOCAL_PROJECTS: Project[] = [
     year: '2026',
   },
   {
+    _id: 'local-photo-1',
+    _type: 'photoProject',
+    title: 'CC Buchanan',
+    medium: 'photo',
+    location: 'Catalina',
+    year: '2025',
+    tags: ['portrait'],
+    imageUrl: '/Photo/CC Buchanan, Catalina, 2025/000394490012.jpg',
+    imageUrls: [
+      '/Photo/CC Buchanan, Catalina, 2025/000394490012.jpg',
+      '/Photo/CC Buchanan, Catalina, 2025/000394490015.jpg',
+      '/Photo/CC Buchanan, Catalina, 2025/000394490016.jpg',
+    ],
+    imageEntries: [
+      { url: '/Photo/CC Buchanan, Catalina, 2025/000394490012.jpg', wide: false },
+      { url: '/Photo/CC Buchanan, Catalina, 2025/000394490015.jpg', wide: false },
+      { url: '/Photo/CC Buchanan, Catalina, 2025/000394490016.jpg', wide: false },
+    ],
+    order: 1,
+  },
+  {
     _id: 'local-2',
+    _type: 'project',
     title: 'daniel-derro.com',
     clientName: 'Daniel Derro',
     subtitle: 'Portfolio & Photography',
+    medium: 'web',
     bio: 'Los Angeles–based photographer specializing in editorial, portrait, and documentary work.',
     stack: ['Next.js', 'React'],
     domain: 'daniel-derro.com',
@@ -37,14 +62,35 @@ const LOCAL_PROJECTS: Project[] = [
       '/daniel-derro.com-portfolio-photo-2026/2.png',
     ],
     tags: ['portfolio', 'photo'],
-    order: 1,
+    order: 2,
     year: '2026',
   },
   {
+    _id: 'local-photo-2',
+    _type: 'photoProject',
+    title: 'James',
+    medium: 'photo',
+    location: 'Mid City',
+    year: '2024',
+    tags: ['portrait'],
+    imageUrl: '/Photo/James, Mid City, 2024/000020710032.jpg',
+    imageUrls: [
+      '/Photo/James, Mid City, 2024/000020710032.jpg',
+      '/Photo/James, Mid City, 2024/000020710037.jpg',
+    ],
+    imageEntries: [
+      { url: '/Photo/James, Mid City, 2024/000020710032.jpg', wide: false },
+      { url: '/Photo/James, Mid City, 2024/000020710037.jpg', wide: false },
+    ],
+    order: 3,
+  },
+  {
     _id: 'local-3',
+    _type: 'project',
     title: 'giovannisotomayor.com',
     clientName: 'Giovanni Sotomayor',
     subtitle: 'Portfolio & Photography',
+    medium: 'web',
     bio: 'Photographer and visual storyteller capturing moments across landscapes and intimate portraits.',
     stack: ['Next.js', 'React', 'Sanity'],
     domain: 'giovannisotomayor.com',
@@ -56,14 +102,45 @@ const LOCAL_PROJECTS: Project[] = [
       '/giovannisotomayor.com-portfolio-photo-2025/3.png',
     ],
     tags: ['portfolio', 'photo'],
-    order: 2,
+    order: 4,
     year: '2025',
   },
   {
+    _id: 'local-photo-3',
+    _type: 'photoProject',
+    title: 'Savedher',
+    medium: 'photo',
+    location: 'Koreatown',
+    year: '2025',
+    tags: ['portrait'],
+    imageUrl: '/Photo/Savedher, Koreatown, 2025/000403380002.jpg',
+    imageUrls: [
+      '/Photo/Savedher, Koreatown, 2025/000403380002.jpg',
+      '/Photo/Savedher, Koreatown, 2025/000403380004.jpg',
+      '/Photo/Savedher, Koreatown, 2025/000403380005.jpg',
+      '/Photo/Savedher, Koreatown, 2025/000403380006.jpg',
+      '/Photo/Savedher, Koreatown, 2025/000403380007.jpg',
+      '/Photo/Savedher, Koreatown, 2025/000403380012.jpg',
+      '/Photo/Savedher, Koreatown, 2025/000403380016.jpg',
+    ],
+    imageEntries: [
+      { url: '/Photo/Savedher, Koreatown, 2025/000403380002.jpg', wide: false },
+      { url: '/Photo/Savedher, Koreatown, 2025/000403380004.jpg', wide: false },
+      { url: '/Photo/Savedher, Koreatown, 2025/000403380005.jpg', wide: false },
+      { url: '/Photo/Savedher, Koreatown, 2025/000403380006.jpg', wide: false },
+      { url: '/Photo/Savedher, Koreatown, 2025/000403380007.jpg', wide: false },
+      { url: '/Photo/Savedher, Koreatown, 2025/000403380012.jpg', wide: false },
+      { url: '/Photo/Savedher, Koreatown, 2025/000403380016.jpg', wide: false },
+    ],
+    order: 5,
+  },
+  {
     _id: 'local-4',
+    _type: 'project',
     title: 'nuvanydavid.com',
     clientName: 'Nuvany David',
     subtitle: 'Portfolio & Photography',
+    medium: 'web',
     bio: 'Dominican-American photographer whose work explores identity, community, and belonging.',
     stack: ['Next.js', 'React'],
     domain: 'nuvanydavid.com',
@@ -75,22 +152,38 @@ const LOCAL_PROJECTS: Project[] = [
       '/nuvanydavid.com-portfolio-photo-2026/3.png',
     ],
     tags: ['portfolio', 'photo'],
-    order: 3,
+    order: 6,
     year: '2026',
   },
 ]
 
 export default async function Home() {
-  let projects: Project[] = []
+  let items: WorkItem[] = []
   try {
-    projects = await getHomepageProjects()
+    items = await getWorkItems()
   } catch {
     // Sanity not configured yet
   }
 
-  if (projects.length === 0) {
-    projects = LOCAL_PROJECTS
+  if (items.length === 0) {
+    items = LOCAL_WORK_ITEMS
+  } else {
+    const hasPhotos = items.some((item) => item._type === 'photoProject')
+    if (!hasPhotos) {
+      const webItems = items
+      const localPhotos = LOCAL_WORK_ITEMS.filter(
+        (item) => item._type === 'photoProject',
+      )
+      const merged: WorkItem[] = []
+      let wi = 0
+      let pi = 0
+      while (wi < webItems.length || pi < localPhotos.length) {
+        if (wi < webItems.length) merged.push(webItems[wi++])
+        if (pi < localPhotos.length) merged.push(localPhotos[pi++])
+      }
+      items = merged
+    }
   }
 
-  return <HomePage projects={projects} />
+  return <HomePage projects={items} />
 }

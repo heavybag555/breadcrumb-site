@@ -77,6 +77,20 @@ const project = {
       description: 'Year the project was completed',
     },
     {
+      name: 'medium',
+      title: 'Medium',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Web', value: 'web' },
+          { title: 'Photo', value: 'photo' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'web',
+      validation: (Rule: any) => Rule.required(),
+    },
+    {
       name: 'order',
       title: 'Display Order',
       type: 'number',
