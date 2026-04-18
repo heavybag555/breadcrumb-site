@@ -1,5 +1,11 @@
 import { sanityClient } from './client'
-import type { Project, PhotoProject, WorkItem } from './types'
+import type {
+  Project,
+  PhotoProject,
+  WorkItem,
+  Resource,
+  ResourcesByCategory,
+} from './types'
 
 const PROJECT_FIELDS = `
   _id,
@@ -49,4 +55,42 @@ export async function getWorkItems(): Promise<WorkItem[]> {
       _type == "photoProject" => { ${PHOTO_PROJECT_FIELDS} }
     }`
   )
+}
+
+const RESOURCE_FIELDS = `
+  _id,
+  _type,
+  label,
+  url,
+  previewImage,
+  category,
+  order
+`
+
+export async function getResources(): Promise<Resource[]> {
+  const client = sanityClient()
+  return client.fetch<Resource[]>(
+    `*[_type == "resource"] | order(category asc, order asc) { ${RESOURCE_FIELDS} }`
+  )
+}
+
+export async function getResourcesByCategory(): Promise<ResourcesByCategory> {
+  let resources: Resource[] = []
+  try {
+    resources = await getResources()
+  } catch {
+    // Sanity not configured or unreachable — return empty buckets.
+  }
+
+  const buckets: ResourcesByCategory = {
+    learning: [],
+    reading: [],
+    watching: [],
+  }
+  for (const r of resources) {
+    if (r.category && buckets[r.category]) {
+      buckets[r.category].push(r)
+    }
+  }
+  return buckets
 }

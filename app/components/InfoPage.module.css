@@ -216,7 +216,8 @@
 .scopeBlock {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
+  width: 100%;
   margin-bottom: 20px;
 }
 
@@ -226,6 +227,27 @@
 
 .scopeTitle {
   color: #595959;
+}
+
+/* Resources row: fixed 12px between subsection title and link list */
+.scopeTitle:has(+ .mentionList) {
+  margin-block-end: 0;
+}
+
+.scopeTitle + .mentionList {
+  margin-top: 12px;
+}
+
+/* Resources sub-section title with ↗ affordance to the right */
+.resourceScopeTitle {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.resourceTitleArrow {
+  color: #595959;
+  line-height: 1;
 }
 
 /* ── Full-width image inside a column ── */
@@ -240,6 +262,88 @@
 
 .principleNum {
   color: #595959;
+}
+
+/* ── Notion-style mention link ──────────────────────────────
+   Each mention is a row: square thumbnail + label.
+   Rows stack vertically, all aligned flush-left in the column.
+   Grey at rest; black bg + white text on hover. */
+
+.mentionList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+  color: #353535;
+}
+
+.mention {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  align-self: stretch;
+  width: calc(100% + 6px);
+  min-width: 0;
+  padding: 4px 8px 4px 6px;
+  margin-left: -6px;
+  border-radius: 6px;
+  color: #595959;
+  text-decoration: none;
+  background-color: transparent;
+  transition: color var(--dur-m) var(--ease-butter),
+    background-color var(--dur-m) var(--ease-butter);
+}
+
+.mention:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+.mention:hover .mentionLabel {
+  color: #fff;
+}
+
+.mentionThumb {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  aspect-ratio: 1 / 1;
+  border-radius: 3px;
+  overflow: hidden;
+  background-color: #1a1a1a;
+  color: #595959;
+  transition: color var(--dur-m) var(--ease-butter);
+}
+
+/* YouTube (and other) previews are rectangular; crop to a centered square. */
+.mentionThumb img {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+.mention:hover .mentionThumb {
+  color: #fff;
+}
+
+/* Single-line label with CSS ellipsis as a column-aware safety net
+   for any label the JS character cap doesn't already trim. */
+.mentionLabel {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
 }
 
 /* ── Footer ── */

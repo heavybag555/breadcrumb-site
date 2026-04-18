@@ -37,3 +37,21 @@ export interface PhotoProject {
 }
 
 export type WorkItem = Project | PhotoProject
+
+export type ResourceCategory = 'learning' | 'reading' | 'watching'
+
+export interface Resource {
+  _id: string
+  _type: 'resource'
+  label: string
+  url: string
+  previewImage?: string | null
+  category: ResourceCategory
+  order?: number
+}
+
+export interface ResourcesByCategory {
+  learning: Resource[]
+  reading: Resource[]
+  watching: Resource[]
+}

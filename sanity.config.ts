@@ -4,6 +4,7 @@ import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import project from './sanity/schemas/project'
 import photoProject from './sanity/schemas/photoProject'
+import resource from './sanity/schemas/resource'
 
 export default defineConfig({
   name: '2u4u-studio',
@@ -12,5 +13,5 @@ export default defineConfig({
   dataset: 'production',
   basePath: '/studio',
   plugins: [structureTool()],
-  schema: { types: [project, photoProject] },
+  schema: { types: [project, photoProject, resource] },
 })
