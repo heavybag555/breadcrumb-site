@@ -5,6 +5,7 @@ import type {
   WorkItem,
   Resource,
   ResourcesByCategory,
+  Writing,
 } from './types'
 
 const PROJECT_FIELDS = `
@@ -93,4 +94,29 @@ export async function getResourcesByCategory(): Promise<ResourcesByCategory> {
     }
   }
   return buckets
+}
+
+const WRITING_FIELDS = `
+  _id,
+  _type,
+  title,
+  description,
+  "imageUrl": image.asset->url,
+  date,
+  text,
+  order
+`
+
+export async function getWritings(): Promise<Writing[]> {
+  try {
+    const client = sanityClient()
+    return await client.fetch<Writing[]>(
+      `*[_type == "writing"] | order(coalesce(order, 9999) asc, date desc) {
+        ${WRITING_FIELDS}
+      }`
+    )
+  } catch {
+    // Sanity not configured or unreachable — return empty list.
+    return []
+  }
 }

@@ -55,3 +55,29 @@ export interface ResourcesByCategory {
   reading: Resource[]
   watching: Resource[]
 }
+
+export interface WritingBlockChild {
+  _type: 'span'
+  _key?: string
+  text: string
+  marks?: string[]
+}
+
+export interface WritingBlock {
+  _type: 'block'
+  _key?: string
+  style?: string
+  children: WritingBlockChild[]
+  markDefs?: Array<Record<string, unknown>>
+}
+
+export interface Writing {
+  _id: string
+  _type: 'writing'
+  title: string
+  description?: string
+  imageUrl?: string | null
+  date: string
+  text?: WritingBlock[]
+  order?: number
+}

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "tsx scripts/seed-sanity.ts",
-    "seed:resources": "tsx scripts/seed-resources.ts"
+    "seed:resources": "tsx scripts/seed-resources.ts",
+    "seed:writings": "tsx scripts/seed-writings.ts"
   },
   "dependencies": {
     "@mux/mux-video": "^0.30.6",

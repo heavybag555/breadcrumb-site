@@ -8,6 +8,7 @@ import styles from './HeaderNav.module.css'
 const ITEMS = [
   { href: '/', label: 'Work' },
   { href: '/info', label: 'Info' },
+  { href: '/resources', label: 'Resources' },
   { href: '/writing', label: 'Writing' },
 ]
 

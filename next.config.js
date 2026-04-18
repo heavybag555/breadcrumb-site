@@ -5,6 +5,14 @@ const nextConfig = {
   // Avoid picking a parent lockfile as the workspace root (breaks node_modules resolution in Turbopack).
   turbopack: {
     root: path.join(__dirname),
+    // `through2` (pulled in by @sanity/client → get-it) requires 'string_decoder/'
+    // with a trailing slash that Turbopack doesn't resolve. Alias the folder
+    // specifier to the folder of the real package so the Studio bundles
+    // under Turbopack. Turbopack requires both sides to end with '/' when
+    // the key ends with '/'.
+    resolveAlias: {
+      'string_decoder/': 'string_decoder/',
+    },
   },
   reactStrictMode: true,
   images: {

@@ -10,6 +10,14 @@
   padding: 0 200px;
   min-height: 100vh;
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Pushes the footer to the bottom of the viewport on short pages
+   (e.g. /resources) while remaining inert on taller pages. */
+.sections {
+  flex: 1 0 auto;
 }
 
 /* ── Brand — always sticky at top-left ── */
@@ -344,6 +352,370 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-decoration: none;
+}
+
+/* ── Writing rows ─────────────────────────────────────────────
+   Each writing entry is a single clickable row that spans the
+   three content columns (title | description | date). The row
+   inherits the Notion-style mention hover (black bg, white text).
+   The inner cells flex:1 with the same 20px gap as `.infoRow`,
+   so each cell's width matches a single `.col` exactly. */
+
+.writingEntries {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.writingHeader {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  /* No horizontal padding — the button rows below bleed out with negative
+     margin so their inner content sits flush with this container's left
+     edge. Matching that here keeps header labels aligned with the first
+     character of the content in each cell. */
+}
+
+.writingList {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  color: #353535;
+}
+
+.writingRow {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: calc(100% + 24px);
+  margin-left: -12px;
+  padding: 12px;
+  border-radius: 8px;
+  color: #353535;
+  text-decoration: none;
+  text-align: left;
+  background-color: transparent;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+  transition: color var(--dur-m) var(--ease-butter),
+    background-color var(--dur-m) var(--ease-butter);
+}
+
+.writingRow:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+/* Each cell is a block so text flows from the cell's top-left origin,
+   keeping it aligned with the matching header label above. */
+.writingCell {
+  flex: 1 1 0;
+  min-width: 0;
+  display: block;
+}
+
+/* Title: body typography, accent orange — stays orange on row hover.
+   Plus sits inline after the title with 4px spacing. */
+.writingCellTitle {
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
+  color: #ff6700;
+}
+
+.writingTitleText {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.writingTitlePlus {
+  display: inline-block;
+  margin-inline-start: 4px;
+  vertical-align: -0.15em;
+  color: #ff6700;
+}
+
+/* ── Cursor-follow preview image ─────────────────────────────
+   When hovering a writing row that has a preview image, we hide the
+   native cursor and render a 200px-tall image that tracks the mouse.
+   Pointer events are disabled on the image so it never intercepts the
+   hover. Positioning is viewport-fixed (clientX/clientY). */
+
+.writingRowHoverCursor:hover {
+  cursor: none;
+}
+
+.writingHoverImage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 200px;
+  width: auto;
+  max-width: none;
+  pointer-events: none;
+  z-index: 1000;
+  border-radius: 0;
+  /* Anchor the image's top-left near the cursor tip. The `translate3d`
+     already moves it to (clientX, clientY); this nudges it a few pixels
+     down-right so the cursor hotspot isn't covered by the image edge. */
+  margin-top: 12px;
+  margin-left: 12px;
+  will-change: transform;
+}
+
+/* Description fills its column — wraps onto as many lines as needed. */
+.writingCellDesc {
+  display: block;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Dates are short; keep on one line so the column doesn't collapse height. */
+.writingCellDate {
+  display: block;
+  white-space: nowrap;
+}
+
+/* ── Writing lightbox ─────────────────────────────────────────
+   Full-viewport overlay blurs the page behind it; centered black panel. */
+
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  z-index: 2000;
+  padding: 40px 0;
+  animation: lightboxFadeIn var(--dur-m) var(--ease-butter);
+}
+
+@keyframes lightboxFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lightboxPanel {
+  position: relative;
+  /* Full 8-column content width:
+       content_width = 100vw - 2 * page-padding
+     At desktop padding 200px → calc(100vw - 400px). */
+  width: calc(100vw - 400px);
+  max-height: calc(100vh - 80px);
+  /* Hide scroll overflow here so the inner scroll area + absolute-positioned
+     blur fade both respect the 24px rounded corners of the card. */
+  overflow: hidden;
+  background-color: #000;
+  color: #595959;
+  border-radius: 24px;
+  box-sizing: border-box;
+  /* Tighten body-style typography for long-form reading */
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: 22px;
+  letter-spacing: var(--body-ls);
+  animation: lightboxPanelIn var(--dur-l) var(--ease-butter);
+}
+
+/* The actual scroll container. Lives inside the fixed-size panel so the
+   blur fade can sit outside of scroll and stay pinned to the panel edge. */
+.lightboxScroll {
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE / legacy Edge */
+  padding: 48px 0 56px;
+  box-sizing: border-box;
+}
+
+.lightboxScroll::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes lightboxPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Intentionally off-grid: the article text column is a fixed 400px wide,
+   centered inside the 8-col panel. The image below still breaks out to
+   span 6 of the 8 columns — only the reading column ignores the grid. */
+.lightboxArticle {
+  width: 400px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.lightboxTitle {
+  margin: 0 0 20px;
+  font-size: var(--heading-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+  letter-spacing: var(--heading-ls);
+  color: #595959;
+}
+
+.lightboxDescription {
+  margin: 0 0 20px;
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  letter-spacing: var(--body-ls);
+  color: #353535;
+}
+
+.lightboxDate {
+  margin: 0 0 20px;
+  font-size: var(--caption-size);
+  font-weight: var(--caption-weight);
+  line-height: var(--caption-lh);
+  letter-spacing: var(--caption-ls);
+  color: #ff6700;
+}
+
+/* Image breaks out of the 2-col article to span 6 of 8 cols, centered.
+     panel_width = 100vw - 2 * page-padding
+     col_width   = (panel_width - 140) / 8
+     6-col span  = 6 * col_width + 5 * 20px
+                 = 3 * panel_width / 4 - 5px
+   Centering: `margin-left: 50%; translateX(-50%)` pins the image's centre
+   to the article's centre regardless of its wider size. */
+.lightboxImage {
+  display: block;
+  width: calc(3 * (100vw - 400px) / 4 - 5px);
+  max-width: none;
+  height: auto;
+  margin: 0 0 24px 50%;
+  transform: translateX(-50%);
+  border-radius: 24px;
+}
+
+.lightboxHeading {
+  margin: 28px 0 12px;
+  font-size: var(--heading-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+  letter-spacing: var(--heading-ls);
+  color: #595959;
+}
+
+.lightboxPara {
+  margin: 0 0 16px;
+  color: #595959;
+}
+
+.lightboxList {
+  margin: 0 0 16px;
+  padding-left: 20px;
+  color: #595959;
+}
+
+.lightboxListItem {
+  margin: 0 0 8px;
+}
+
+/* Progressive blur anchored to the panel's bottom edge. Lives as a sibling
+   of `.lightboxScroll` inside `.lightboxPanel` — so it's always pinned to
+   the panel rather than moving with scroll. Two stacked blur layers with
+   linearly-increasing strength and staggered gradient masks approximate
+   a true progressive blur (stronger toward the bottom, transparent at top). */
+.lightboxBlurFade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 140px;
+  pointer-events: none;
+  z-index: 2;
+  /* A subtle gradient to solid black helps the text dissolve into the card's
+     lower edge, which flat backdrop blur alone cannot do over a black bg. */
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 92%);
+}
+
+/* Weaker blur layer — fades in earlier (higher up) with a gentler curve. */
+.lightboxBlurFade::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 55%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 55%);
+}
+
+/* Stronger blur layer — fades in lower and reaches full opacity at the edge. */
+.lightboxBlurFade::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 45%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 45%, #000 100%);
+}
+
+@media (max-width: 1200px) {
+  /* page-padding shrinks to 60px on this breakpoint */
+  .lightboxPanel {
+    width: calc(100vw - 120px);
+  }
+  .lightboxImage {
+    width: calc(3 * (100vw - 120px) / 4 - 5px);
+  }
+}
+
+@media (max-width: 900px) {
+  .lightboxOverlay {
+    padding: 24px;
+  }
+
+  .lightboxPanel {
+    width: 100%;
+  }
+
+  .lightboxScroll {
+    padding: 32px 0 40px;
+  }
+
+  .lightboxArticle {
+    width: 100%;
+    max-width: none;
+    padding: 0 24px;
+  }
+
+  /* At mobile we collapse the 6-col break-out back to the article width */
+  .lightboxImage {
+    width: 100%;
+    margin-left: 0;
+    transform: none;
+  }
 }
 
 /* ── Footer ── */
