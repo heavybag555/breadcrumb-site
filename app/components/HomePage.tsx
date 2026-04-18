@@ -167,17 +167,13 @@ function ProjectCard({ project, side = 'right' }: { project: Project | null; sid
 
 function PhotoDetailRow({ photo }: { photo: PhotoProject }) {
   const title = photo.title
-  const location = photo.location ?? ''
-  const year = photo.year ?? ''
+  const medium = photo.medium ?? 'Photo'
 
   return (
     <div className={styles.photoDetailRow}>
-      <p className={styles.detailClientName}>{title}</p>
-      {(location || year) && (
-        <p className={styles.detailTags}>
-          {[location, year].filter(Boolean).join(', ')}
-        </p>
-      )}
+      <span className={styles.photoTriangle} aria-hidden="true" />
+      <p className={styles.detailClientName}>&ldquo;{title}&rdquo;</p>
+      <p className={styles.detailTags}>{medium.charAt(0).toUpperCase() + medium.slice(1)}</p>
     </div>
   )
 }
@@ -483,7 +479,11 @@ export default function HomePage({ projects }: { projects: WorkItem[] }) {
             >
               {isPhoto ? (
                 <>
-                  <PhotoDetailRow photo={item as PhotoProject} />
+                  <div className={styles.photoDetailGrid}>
+                    <div className={styles.photoDetailCol}>
+                      <PhotoDetailRow photo={item as PhotoProject} />
+                    </div>
+                  </div>
                   <PhotoCard photo={item as PhotoProject} photoIndex={currentPhotoIndex} />
                 </>
               ) : (

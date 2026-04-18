@@ -408,15 +408,36 @@
 }
 
 .photoImageWide {
-  grid-column: span 2;
+  grid-column: span 3;
+}
+
+.photoDetailGrid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 20px;
+  width: 100%;
+  padding-bottom: 12px;
+}
+
+.photoDetailCol {
+  grid-column: 7 / 8;
 }
 
 .photoDetailRow {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0 0 24px;
-  width: 100%;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.photoTriangle {
+  width: 0;
+  height: 0;
+  flex-shrink: 0;
+  margin-top: 4px;
+  border-left: 6px solid #595959;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
 }
 
 .detailMedium {
@@ -753,6 +774,14 @@
   }
 
   .projectRowLeft .projectImage {
+    grid-column: 1 / -1;
+  }
+
+  .photoDetailGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .photoDetailCol {
     grid-column: 1 / -1;
   }
 
