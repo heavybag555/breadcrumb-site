@@ -15,7 +15,7 @@
   z-index: 50;
   pointer-events: none;
   opacity: 1;
-  transition: opacity 1.4s var(--ease-butter);
+  transition: opacity var(--dur-xl) var(--ease-butter-soft);
   will-change: opacity;
 }
 
@@ -74,7 +74,7 @@
   letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: #595959;
-  transition: color 1s var(--ease-butter);
+  transition: color var(--dur-l) var(--ease-butter-soft);
 }
 
 .navBtnActive {
@@ -96,8 +96,8 @@
   letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: #FF6700;
-  transition: color 1s var(--ease-butter),
-    opacity 1s var(--ease-butter);
+  transition: color var(--dur-l) var(--ease-butter-soft),
+    opacity var(--dur-l) var(--ease-butter-soft);
 }
 
 .ctaLink:hover {
@@ -106,7 +106,7 @@
 
 .ctaArrow {
   flex-shrink: 0;
-  transition: transform var(--dur-l) var(--ease-butter);
+  transition: transform var(--dur-xl) var(--ease-butter-soft);
   will-change: transform;
 }
 

@@ -499,15 +499,37 @@
   backdrop-filter: blur(10px);
   z-index: 2000;
   padding: 40px 0;
-  animation: lightboxFadeIn var(--dur-m) var(--ease-butter);
+  animation: lightboxFadeIn var(--dur-xl) var(--ease-butter-soft) both;
+  will-change: opacity, backdrop-filter;
+}
+
+.lightboxOverlayClosing {
+  animation: lightboxFadeOut var(--dur-l) var(--ease-butter-in-out) both;
 }
 
 @keyframes lightboxFadeIn {
   from {
     opacity: 0;
+    -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(0px);
   }
   to {
     opacity: 1;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+}
+
+@keyframes lightboxFadeOut {
+  from {
+    opacity: 1;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+  to {
+    opacity: 0;
+    -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(0px);
   }
 }
 
@@ -530,7 +552,12 @@
   font-weight: var(--body-weight);
   line-height: 22px;
   letter-spacing: var(--body-ls);
-  animation: lightboxPanelIn var(--dur-l) var(--ease-butter);
+  animation: lightboxPanelIn var(--dur-xl) var(--ease-butter-soft) both;
+  will-change: transform, opacity;
+}
+
+.lightboxPanelClosing {
+  animation: lightboxPanelOut var(--dur-l) var(--ease-butter-in-out) both;
 }
 
 /* The actual scroll container. Lives inside the fixed-size panel so the
@@ -541,7 +568,7 @@
   overscroll-behavior: contain;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE / legacy Edge */
-  padding: 48px 0 56px;
+  padding: 96px 0 112px;
   box-sizing: border-box;
 }
 
@@ -552,11 +579,22 @@
 @keyframes lightboxPanelIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes lightboxPanelOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px);
   }
 }
 
@@ -701,7 +739,7 @@
   }
 
   .lightboxScroll {
-    padding: 32px 0 40px;
+    padding: 64px 0 80px;
   }
 
   .lightboxArticle {

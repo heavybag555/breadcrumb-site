@@ -1,8 +1,15 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import styles from './InfoPage.module.css'
 import type { WritingBlock, WritingEntry } from './WritingPage'
+
+/**
+ * Duration for the lightbox closing animation. Kept in sync with the
+ * `lightboxFadeOut` / `lightboxPanelOut` keyframes in `InfoPage.module.css`
+ * so the unmount lands exactly when the animation finishes.
+ */
+const CLOSE_DURATION_MS = 1800
 
 function formatDate(raw: string): string {
   // `YYYY-MM-DD` from Sanity → "MM DD YY" (e.g. "04 18 26"). Matches
@@ -83,9 +90,20 @@ export default function WritingLightbox({
   entry: WritingEntry
   onClose: () => void
 }) {
+  const [closing, setClosing] = useState(false)
+  const timerRef = useRef<number | null>(null)
+
+  const requestClose = useCallback(() => {
+    setClosing((prev) => {
+      if (prev) return prev
+      timerRef.current = window.setTimeout(onClose, CLOSE_DURATION_MS)
+      return true
+    })
+  }, [onClose])
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') requestClose()
     }
     document.addEventListener('keydown', onKey)
     // Lock body scroll while the lightbox is open.
@@ -94,17 +112,18 @@ export default function WritingLightbox({
     return () => {
       document.removeEventListener('keydown', onKey)
       document.body.style.overflow = prevOverflow
+      if (timerRef.current !== null) clearTimeout(timerRef.current)
     }
-  }, [onClose])
+  }, [requestClose])
 
   return (
     <div
-      className={styles.lightboxOverlay}
-      onClick={onClose}
+      className={`${styles.lightboxOverlay} ${closing ? styles.lightboxOverlayClosing : ''}`}
+      onClick={requestClose}
       role="presentation"
     >
       <div
-        className={styles.lightboxPanel}
+        className={`${styles.lightboxPanel} ${closing ? styles.lightboxPanelClosing : ''}`}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"

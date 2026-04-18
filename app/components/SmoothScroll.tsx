@@ -21,12 +21,13 @@ export default function SmoothScroll() {
     const mqCoarse = window.matchMedia('(pointer: coarse)')
     if (mqReduced.matches || mqCoarse.matches) return
 
-    // Heaviness: lower = heavier / longer glide. 0.04 feels very
-    // weighted — the page keeps drifting after the wheel stops.
-    const LERP = 0.04
-    // Scale wheel delta. Kept <1 so a single wheel notch doesn't
-    // overshoot the long glide and the motion stays cinematic.
-    const WHEEL_MULT = 0.7
+    // Heaviness: lower = heavier / longer glide. 0.03 drifts for
+    // nearly a full second after the wheel stops — deliberately
+    // cinematic, matches the long CSS easing on hovers.
+    const LERP = 0.03
+    // Scale wheel delta. Kept well below 1 so a single wheel notch
+    // doesn't overshoot the long glide and the motion stays heavy.
+    const WHEEL_MULT = 0.6
     // Stop ticking once we're within half a pixel of the target.
     const EPSILON = 0.5
 

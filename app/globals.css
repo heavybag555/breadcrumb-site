@@ -55,12 +55,22 @@
 
   /* Motion — heavy, natural buttery easing.
      Curve is a deep ease-out (expo/quint) so interactions feel
-     weighted on the way in and drift to rest without bouncing. */
+     weighted on the way in and drift to rest without bouncing.
+     Durations err on the long side: hovers, overlays, and page
+     transitions should feel slow and deliberate. */
   --ease-butter: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-butter-in-out: cubic-bezier(0.76, 0, 0.24, 1);
-  --dur-s: 360ms;
-  --dur-m: 560ms;
-  --dur-l: 780ms;
+  --ease-butter-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-xs: 420ms;
+  --dur-s: 760ms;
+  --dur-m: 1200ms;
+  --dur-l: 1800ms;
+  --dur-xl: 2400ms;
+
+  /* Dedicated timings for page-level fades so the interceptor and
+     CSS stay in sync without grep-hunting. */
+  --page-fade-out: 900ms;
+  --page-fade-in: 1800ms;
 }
 
 /* ── Reset ── */
@@ -97,8 +107,13 @@ body {
 a {
   color: inherit;
   text-decoration: none;
-  transition: color var(--dur-m) var(--ease-butter),
-    opacity var(--dur-m) var(--ease-butter);
+  transition:
+    color var(--dur-m) var(--ease-butter),
+    opacity var(--dur-m) var(--ease-butter),
+    background-color var(--dur-m) var(--ease-butter),
+    border-color var(--dur-m) var(--ease-butter),
+    transform var(--dur-l) var(--ease-butter),
+    filter var(--dur-l) var(--ease-butter);
 }
 
 button {
@@ -107,14 +122,40 @@ button {
   background: none;
   border: none;
   cursor: pointer;
-  transition: color var(--dur-m) var(--ease-butter),
+  transition:
+    color var(--dur-m) var(--ease-butter),
     opacity var(--dur-m) var(--ease-butter),
-    background-color var(--dur-m) var(--ease-butter);
+    background-color var(--dur-m) var(--ease-butter),
+    border-color var(--dur-m) var(--ease-butter),
+    transform var(--dur-l) var(--ease-butter),
+    filter var(--dur-l) var(--ease-butter);
 }
 
 img {
   display: block;
   max-width: 100%;
+}
+
+/* ── Page transition ──
+   Pure opacity crossfade driven by a pathname-keyed wrapper and the
+   PageTransition client component. On link click the wrapper fades
+   out at `--page-fade-out`; once navigation commits, the new page
+   fades in at the slower `--page-fade-in`. No transform / filter so
+   the homepage's `mix-blend-mode: exclusion` keeps working the moment
+   the transition ends (opacity: 1 releases the transient stacking
+   context the browser creates while opacity is animating). */
+
+.pageTransition {
+  opacity: 1;
+  transition-property: opacity;
+  transition-timing-function: var(--ease-butter-soft);
+  transition-duration: var(--page-fade-in);
+}
+
+.pageTransitionHidden {
+  opacity: 0;
+  transition-duration: var(--page-fade-out);
+  transition-timing-function: var(--ease-butter-in-out);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -340,8 +340,8 @@
   overflow: hidden;
   position: relative;
   border-radius: 8px;
-  transition: opacity var(--dur-l) var(--ease-butter),
-    filter var(--dur-l) var(--ease-butter);
+  transition: opacity var(--dur-xl) var(--ease-butter-soft),
+    filter var(--dur-xl) var(--ease-butter-soft);
   will-change: opacity, filter;
 }
 
@@ -387,8 +387,8 @@
   overflow: hidden;
   position: relative;
   border-radius: 0;
-  transition: opacity var(--dur-l) var(--ease-butter),
-    filter var(--dur-l) var(--ease-butter);
+  transition: opacity var(--dur-xl) var(--ease-butter-soft),
+    filter var(--dur-xl) var(--ease-butter-soft);
   will-change: opacity, filter;
 }
 

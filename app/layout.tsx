@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import SmoothScroll from './components/SmoothScroll'
 import HeaderNav from './components/HeaderNav'
+import PageTransition from './components/PageTransition'
 
 export const metadata: Metadata = {
   title: '2U4U Studio',
@@ -22,7 +23,7 @@ export default function RootLayout({
       <body>
         <SmoothScroll />
         <HeaderNav />
-        {children}
+        <PageTransition>{children}</PageTransition>
       </body>
     </html>
   )
