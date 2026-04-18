@@ -78,8 +78,10 @@ function measureParagraphOffsets(
 
 function ProjectDetailRow({ project }: { project: Project }) {
   const clientName = project.clientName || project.title
-  const tags = project.tags ?? []
-  const year = project.year ?? ''
+  const mediumRaw = project.medium ?? ''
+  const mediumLabel = mediumRaw
+    ? mediumRaw.charAt(0).toUpperCase() + mediumRaw.slice(1)
+    : ''
   const process = project.process ?? ''
   const stack = project.stack ?? []
   const domain = project.domain ?? ''
@@ -88,12 +90,12 @@ function ProjectDetailRow({ project }: { project: Project }) {
   return (
     <div className={styles.detailRow}>
       <div className={styles.detailCol}>
-        <p className={styles.detailClientName}>{clientName}</p>
-        {(tags.length > 0 || year) && (
-          <p className={styles.detailTags}>
-            {[...tags, ...(year ? [year] : [])].join(', ')}
-          </p>
-        )}
+        <h1 className={styles.detailProjectHeading}>
+          <span className={styles.detailClientName}>{clientName}</span>
+          {mediumLabel && (
+            <span className={styles.detailTags}>{mediumLabel}</span>
+          )}
+        </h1>
       </div>
       <div className={styles.detailCol}>
         {process && <p className={styles.detailBody}>{process}</p>}
