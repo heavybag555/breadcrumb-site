@@ -1,6 +1,6 @@
 'use client'
 
-import Image from 'next/image'
+import FadeImage from './FadeImage'
 import styles from './ProjectGrid.module.css'
 
 export interface ProjectSlot {
@@ -50,7 +50,7 @@ export default function ProjectGrid({ slots, columns = 2 }: ProjectGridProps) {
             >
               <div className={styles.thumbnail}>
                 {slot.imageUrl ? (
-                  <Image
+                  <FadeImage
                     src={slot.imageUrl}
                     alt={slot.title}
                     width={800}

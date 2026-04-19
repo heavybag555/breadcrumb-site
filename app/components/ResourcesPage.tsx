@@ -1,6 +1,7 @@
 'use client'
 
 import styles from './InfoPage.module.css'
+import FadeImage from './FadeImage'
 import type { Resource, ResourcesByCategory } from '@/sanity/types'
 
 const EMPTY_RESOURCES: ResourcesByCategory = {
@@ -36,7 +37,7 @@ function ResourceMention({ resource }: { resource: Resource }) {
     >
       <span className={styles.mentionThumb} aria-hidden="true">
         {preview ? (
-          <img src={preview} alt="" loading="lazy" />
+          <FadeImage src={preview} alt="" loading="lazy" />
         ) : (
           <svg
             width="14"

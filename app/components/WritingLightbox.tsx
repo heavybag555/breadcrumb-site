@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import styles from './InfoPage.module.css'
+import FadeImage from './FadeImage'
 import type { WritingBlock, WritingEntry } from './WritingPage'
 
 /**
@@ -137,7 +138,7 @@ export default function WritingLightbox({
             ) : null}
             <p className={styles.lightboxDate}>{formatDate(entry.date)}</p>
             {entry.imageUrl ? (
-              <img
+              <FadeImage
                 className={styles.lightboxImage}
                 src={entry.imageUrl}
                 alt={entry.title}

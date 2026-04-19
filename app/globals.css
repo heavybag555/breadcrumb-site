@@ -140,6 +140,23 @@ img {
   max-width: 100%;
 }
 
+/* ── Image fade-in ──
+   Images opt in by rendering `<FadeImage>` (or by setting the
+   `data-fade` attribute directly). They start at opacity 0 and
+   ease to 1 once the source has loaded. No transform, scale, or
+   slide — pure opacity to keep sticky positions and mix-blend
+   contexts undisturbed. `prefers-reduced-motion` is handled by
+   the global override below. */
+
+img[data-fade] {
+  opacity: 0;
+  transition: opacity var(--dur-m) var(--ease-butter-soft);
+}
+
+img[data-fade][data-loaded='true'] {
+  opacity: 1;
+}
+
 /* ── Page transition ──
    Pure opacity crossfade driven by a pathname-keyed wrapper and the
    PageTransition client component. On link click the wrapper fades

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import styles from './HomePage.module.css'
+import FadeImage from './FadeImage'
 import type { Project, PhotoProject, WorkItem } from '@/sanity/types'
 
 const STICKY_LINES = [
@@ -187,7 +188,7 @@ function ProjectCard({ project, side = 'right' }: { project: Project | null; sid
     <div className={rowClass} suppressHydrationWarning>
       {isLeft && <div className={styles.projectDetailsLeft}>{detailsContent}</div>}
       <a href={href} className={styles.projectImage} target="_blank" rel="noopener noreferrer">
-        {imageUrl && <img src={imageUrl} alt={title} loading="lazy" />}
+        {imageUrl && <FadeImage src={imageUrl} alt={title} loading="lazy" />}
       </a>
       {!isLeft && <div className={styles.projectDetails}>{detailsContent}</div>}
     </div>
@@ -227,12 +228,12 @@ function PhotoCard({ photo, photoIndex }: { photo: PhotoProject; photoIndex: num
     <div className={styles.photoRow}>
       {first.url && (
         <div className={`${styles.photoImage} ${first.wide ? styles.photoImageWide : styles.photoImageStandard}`}>
-          <img src={first.url} alt={`${title} — 1`} loading="lazy" />
+          <FadeImage src={first.url} alt={`${title} — 1`} loading="lazy" />
         </div>
       )}
       {second.url && (
         <div className={`${styles.photoImage} ${second.wide ? styles.photoImageWide : styles.photoImageStandard}`}>
-          <img src={second.url} alt={`${title} — 2`} loading="lazy" />
+          <FadeImage src={second.url} alt={`${title} — 2`} loading="lazy" />
         </div>
       )}
     </div>
@@ -468,7 +469,7 @@ export default function HomePage({ projects }: { projects: WorkItem[] }) {
         <span ref={spanRefs[1]} className={styles.assemblySpan}>
           Founded by{' '}
           <span className={styles.assemblyMuted}>Benjamin Uribe</span>{' '}
-          <img src="/images/benuribe.jpg" alt="Benjamin Uribe" className={styles.profilePic} />
+          <FadeImage src="/images/benuribe.jpg" alt="Benjamin Uribe" className={styles.profilePic} />
           {', the studio works across development, design, art direction, and image. Recent projects include: '}
           <a
             href="https://daniel-derro.com"
@@ -505,7 +506,7 @@ export default function HomePage({ projects }: { projects: WorkItem[] }) {
       <div ref={floatRefs[1]} className={styles.float}>
         Founded by{' '}
         <span className={styles.assemblyMuted}>Benjamin Uribe</span>{' '}
-        <img src="/images/benuribe.jpg" alt="Benjamin Uribe" className={styles.profilePic} />
+        <FadeImage src="/images/benuribe.jpg" alt="Benjamin Uribe" className={styles.profilePic} />
         {', the studio works across development, design, art direction, and image. Recent projects include: '}
         <a
           href="https://daniel-derro.com"

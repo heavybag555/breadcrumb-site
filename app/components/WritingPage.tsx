@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import styles from './InfoPage.module.css'
+import FadeImage from './FadeImage'
 import WritingLightbox from './WritingLightbox'
 
 /* ── Portable Text shapes we accept from Sanity ──
@@ -166,7 +167,7 @@ function WritingRow({
     <>
       {Row}
       {preview && hoverPos ? (
-        <img
+        <FadeImage
           className={styles.writingHoverImage}
           src={preview}
           alt=""
