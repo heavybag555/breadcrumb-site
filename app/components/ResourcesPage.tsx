@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import styles from './InfoPage.module.css'
 import FadeImage from './FadeImage'
 import type { Resource, ResourcesByCategory } from '@/sanity/types'
@@ -102,7 +103,11 @@ export default function ResourcesPage({
   return (
     <main className={styles.page}>
       {/* ── Brand: always sticky at top-left ── */}
-      <p className={styles.brand}>2u4u Studio</p>
+      <p className={styles.brand}>
+        <Link href="/" aria-label="2u4u Studio — home">
+          2u4u Studio
+        </Link>
+      </p>
 
       {/* ── Resources sections ── */}
       <div className={styles.sections}>

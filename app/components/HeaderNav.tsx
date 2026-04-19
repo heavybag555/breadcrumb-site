@@ -7,7 +7,7 @@ import NavButtons from './NavButtons'
 import styles from './HeaderNav.module.css'
 
 const ITEMS = [
-  { href: '/', label: 'Work' },
+  { href: '/#work', label: 'Work' },
   { href: '/info', label: 'Info' },
   { href: '/resources', label: 'Resources' },
   { href: '/writing', label: 'Writing' },
@@ -62,9 +62,11 @@ export default function HeaderNav() {
   }, [menuOpen])
 
   const activeHref = (() => {
-    if (pathname === '/') return '/'
-    const match = ITEMS.find((i) => i.href !== '/' && pathname.startsWith(i.href))
-    return match?.href ?? '/'
+    if (pathname === '/') return '/#work'
+    const match = ITEMS.find(
+      (i) => !i.href.startsWith('/#') && pathname.startsWith(i.href),
+    )
+    return match?.href ?? '/#work'
   })()
 
   const closeMobile = useCallback(() => setMenuOpen(false), [])

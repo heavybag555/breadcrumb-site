@@ -44,6 +44,7 @@ export default function PageTransition({
   const [reduced, setReduced] = useState(false)
 
   const pendingHrefRef = useRef<string | null>(null)
+  const pendingHashRef = useRef<string | null>(null)
   const fadeOutTimerRef = useRef<number | null>(null)
   const fadeInTimerRef = useRef<number | null>(null)
   const lastCommittedPathRef = useRef<string>(pathname)
@@ -128,6 +129,28 @@ export default function PageTransition({
         return
       }
 
+      // Same-page hash jump (e.g. "/#work" while already on "/").
+      // Skip the page fade and smoothly scroll to the target so the
+      // viewer keeps their current context instead of blinking out.
+      if (
+        url.pathname === window.location.pathname &&
+        url.search === window.location.search &&
+        url.hash &&
+        url.hash !== window.location.hash
+      ) {
+        e.preventDefault()
+        const hash = url.hash
+        const targetId = decodeURIComponent(hash.slice(1))
+        const target = targetId ? document.getElementById(targetId) : null
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+        if (typeof window.history?.pushState === 'function') {
+          window.history.pushState(null, '', hash)
+        }
+        return
+      }
+
       e.preventDefault()
 
       // Ignore while we're already transitioning out.
@@ -135,6 +158,7 @@ export default function PageTransition({
 
       const dest = url.pathname + url.search + url.hash
       pendingHrefRef.current = dest
+      pendingHashRef.current = url.hash || null
 
       setVisible(false)
 
@@ -154,18 +178,37 @@ export default function PageTransition({
   }, [reduced, router])
 
   // When the pathname actually changes (post `router.push`), scroll
-  // to the top and schedule a fade back in.
+  // to the top (or to the hash target, if one was requested) and
+  // schedule a fade back in.
   useEffect(() => {
     if (pathname === lastCommittedPathRef.current) return
     lastCommittedPathRef.current = pathname
     pendingHrefRef.current = null
 
+    const hash = pendingHashRef.current
+    pendingHashRef.current = null
+
+    const scrollToHashTarget = () => {
+      if (!hash) return false
+      const targetId = decodeURIComponent(hash.slice(1))
+      if (!targetId) return false
+      const target = document.getElementById(targetId)
+      if (!target) return false
+      // Jump without animation — the new page is still fading in,
+      // so a smooth scroll on top of that reads as jittery.
+      target.scrollIntoView({ behavior: 'auto', block: 'start' })
+      return true
+    }
+
     if (reduced) {
+      if (!scrollToHashTarget()) window.scrollTo(0, 0)
       setVisible(true)
       return
     }
 
-    window.scrollTo(0, 0)
+    if (!scrollToHashTarget()) {
+      window.scrollTo(0, 0)
+    }
 
     if (fadeInTimerRef.current !== null) clearTimeout(fadeInTimerRef.current)
     fadeInTimerRef.current = window.setTimeout(() => {

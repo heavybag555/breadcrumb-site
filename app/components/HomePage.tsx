@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useRef } from 'react'
 import styles from './HomePage.module.css'
 import FadeImage from './FadeImage'
@@ -450,7 +451,9 @@ export default function HomePage({ projects }: { projects: WorkItem[] }) {
     >
       {/* ── Brand: always sticky at top-left ── */}
       <p ref={brandRef} className={styles.brand}>
-        2u4u Studio.
+        <Link href="/" aria-label="2u4u Studio — home">
+          2u4u Studio.
+        </Link>
       </p>
 
       {/* ── Assembly paragraph: sticky merged view ── */}
@@ -543,6 +546,7 @@ export default function HomePage({ projects }: { projects: WorkItem[] }) {
             <div
               key={item._id}
               ref={i === 0 ? firstContentRef : undefined}
+              id={i === 0 ? 'work' : undefined}
               className={i === 0 ? styles.contentSection : styles.projectRowSpacing}
             >
               {isPhoto ? (

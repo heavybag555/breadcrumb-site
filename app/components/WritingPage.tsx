@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import styles from './InfoPage.module.css'
 import FadeImage from './FadeImage'
@@ -191,7 +192,11 @@ export default function WritingPage({
   return (
     <main className={styles.page}>
       {/* ── Brand: always sticky at top-left ── */}
-      <p className={styles.brand}>2u4u Studio</p>
+      <p className={styles.brand}>
+        <Link href="/" aria-label="2u4u Studio — home">
+          2u4u Studio
+        </Link>
+      </p>
 
       {/* ── Writing sections ── */}
       <div className={styles.sections}>
