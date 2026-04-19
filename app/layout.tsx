@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import SmoothScroll from './components/SmoothScroll'
 import HeaderNav from './components/HeaderNav'
 import PageTransition from './components/PageTransition'
 
@@ -21,7 +20,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SmoothScroll />
         <HeaderNav />
         <PageTransition>{children}</PageTransition>
       </body>

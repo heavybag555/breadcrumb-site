@@ -175,7 +175,7 @@
   align-items: flex-start;
   padding: 20px 0;
   width: 100%;
-  border-top: 1px solid #353535;
+  border-top: 1px solid rgba(53, 53, 53, 0.2);
 }
 
 .col {
@@ -483,6 +483,15 @@
 .writingCellDate {
   display: block;
   white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  /* Hide the Date column entirely on mobile: both the row cell and
+     the matching "Date" header label (last child in .writingHeader). */
+  .writingCellDate,
+  .writingHeader > .writingCell:last-child {
+    display: none;
+  }
 }
 
 /* ── Writing lightbox ─────────────────────────────────────────
@@ -876,26 +885,70 @@
     width: 100%;
   }
 
+  /* Tighter gap between the Title/Description header row and
+     the list of story buttons below it on mobile. */
+  .writingEntries {
+    gap: 4px;
+  }
+
+  /* Same 4px gap between each resources sub-section title
+     (Learning / Reading / Watching) and its list of mentions. */
+  .scopeTitle + .mentionList {
+    margin-top: 4px;
+  }
+
+  /* Mobile: promote the page/section title (.rowLabel) to white and
+     adopt heading type scale so it reads as the primary heading on
+     Info, Writing, and Resources. */
+  .rowLabel {
+    color: #ffffff;
+    font-size: var(--heading-size);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-lh);
+    letter-spacing: var(--heading-ls);
+  }
+
+  /* Resources page mobile layout.
+     Row 1: full-width "Resources" label.
+     Row 2: Learning | Reading (side by side).
+     Row 3: Watching   (left column only). */
+  .resourcesRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+  }
+
+  .resourcesLabelCol {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .resourcesListCol {
+    flex: initial;
+    width: auto;
+    grid-column: auto;
+  }
+
+  /* Mobile footer: domain on the left, year on the right.
+     Tagline column is hidden entirely. */
   .footer {
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     height: auto;
     padding: 4px 24px;
     margin-left: -24px;
     width: calc(100% + 48px);
-    gap: 32px;
+    gap: 20px;
   }
 
   .footerColCenter {
-    align-items: flex-start;
+    display: none;
   }
 
   .footerColRight {
-    align-items: flex-start;
+    align-items: flex-end;
     padding-right: 0;
-  }
-
-  .footerCenter {
-    text-align: left;
-    white-space: normal;
   }
 }

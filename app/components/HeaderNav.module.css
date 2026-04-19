@@ -33,6 +33,14 @@
   gap: 4px;
 }
 
+/* ── Desktop nav group (hidden ≤900px) ── */
+
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .navButtons {
   position: relative;
   display: flex;
@@ -114,6 +122,118 @@
   transform: translate(3px, -3px);
 }
 
+/* ── Mobile toggle (hidden >900px) ──
+   24px glyphs inside a black circle; 6px padding (36px total).
+   On mobile, .nav is exactly one heading line tall so the control
+   centers on the same band as "2u4u Studio.". ─────────────── */
+
+.mobileToggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  border-radius: 50%;
+  background-color: #000;
+  color: #595959;
+  transition: opacity var(--dur-l) var(--ease-butter-soft);
+}
+
+.mobileToggle svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transition: opacity var(--dur-s) var(--ease-butter-soft),
+    transform var(--dur-s) var(--ease-butter-soft);
+  will-change: opacity, transform;
+}
+
+.toggleIconPlus {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.toggleIconXmark {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+.mobileToggleOpen .toggleIconPlus {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+.mobileToggleOpen .toggleIconXmark {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.mobileToggle:hover {
+  opacity: 0.85;
+}
+
+/* ── Mobile fullscreen overlay (hidden >900px) ── */
+
+.mobileOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #0e0e0e;
+  padding: 100px 24px 40px;
+  flex-direction: column;
+  gap: 0;
+  z-index: 49;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--dur-m) var(--ease-butter-soft),
+    visibility 0s linear var(--dur-m);
+}
+
+.mobileOverlayOpen {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity var(--dur-m) var(--ease-butter-soft),
+    visibility 0s;
+}
+
+.mobileLink {
+  font-size: var(--heading-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+  letter-spacing: var(--heading-ls);
+  color: #595959;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color var(--dur-l) var(--ease-butter-soft);
+}
+
+.mobileLinkActive {
+  color: #595959;
+}
+
+.mobileLink:hover,
+.mobileLink:focus-visible {
+  color: #fff;
+}
+
+.mobileLinkConnect {
+  color: #FF6700;
+}
+
+.mobileLinkConnect:hover,
+.mobileLinkConnect:focus-visible {
+  color: #FF6700;
+  opacity: 0.7;
+}
+
+/* ── Responsive ── */
+
 @media (max-width: 1200px) {
   .navOverlay {
     left: 60px;
@@ -131,7 +251,26 @@
     right: 24px;
   }
 
+  /* Same vertical band as .brand first line (sticky top + padding
+     align with overlay; height = line-height centers the icon). */
   .nav {
     width: 100%;
+    height: var(--heading-lh);
+    align-items: center;
+    overflow: visible;
+  }
+
+  .desktopNav {
+    display: none;
+  }
+
+  .mobileToggle {
+    display: flex;
+    margin-top: 0;
+    flex-shrink: 0;
+  }
+
+  .mobileOverlay {
+    display: flex;
   }
 }

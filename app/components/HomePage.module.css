@@ -182,6 +182,16 @@
   color: #808080;
 }
 
+.assemblyDomain {
+  color: #808080;
+  text-decoration: none;
+  transition: color var(--dur-s) var(--ease-butter);
+}
+
+.assemblyDomain:hover {
+  color: #ffffff;
+}
+
 .profilePic {
   display: inline;
   width: var(--heading-size);
@@ -203,7 +213,11 @@
   line-height: var(--heading-lh);
   letter-spacing: var(--heading-ls);
   color: #ffffff;
-  margin-top: 400px;
+  /* Tuned so float[1]'s natural position sits near the bottom of
+     the first viewport at scroll=0 (brand + both floats + both
+     margins ≈ 100vh). 40vh accounts for ~216px of fixed content
+     (brand + two ~78px floats) at common viewport sizes. */
+  margin-top: 40vh;
   z-index: 30;
   width: 50%;
   mix-blend-mode: exclusion;
@@ -546,7 +560,7 @@
   align-items: flex-start;
   padding: 20px 0;
   width: 100%;
-  border-top: 1px solid #353535;
+  border-top: 1px solid rgba(53, 53, 53, 0.2);
   margin-bottom: 24px;
 }
 
@@ -650,6 +664,12 @@
   transform: translate(3px, -3px);
 }
 
+/* Mobile-only variant rendered under the bio; hidden on desktop
+   where the domain is shown in the 4-col detail row instead. */
+.detailDomainMobile {
+  display: none;
+}
+
 /* ── Footer ── */
 
 .footer {
@@ -724,7 +744,7 @@
   }
 
   .float {
-    margin-top: 240px;
+    margin-top: 40vh;
   }
 
   .contentSection {
@@ -765,7 +785,10 @@
   }
 
   .float {
-    margin-top: 160px;
+    /* Slightly tighter on mobile because floats wrap to more
+       lines (wider relative width → taller), so less margin is
+       needed to land float[1] near the viewport bottom. */
+    margin-top: 32vh;
     width: 100%;
   }
 
@@ -817,13 +840,51 @@
     grid-column: 1 / -1;
   }
 
+  /* Mobile: 2 columns.
+     Left column (col 1) = title + medium, top-aligned.
+     Right column (col 2) = process / stack stacked with 0 gap.
+     Domain link moves out of the top row and is rendered under
+     the bio below the image — see .detailDomainMobile. */
   .detailRow {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Explicit: 0 between process/stack rows; 20 between columns */
+    gap: 0 20px;
+    align-items: start;
   }
 
   .detailCol {
-    flex: 0 0 auto;
-    width: 100%;
+    flex: initial;
+    width: auto;
+    grid-column: 2;
+  }
+
+  .detailRow > .detailCol:first-child {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .detailColDomain {
+    display: none;
+  }
+
+  .detailDomainMobile {
+    display: inline-flex;
+  }
+
+  /* Bio always renders below the image on mobile, regardless of
+     the desktop left/right alternation. */
+  .projectImage {
+    order: 1;
+  }
+
+  .projectDetails,
+  .projectDetailsLeft {
+    order: 2;
+  }
+
+  .projectMeta {
+    gap: 20px;
   }
 
   .infoPanel {
@@ -835,26 +896,25 @@
     width: 100%;
   }
 
+  /* Mobile footer: domain on the left, year on the right.
+     Tagline column is hidden entirely. */
   .footer {
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     height: auto;
     padding: 4px 24px;
     margin-left: -24px;
     width: calc(100% + 48px);
-    gap: 32px;
+    gap: 20px;
   }
 
   .footerColCenter {
-    align-items: flex-start;
+    display: none;
   }
 
   .footerColRight {
-    align-items: flex-start;
+    align-items: flex-end;
     padding-right: 0;
-  }
-
-  .footerCenter {
-    text-align: left;
-    white-space: normal;
   }
 }

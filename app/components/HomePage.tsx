@@ -6,7 +6,7 @@ import type { Project, PhotoProject, WorkItem } from '@/sanity/types'
 
 const STICKY_LINES = [
   'A web, interaction, and photography practice based in Los Angeles.',
-  'Founded by Benjamin Uribe, the studio works across development, design, art direction, and photography — under one roof, one voice, one standard of care.',
+  'Founded by Benjamin Uribe, the studio works across development, design, art direction, and image. Recent projects include: daniel-derro.com and broosk.online.',
 ]
 
 /**
@@ -146,11 +146,40 @@ function ProjectCard({ project, side = 'right' }: { project: Project | null; sid
   const isLeft = side === 'left'
   const rowClass = `${styles.projectRow} ${isLeft ? styles.projectRowLeft : ''}`
 
+  const domain = project?.domain ?? ''
+
   const detailsContent = (
     <div className={styles.projectMeta}>
       <p className={styles.projectProcess}>
         {project?.bio || 'Write a short bio for this project here.'}
       </p>
+      {domain && (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${styles.detailDomain} ${styles.detailDomainMobile}`}
+        >
+          {domain}
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            className={styles.detailDomainArrow}
+          >
+            <path
+              d="M3 11L11 3M11 3H4.5M11 3V9.5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </a>
+      )}
     </div>
   )
 
@@ -440,7 +469,25 @@ export default function HomePage({ projects }: { projects: WorkItem[] }) {
           Founded by{' '}
           <span className={styles.assemblyMuted}>Benjamin Uribe</span>{' '}
           <img src="/images/benuribe.jpg" alt="Benjamin Uribe" className={styles.profilePic} />
-          {', the studio works across development, design, art direction, and photography — under one roof, one voice, one standard of care.'}
+          {', the studio works across development, design, art direction, and image. Recent projects include: '}
+          <a
+            href="https://daniel-derro.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.assemblyDomain}
+          >
+            daniel-derro.com
+          </a>
+          {' and '}
+          <a
+            href="https://broosk.online"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.assemblyDomain}
+          >
+            broosk.online
+          </a>
+          {'.'}
         </span>
       </div>
 
@@ -459,7 +506,25 @@ export default function HomePage({ projects }: { projects: WorkItem[] }) {
         Founded by{' '}
         <span className={styles.assemblyMuted}>Benjamin Uribe</span>{' '}
         <img src="/images/benuribe.jpg" alt="Benjamin Uribe" className={styles.profilePic} />
-        {', the studio works across development, design, art direction, and photography — under one roof, one voice, one standard of care.'}
+        {', the studio works across development, design, art direction, and image. Recent projects include: '}
+        <a
+          href="https://daniel-derro.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.assemblyDomain}
+        >
+          daniel-derro.com
+        </a>
+        {' and '}
+        <a
+          href="https://broosk.online"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.assemblyDomain}
+        >
+          broosk.online
+        </a>
+        {'.'}
       </div>
 
       {/* ── Work: detail row + image card per project ── */}

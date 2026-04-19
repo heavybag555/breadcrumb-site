@@ -105,17 +105,17 @@ export default function ResourcesPage({
 
       {/* ── Resources sections ── */}
       <div className={styles.sections}>
-        <div className={styles.infoRow}>
-          <div className={styles.col}>
+        <div className={`${styles.infoRow} ${styles.resourcesRow}`}>
+          <div className={`${styles.col} ${styles.resourcesLabelCol}`}>
             <p className={styles.rowLabel}>Resources</p>
           </div>
-          <div className={styles.col}>
+          <div className={`${styles.col} ${styles.resourcesListCol}`}>
             <ResourceMentionList title="Learning" items={resources.learning} />
           </div>
-          <div className={styles.col}>
+          <div className={`${styles.col} ${styles.resourcesListCol}`}>
             <ResourceMentionList title="Reading" items={resources.reading} />
           </div>
-          <div className={styles.col}>
+          <div className={`${styles.col} ${styles.resourcesListCol}`}>
             <ResourceMentionList title="Watching" items={resources.watching} />
           </div>
         </div>
