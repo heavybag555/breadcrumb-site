@@ -2,6 +2,8 @@ import { getWorkItems } from '@/sanity/queries'
 import type { Project, PhotoProject, WorkItem } from '@/sanity/types'
 import HomePage from './components/HomePage'
 
+export const revalidate = 60
+
 const LOCAL_WORK_ITEMS: WorkItem[] = [
   {
     _id: 'local-1',

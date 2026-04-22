@@ -4,6 +4,8 @@ import WritingPage, {
   type WritingEntry,
 } from '../components/WritingPage'
 
+export const revalidate = 60
+
 export default async function Writing() {
   const writings = await getWritings()
 
