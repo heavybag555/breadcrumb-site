@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import { staggerEnter } from '@/app/lib/staggerEnter'
 import styles from './InfoPage.module.css'
 import FadeImage from './FadeImage'
 import WritingLightbox from './WritingLightbox'
@@ -56,9 +57,11 @@ function hasBody(entry: WritingEntry): boolean {
 function WritingRow({
   entry,
   onOpen,
+  stagger,
 }: {
   entry: WritingEntry
   onOpen: (entry: WritingEntry) => void
+  stagger: number
 }) {
   const preview = entry.imageUrl
   const [hoverPos, setHoverPos] = useState<{ x: number; y: number } | null>(
@@ -120,7 +123,8 @@ function WritingRow({
     </>
   )
 
-  const rowClass = `${styles.writingRow} ${preview ? styles.writingRowHoverCursor : ''}`
+  const rowClass = `${styles.writingRow} ${preview ? styles.writingRowHoverCursor : ''} animate-enter`
+  const rowStyle = staggerEnter(stagger)
 
   // Decide the row's element based on what's available:
   //  1. body text → <button> that opens the lightbox
@@ -132,6 +136,7 @@ function WritingRow({
       <button
         type="button"
         className={rowClass}
+        style={rowStyle}
         onClick={() => onOpen(entry)}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -146,6 +151,7 @@ function WritingRow({
         target="_blank"
         rel="noopener noreferrer"
         className={rowClass}
+        style={rowStyle}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
@@ -156,6 +162,7 @@ function WritingRow({
     Row = (
       <span
         className={rowClass}
+        style={rowStyle}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
@@ -192,7 +199,7 @@ export default function WritingPage({
   return (
     <main className={styles.page}>
       {/* ── Brand: always sticky at top-left ── */}
-      <p className={styles.brand}>
+      <p className={`${styles.brand} animate-enter`} style={staggerEnter(1)}>
         <Link href="/" aria-label="2u4u Studio — home">
           2u4u Studio
         </Link>
@@ -201,11 +208,17 @@ export default function WritingPage({
       {/* ── Writing sections ── */}
       <div className={styles.sections}>
         <div className={styles.infoRow}>
-          <div className={styles.col}>
+          <div
+            className={`${styles.col} animate-enter`}
+            style={staggerEnter(2)}
+          >
             <p className={styles.rowLabel}>Writing</p>
           </div>
           <div className={styles.writingEntries}>
-            <div className={styles.writingHeader}>
+            <div
+              className={`${styles.writingHeader} animate-enter`}
+              style={staggerEnter(3)}
+            >
               <span className={`${styles.writingCell} ${styles.scopeTitle}`}>
                 Title
               </span>
@@ -218,11 +231,12 @@ export default function WritingPage({
             </div>
             {entries.length > 0 ? (
               <div className={styles.writingList}>
-                {entries.map((entry) => (
+                {entries.map((entry, i) => (
                   <WritingRow
                     key={entry.id}
                     entry={entry}
                     onOpen={setActive}
+                    stagger={4 + i}
                   />
                 ))}
               </div>
@@ -235,17 +249,26 @@ export default function WritingPage({
 
       {/* ── Footer ── */}
       <footer className={`${styles.footer} ${styles.contentSection}`}>
-        <div className={styles.footerCol}>
+        <div
+          className={`${styles.footerCol} animate-enter`}
+          style={staggerEnter(4 + entries.length)}
+        >
           <a href="/" className={styles.footerLink}>
             2u4u.studio
           </a>
         </div>
-        <div className={styles.footerColCenter}>
+        <div
+          className={`${styles.footerColCenter} animate-enter`}
+          style={staggerEnter(5 + entries.length)}
+        >
           <p className={styles.footerCenter}>
             Web, Photo, and Interaction Studio based in Los Angeles, CA
           </p>
         </div>
-        <div className={styles.footerColRight}>
+        <div
+          className={`${styles.footerColRight} animate-enter`}
+          style={staggerEnter(6 + entries.length)}
+        >
           <p>© 2026</p>
         </div>
       </footer>

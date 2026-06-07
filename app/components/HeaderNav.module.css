@@ -6,9 +6,11 @@
 .navOverlay {
   position: fixed;
   top: 20px;
-  padding-top: 20px;
-  left: 20px;
-  right: 20px;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  max-width: var(--page-max-width);
+  padding: 20px var(--page-margin) 0;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -82,7 +84,13 @@
   letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: var(--color-text);
-  transition: color var(--dur-l) var(--ease-butter-soft);
+  transition:
+    color var(--dur-l) var(--ease-butter-soft),
+    scale 150ms ease-out;
+}
+
+.navBtn:active {
+  scale: 0.96;
 }
 
 .navBtnActive {
@@ -104,8 +112,14 @@
   letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: #FF6700;
-  transition: color var(--dur-l) var(--ease-butter-soft),
-    opacity var(--dur-l) var(--ease-butter-soft);
+  transition:
+    color var(--dur-l) var(--ease-butter-soft),
+    opacity var(--dur-l) var(--ease-butter-soft),
+    scale 150ms ease-out;
+}
+
+.ctaLink:active {
+  scale: 0.96;
 }
 
 .ctaLink:hover {
@@ -139,36 +153,47 @@
   border-radius: 50%;
   background-color: var(--color-ink);
   color: var(--color-bg);
-  transition: opacity var(--dur-l) var(--ease-butter-soft);
+  transition:
+    opacity var(--dur-l) var(--ease-butter-soft),
+    scale 150ms ease-out;
+}
+
+.mobileToggle:active {
+  scale: 0.96;
 }
 
 .mobileToggle svg {
   position: absolute;
   top: 50%;
   left: 50%;
-  transition: opacity var(--dur-s) var(--ease-butter-soft),
-    transform var(--dur-s) var(--ease-butter-soft);
-  will-change: opacity, transform;
+  transition:
+    opacity 300ms cubic-bezier(0.2, 0, 0, 1),
+    transform 300ms cubic-bezier(0.2, 0, 0, 1),
+    filter 300ms cubic-bezier(0.2, 0, 0, 1);
 }
 
 .toggleIconPlus {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
+  filter: blur(0);
 }
 
 .toggleIconXmark {
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.8);
+  transform: translate(-50%, -50%) scale(0.25);
+  filter: blur(4px);
 }
 
 .mobileToggleOpen .toggleIconPlus {
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.8);
+  transform: translate(-50%, -50%) scale(0.25);
+  filter: blur(4px);
 }
 
 .mobileToggleOpen .toggleIconXmark {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
+  filter: blur(0);
 }
 
 .mobileToggle:hover {
@@ -210,7 +235,13 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  transition: color var(--dur-l) var(--ease-butter-soft);
+  transition:
+    color var(--dur-l) var(--ease-butter-soft),
+    scale 150ms ease-out;
+}
+
+.mobileLink:active {
+  scale: 0.96;
 }
 
 .mobileLinkActive {

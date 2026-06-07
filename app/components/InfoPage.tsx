@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { staggerEnter } from '@/app/lib/staggerEnter'
 import styles from './InfoPage.module.css'
 import FadeImage from './FadeImage'
 
@@ -39,7 +40,7 @@ export default function InfoPage() {
   return (
     <main className={styles.page}>
       {/* ── Brand: always sticky at top-left ── */}
-      <p className={styles.brand}>
+      <p className={`${styles.brand} animate-enter`} style={staggerEnter(1)}>
         <Link href="/" aria-label="2u4u Studio — home">
           2u4u Studio
         </Link>
@@ -49,10 +50,16 @@ export default function InfoPage() {
       <div className={styles.sections}>
         {/* ── Information ── */}
         <div className={styles.infoRow}>
-          <div className={styles.col}>
+          <div
+            className={`${styles.col} animate-enter`}
+            style={staggerEnter(2)}
+          >
             <p className={styles.rowLabel}>Information</p>
           </div>
-          <div className={styles.col}>
+          <div
+            className={`${styles.col} animate-enter`}
+            style={staggerEnter(3)}
+          >
             <p className={styles.subHeading}>About</p>
             <p className={styles.bodyText}>
               Benjamin Uribe is a designer, developer, and educator based in Los
@@ -71,7 +78,10 @@ export default function InfoPage() {
               be in the room.
             </p>
           </div>
-          <div className={styles.col}>
+          <div
+            className={`${styles.col} animate-enter`}
+            style={staggerEnter(4)}
+          >
             <div className={styles.scopeBlock}>
               <p className={styles.scopeTitle}>Services</p>
               <p className={styles.bodyText}>{SERVICES.join(', ')}</p>
@@ -85,7 +95,10 @@ export default function InfoPage() {
               <p className={styles.bodyText}>{INTERESTS.join(', ')}</p>
             </div>
           </div>
-          <div className={styles.col}>
+          <div
+            className={`${styles.col} animate-enter`}
+            style={staggerEnter(5)}
+          >
             <p className={styles.subHeading}>Contact</p>
             <FadeImage
               src="/images/benuribe.jpg"
@@ -111,17 +124,26 @@ export default function InfoPage() {
 
         {/* ── Philosophy ── */}
         <div className={styles.infoRow}>
-          <div className={styles.col}>
+          <div
+            className={`${styles.col} animate-enter`}
+            style={staggerEnter(6)}
+          >
             <p className={styles.rowLabel}>Philosophy</p>
           </div>
-          <div className={styles.col}>
+          <div
+            className={`${styles.col} animate-enter`}
+            style={staggerEnter(7)}
+          >
             <FadeImage
               src="/images/family.jpg"
               alt="Family"
               className={styles.colImage}
             />
           </div>
-          <div className={styles.col}>
+          <div
+            className={`${styles.col} animate-enter`}
+            style={staggerEnter(8)}
+          >
             <p className={styles.bodyText}>
               The studio exists at the intersection of two inheritances: a
               family of educators who gave knowledge away freely, and a field
@@ -135,7 +157,10 @@ export default function InfoPage() {
               relationship, and every piece of work published under this name.
             </p>
           </div>
-          <div className={styles.col}>
+          <div
+            className={`${styles.col} animate-enter`}
+            style={staggerEnter(9)}
+          >
             <p className={styles.scopeTitle}>Principles</p>
             {PRINCIPLES.map((pr, i) => (
               <p key={pr} className={styles.bodyText}>
@@ -149,17 +174,26 @@ export default function InfoPage() {
 
       {/* ── Footer ── */}
       <footer className={`${styles.footer} ${styles.contentSection}`}>
-        <div className={styles.footerCol}>
+        <div
+          className={`${styles.footerCol} animate-enter`}
+          style={staggerEnter(10)}
+        >
           <a href="/" className={styles.footerLink}>
             2u4u.studio
           </a>
         </div>
-        <div className={styles.footerColCenter}>
+        <div
+          className={`${styles.footerColCenter} animate-enter`}
+          style={staggerEnter(11)}
+        >
           <p className={styles.footerCenter}>
             Web, Photo, and Interaction Studio based in Los Angeles, CA
           </p>
         </div>
-        <div className={styles.footerColRight}>
+        <div
+          className={`${styles.footerColRight} animate-enter`}
+          style={staggerEnter(12)}
+        >
           <p>© 2026</p>
         </div>
       </footer>

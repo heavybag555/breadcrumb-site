@@ -1,13 +1,16 @@
 /* ──────────────────────────────────────────────
    HomePage.module.css
    Block flow layout — required for site-wide sticky.
-   8-column grid | 20px gutter | 20px page margin
+   4-column grid in a centered 840px container
+   20px gutter | 20px page margin
    4px spacing system (all spacing on a 4px grid)
    ────────────────────────────────────────────── */
 
-/* ── Page wrapper — 8-column grid ── */
+/* ── Page wrapper — 4-column grid, centered in 1200px container ── */
 
 .page {
+  max-width: var(--page-max-width);
+  margin-inline: auto;
   padding: 0 var(--page-margin);
   display: grid;
   grid-template-columns: repeat(var(--grid-col-count), 1fr);
@@ -18,7 +21,7 @@
   --reveal-dur: var(--dur-s);
 }
 
-/* ── Hero — directory + body span columns 3–4, left-aligned ── */
+/* ── Hero — directory in cols 1, 2, 4; identity block in cols 2–3, centered ── */
 
 .hero {
   grid-column: 1 / -1;
@@ -36,15 +39,20 @@
 }
 
 .heroNavCol3 {
-  grid-column: 3;
+  grid-column: 1;
 }
 
 .heroNavCol4 {
-  grid-column: 4;
+  grid-column: 2;
 }
 
 .heroNavCol6 {
-  grid-column: 6;
+  grid-column: 4;
+}
+
+/* Desktop: stack wrapper is transparent to the hero grid */
+.heroNavColStack {
+  display: contents;
 }
 
 .heroNav {
@@ -91,11 +99,11 @@
 }
 
 .panelRevealCol3 {
-  grid-column: 3;
+  grid-column: 1;
 }
 
 .panelRevealCol4 {
-  grid-column: 4;
+  grid-column: 2;
 }
 
 .panelRevealOpen {
@@ -275,7 +283,7 @@
 }
 
 .heroCenter {
-  grid-column: 3 / 5;
+  grid-column: 2 / 4;
   grid-row: 1;
   align-self: start;
   margin-top: calc(var(--page-margin) + var(--hero-lh) + 200px);
@@ -293,10 +301,6 @@
   line-height: var(--heading-lh);
   letter-spacing: var(--heading-ls);
   color: var(--color-ink);
-}
-
-.heroBrand + .heroText {
-  margin-top: -20px;
 }
 
 .heroText {
@@ -567,7 +571,7 @@
 }
 
 .projectDetails {
-  grid-column: 7 / 9;
+  grid-column: 4 / 5;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -575,7 +579,7 @@
 }
 
 .projectDetailsLeft {
-  grid-column: 1 / 3;
+  grid-column: 1 / 2;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -583,7 +587,7 @@
 }
 
 .projectRowLeft .projectImage {
-  grid-column: 3 / 9;
+  grid-column: 2 / 5;
 }
 
 .projectTitleRow {
@@ -665,7 +669,7 @@
 }
 
 .projectImage {
-  grid-column: 1 / 7;
+  grid-column: 1 / 4;
   display: block;
   width: 100%;
   overflow: hidden;
@@ -751,7 +755,7 @@
 }
 
 .photoDetailCol {
-  grid-column: 7 / 8;
+  grid-column: 4 / 5;
 }
 
 .photoDetailRow {
@@ -978,7 +982,7 @@
   display: none;
 }
 
-/* ── Footer — column 3, left-aligned ── */
+/* ── Footer — CTA in col 1, location/time in col 4 ── */
 
 .footer {
   grid-column: 1 / -1;
@@ -987,6 +991,7 @@
   display: grid;
   grid-template-columns: repeat(var(--grid-col-count), 1fr);
   column-gap: var(--grid-gutter);
+  align-items: end;
   background-color: var(--color-bg);
   font-size: var(--hero-size);
   line-height: var(--hero-lh);
@@ -995,7 +1000,7 @@
 }
 
 .footerCol {
-  grid-column: 3;
+  grid-column: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1016,10 +1021,12 @@
   gap: 12px;
 }
 
-.footerMeta {
+.footerMetaCol {
+  grid-column: 4;
   display: flex;
   flex-direction: column;
-  margin-top: var(--hero-lh);
+  align-items: flex-start;
+  text-align: left;
 }
 
 .footerLocation,
@@ -1069,14 +1076,58 @@
 }
 
 @media (max-width: 900px) {
-  .panelRevealCol3,
-  .panelRevealCol4,
+  /* Header — 2-column layout (panels + hero directory) */
+  .panelRevealCol3 {
+    grid-column: 1 / 3;
+  }
+
+  .panelRevealCol4 {
+    grid-column: 1 / 3;
+  }
+
+  .hero {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 0;
+  }
+
+  .heroNavColStack {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    grid-column: 1;
+    grid-row: 1;
+    padding-top: var(--page-margin);
+  }
+
   .heroNavCol3,
-  .heroNavCol4,
-  .heroNavCol6,
-  .heroCenter,
-  .footerCol {
+  .heroNavCol4 {
+    grid-column: auto;
+    grid-row: auto;
+    padding-top: 0;
+  }
+
+  .heroNavCol6 {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .heroCenter {
     grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 120px;
+  }
+
+  /* Footer — 2-column layout */
+  .footer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footerCol {
+    grid-column: 1;
+  }
+
+  .footerMetaCol {
+    grid-column: 2;
   }
 
   .contentSection {

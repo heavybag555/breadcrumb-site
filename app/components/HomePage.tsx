@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import styles from './HomePage.module.css'
+import { staggerEnter } from '@/app/lib/staggerEnter'
 import WorkIndex from './WorkIndex'
 import type { Resource, ResourcesByCategory, WorkItem } from '@/sanity/types'
 
@@ -139,7 +140,7 @@ function formatPstTime(): string {
   return `${time} PST`
 }
 
-function FooterTime() {
+function FooterTime({ stagger }: { stagger: number }) {
   const [time, setTime] = useState(formatPstTime)
 
   useEffect(() => {
@@ -147,7 +148,14 @@ function FooterTime() {
     return () => clearInterval(id)
   }, [])
 
-  return <p className={styles.footerTime}>{time}</p>
+  return (
+    <p
+      className={`${styles.footerTime} animate-enter`}
+      style={staggerEnter(stagger)}
+    >
+      {time}
+    </p>
+  )
 }
 
 /* ── Main HomePage ── */
@@ -168,6 +176,9 @@ export default function HomePage({
     { title: 'Reading', items: resources.reading },
     { title: 'Watching', items: resources.watching },
   ] as const
+
+  const workStaggerBase = 10
+  const footerStaggerBase = workStaggerBase + 1 + projects.length
 
   return (
     <main className={styles.page}>
@@ -232,29 +243,38 @@ export default function HomePage({
 
       {/* ── Hero: centered identity block (structure after bureaunicolasleuliet.com) ── */}
       <section className={styles.hero}>
-        <div className={`${styles.heroNavCol} ${styles.heroNavCol3}`}>
-          <DirectoryToggle
-            label="Information"
-            isOpen={activePanel === 'info'}
-            onClick={() =>
-              setActivePanel((p) => (p === 'info' ? null : 'info'))
-            }
-          />
-        </div>
-        <div className={`${styles.heroNavCol} ${styles.heroNavCol4}`}>
-          <DirectoryToggle
-            label="Resources"
-            isOpen={activePanel === 'resources'}
-            onClick={() =>
-              setActivePanel((p) => (p === 'resources' ? null : 'resources'))
-            }
-          />
+        <div className={styles.heroNavColStack}>
+          <div
+            className={`${styles.heroNavCol} ${styles.heroNavCol3} animate-enter`}
+            style={staggerEnter(1)}
+          >
+            <DirectoryToggle
+              label="Information"
+              isOpen={activePanel === 'info'}
+              onClick={() =>
+                setActivePanel((p) => (p === 'info' ? null : 'info'))
+              }
+            />
+          </div>
+          <div
+            className={`${styles.heroNavCol} ${styles.heroNavCol4} animate-enter`}
+            style={staggerEnter(2)}
+          >
+            <DirectoryToggle
+              label="Resources"
+              isOpen={activePanel === 'resources'}
+              onClick={() =>
+                setActivePanel((p) => (p === 'resources' ? null : 'resources'))
+              }
+            />
+          </div>
         </div>
         <div className={`${styles.heroNavCol} ${styles.heroNavCol6}`}>
           <nav className={styles.heroNav}>
             <a
               href="mailto:2you4youstudio@gmail.com"
-              className={`${styles.heroNavLink} ${styles.heroNavExternal}`}
+              className={`${styles.heroNavLink} ${styles.heroNavExternal} animate-enter`}
+              style={staggerEnter(3)}
             >
               Email
               <HeroExternalArrow />
@@ -263,7 +283,8 @@ export default function HomePage({
               href="https://www.instagram.com/2u4u.studio/"
               target="_blank"
               rel="noopener noreferrer"
-              className={`${styles.heroNavLink} ${styles.heroNavExternal}`}
+              className={`${styles.heroNavLink} ${styles.heroNavExternal} animate-enter`}
+              style={staggerEnter(4)}
             >
               Instagram
               <HeroExternalArrow />
@@ -272,7 +293,8 @@ export default function HomePage({
               href="https://www.are.na/"
               target="_blank"
               rel="noopener noreferrer"
-              className={`${styles.heroNavLink} ${styles.heroNavExternal}`}
+              className={`${styles.heroNavLink} ${styles.heroNavExternal} animate-enter`}
+              style={staggerEnter(5)}
             >
               Are.na
               <HeroExternalArrow />
@@ -281,11 +303,22 @@ export default function HomePage({
         </div>
 
         <div className={styles.heroCenter}>
-          <h1 className={styles.heroBrand}>2u4u Studio</h1>
-          <p className={styles.heroText}>
+          <h1
+            className={`${styles.heroBrand} animate-enter`}
+            style={staggerEnter(6)}
+          >
+            2u4u Studio
+          </h1>
+          <p
+            className={`${styles.heroText} animate-enter`}
+            style={staggerEnter(7)}
+          >
             Design, development, and image studio in Los Angeles.
           </p>
-          <p className={styles.heroTextBody}>
+          <p
+            className={`${styles.heroTextBody} animate-enter`}
+            style={staggerEnter(8)}
+          >
             Latest:{' '}
             <a
               href="https://daniel-derro.com"
@@ -301,7 +334,7 @@ export default function HomePage({
 
       {/* ── Work: index list with morphing hover preview ── */}
       <div id="work" className={styles.contentSection}>
-        <WorkIndex projects={projects} />
+        <WorkIndex projects={projects} staggerBase={workStaggerBase} />
       </div>
 
       {/* ── Footer: centered CTA + bottom-left copyright (structure after reference) ── */}
@@ -309,10 +342,16 @@ export default function HomePage({
         <div className={styles.footerCol}>
           <div className={styles.footerCenter}>
             <div className={styles.footerPrimary}>
-              <p className={styles.footerCta}>
+              <p
+                className={`${styles.footerCta} animate-enter`}
+                style={staggerEnter(footerStaggerBase)}
+              >
                 Got a project, idea or collaboration in mind?
               </p>
-              <p className={styles.footerContact}>
+              <p
+                className={`${styles.footerContact} animate-enter`}
+                style={staggerEnter(footerStaggerBase + 1)}
+              >
                 Contact me directly via{' '}
                 <a
                   href="mailto:2you4youstudio@gmail.com"
@@ -322,13 +361,16 @@ export default function HomePage({
                 </a>
               </p>
             </div>
-            <div className={styles.footerMeta}>
-              <p className={styles.footerLocation}>
-                Los Angeles, California, USA
-              </p>
-              <FooterTime />
-            </div>
           </div>
+        </div>
+        <div className={styles.footerMetaCol}>
+          <p
+            className={`${styles.footerLocation} animate-enter`}
+            style={staggerEnter(footerStaggerBase + 2)}
+          >
+            Los Angeles, California, USA
+          </p>
+          <FooterTime stagger={footerStaggerBase + 3} />
         </div>
       </footer>
     </main>

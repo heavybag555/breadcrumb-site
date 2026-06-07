@@ -1,12 +1,15 @@
 /* ──────────────────────────────────────────────
    InfoPage.module.css
    Block flow layout — matches work page header/footer.
-   8-column grid | 20px gutter | 20px page margin
+   4-column flex layout in a centered 840px container
+   20px gutter | 20px page margin
    ────────────────────────────────────────────── */
 
-/* ── Page wrapper (block flow, NOT flex — required for sticky) ── */
+/* ── Page wrapper — centered in 1200px container ── */
 
 .page {
+  max-width: var(--page-max-width);
+  margin-inline: auto;
   padding: 0 var(--page-margin);
   min-height: 100vh;
   position: relative;
@@ -107,8 +110,14 @@
   letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: var(--color-text);
-  transition: color var(--dur-m) var(--ease-butter),
-    background-color var(--dur-m) var(--ease-butter);
+  transition:
+    color var(--dur-m) var(--ease-butter),
+    background-color var(--dur-m) var(--ease-butter),
+    scale 150ms ease-out;
+}
+
+.navBtn:active {
+  scale: 0.96;
 }
 
 .navBtnActive {
@@ -131,8 +140,14 @@
   letter-spacing: var(--body-ls);
   white-space: nowrap;
   color: #FF6700;
-  transition: color var(--dur-m) var(--ease-butter),
-    opacity var(--dur-m) var(--ease-butter);
+  transition:
+    color var(--dur-m) var(--ease-butter),
+    opacity var(--dur-m) var(--ease-butter),
+    scale 150ms ease-out;
+}
+
+.ctaLink:active {
+  scale: 0.96;
 }
 
 .ctaLink:hover {
@@ -204,7 +219,13 @@
 
 .bodyLink {
   color: #FF6700;
-  transition: opacity var(--dur-m) var(--ease-butter);
+  transition:
+    opacity var(--dur-m) var(--ease-butter),
+    scale 150ms ease-out;
+}
+
+.bodyLink:active {
+  scale: 0.96;
 }
 
 .bodyLink:hover {
@@ -300,8 +321,14 @@
   color: var(--color-text);
   text-decoration: none;
   background-color: transparent;
-  transition: color var(--dur-m) var(--ease-butter),
-    background-color var(--dur-m) var(--ease-butter);
+  transition:
+    color var(--dur-m) var(--ease-butter),
+    background-color var(--dur-m) var(--ease-butter),
+    scale 150ms ease-out;
+}
+
+.mention:active {
+  scale: 0.96;
 }
 
 .mention:hover {
@@ -405,8 +432,14 @@
   border: 0;
   font: inherit;
   cursor: pointer;
-  transition: color var(--dur-m) var(--ease-butter),
-    background-color var(--dur-m) var(--ease-butter);
+  transition:
+    color var(--dur-m) var(--ease-butter),
+    background-color var(--dur-m) var(--ease-butter),
+    scale 150ms ease-out;
+}
+
+.writingRow:active {
+  scale: 0.96;
 }
 
 .writingRow:hover {
@@ -544,10 +577,12 @@
 
 .lightboxPanel {
   position: relative;
-  /* Full 8-column content width:
-       content_width = 100vw - 2 * page-padding
-     At desktop padding 200px → calc(100vw - 400px). */
-  width: calc(100vw - 400px);
+  /* Match the centered content container: full container width on
+     wide screens (1200px), shrinking to the 20px page margins below
+     that. Exposed as --lightbox-w so the break-out image can derive
+     its width from the same value. */
+  --lightbox-w: min(calc(100vw - 2 * var(--page-margin)), var(--page-max-width));
+  width: var(--lightbox-w);
   max-height: calc(100vh - 80px);
   /* Hide scroll overflow here so the inner scroll area + absolute-positioned
      blur fade both respect the 24px rounded corners of the card. */
@@ -645,16 +680,16 @@
   color: #ff6700;
 }
 
-/* Image breaks out of the 2-col article to span 6 of 8 cols, centered.
-     panel_width = 100vw - 2 * page-padding
-     col_width   = (panel_width - 140) / 8
-     6-col span  = 6 * col_width + 5 * 20px
-                 = 3 * panel_width / 4 - 5px
+/* Image breaks out of the article column to span 3 of the panel's 4
+   columns, centered.
+     col_width  = (panel_width - 3 * 20px) / 4
+     3-col span = 3 * col_width + 2 * 20px
+                = 3 * panel_width / 4 - 5px
    Centering: `margin-left: 50%; translateX(-50%)` pins the image's centre
    to the article's centre regardless of its wider size. */
 .lightboxImage {
   display: block;
-  width: calc(3 * (100vw - 400px) / 4 - 5px);
+  width: calc(3 * var(--lightbox-w) / 4 - 5px);
   max-width: none;
   height: auto;
   margin: 0 0 24px 50%;
@@ -726,16 +761,6 @@
   backdrop-filter: blur(12px);
   -webkit-mask-image: linear-gradient(to bottom, transparent 45%, #000 100%);
   mask-image: linear-gradient(to bottom, transparent 45%, #000 100%);
-}
-
-@media (max-width: 1200px) {
-  /* page-padding shrinks to 60px on this breakpoint */
-  .lightboxPanel {
-    width: calc(100vw - 120px);
-  }
-  .lightboxImage {
-    width: calc(3 * (100vw - 120px) / 4 - 5px);
-  }
 }
 
 @media (max-width: 900px) {

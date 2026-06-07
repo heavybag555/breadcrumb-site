@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { staggerEnter } from '@/app/lib/staggerEnter'
 import styles from './InfoPage.module.css'
 import FadeImage from './FadeImage'
 import type { Resource, ResourcesByCategory } from '@/sanity/types'
@@ -103,7 +104,7 @@ export default function ResourcesPage({
   return (
     <main className={styles.page}>
       {/* ── Brand: always sticky at top-left ── */}
-      <p className={styles.brand}>
+      <p className={`${styles.brand} animate-enter`} style={staggerEnter(1)}>
         <Link href="/" aria-label="2u4u Studio — home">
           2u4u Studio
         </Link>
@@ -112,16 +113,28 @@ export default function ResourcesPage({
       {/* ── Resources sections ── */}
       <div className={styles.sections}>
         <div className={`${styles.infoRow} ${styles.resourcesRow}`}>
-          <div className={`${styles.col} ${styles.resourcesLabelCol}`}>
+          <div
+            className={`${styles.col} ${styles.resourcesLabelCol} animate-enter`}
+            style={staggerEnter(2)}
+          >
             <p className={styles.rowLabel}>Resources</p>
           </div>
-          <div className={`${styles.col} ${styles.resourcesListCol}`}>
+          <div
+            className={`${styles.col} ${styles.resourcesListCol} animate-enter`}
+            style={staggerEnter(3)}
+          >
             <ResourceMentionList title="Learning" items={resources.learning} />
           </div>
-          <div className={`${styles.col} ${styles.resourcesListCol}`}>
+          <div
+            className={`${styles.col} ${styles.resourcesListCol} animate-enter`}
+            style={staggerEnter(4)}
+          >
             <ResourceMentionList title="Reading" items={resources.reading} />
           </div>
-          <div className={`${styles.col} ${styles.resourcesListCol}`}>
+          <div
+            className={`${styles.col} ${styles.resourcesListCol} animate-enter`}
+            style={staggerEnter(5)}
+          >
             <ResourceMentionList title="Watching" items={resources.watching} />
           </div>
         </div>
@@ -129,17 +142,26 @@ export default function ResourcesPage({
 
       {/* ── Footer ── */}
       <footer className={`${styles.footer} ${styles.contentSection}`}>
-        <div className={styles.footerCol}>
+        <div
+          className={`${styles.footerCol} animate-enter`}
+          style={staggerEnter(6)}
+        >
           <a href="/" className={styles.footerLink}>
             2u4u.studio
           </a>
         </div>
-        <div className={styles.footerColCenter}>
+        <div
+          className={`${styles.footerColCenter} animate-enter`}
+          style={staggerEnter(7)}
+        >
           <p className={styles.footerCenter}>
             Web, Photo, and Interaction Studio based in Los Angeles, CA
           </p>
         </div>
-        <div className={styles.footerColRight}>
+        <div
+          className={`${styles.footerColRight} animate-enter`}
+          style={staggerEnter(8)}
+        >
           <p>© 2026</p>
         </div>
       </footer>

@@ -1,5 +1,6 @@
 'use client'
 
+import { staggerEnter } from '@/app/lib/staggerEnter'
 import styles from './WorkIndex.module.css'
 import type { Project, PhotoProject, WorkItem } from '@/sanity/types'
 
@@ -34,10 +35,21 @@ function itemHref(item: WorkItem): string {
 
 /* ── Work index — list rows with inline project previews ── */
 
-export default function WorkIndex({ projects }: { projects: WorkItem[] }) {
+export default function WorkIndex({
+  projects,
+  staggerBase = 1,
+}: {
+  projects: WorkItem[]
+  staggerBase?: number
+}) {
   return (
     <div className={styles.list}>
-      <p className={styles.label}>Selected work</p>
+      <p
+        className={`${styles.label} animate-enter`}
+        style={staggerEnter(staggerBase)}
+      >
+        Selected work
+      </p>
 
       {projects.map((item, i) => {
         const name = itemName(item)
@@ -52,20 +64,23 @@ export default function WorkIndex({ projects }: { projects: WorkItem[] }) {
             href={href}
             target={isInternal ? undefined : '_blank'}
             rel={isInternal ? undefined : 'noopener noreferrer'}
-            className={styles.row}
+            className={`${styles.row} animate-enter`}
+            style={staggerEnter(staggerBase + 1 + i)}
           >
-            <span className={styles.rowIndex}>
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <span className={styles.rowMedia}>
-              {item.imageUrl ? (
-                <img
-                  src={item.imageUrl}
-                  alt=""
-                  className={styles.rowMediaImg}
-                  loading="lazy"
-                />
-              ) : null}
+            <span className={styles.rowLead}>
+              <span className={styles.rowIndex}>
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span className={styles.rowMedia}>
+                {item.imageUrl ? (
+                  <img
+                    src={item.imageUrl}
+                    alt=""
+                    className={styles.rowMediaImg}
+                    loading="lazy"
+                  />
+                ) : null}
+              </span>
             </span>
             <span className={styles.rowName}>{name}</span>
             <span className={styles.rowDomain}>{domain}</span>

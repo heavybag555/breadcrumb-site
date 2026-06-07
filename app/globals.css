@@ -19,11 +19,14 @@
   --color-accent: #ff6700;
   --color-line: rgba(0, 0, 0, 0.08);
 
-  /* Layout — 6 columns, 20px gutter, 20px page margin */
+  /* Layout — 4 columns inside a centered 840px container,
+     20px gutter, 20px page margin. The 4-col grid is the
+     single content system across all pages. */
   --page-margin: 20px;
   --page-padding: var(--page-margin);
+  --page-max-width: 840px;
   --grid-gutter: 20px;
-  --grid-col-count: 8;
+  --grid-col-count: 4;
 
   /* Hero / footer — reference's flat minimal scale (12px / 13.2px) */
   --hero-size: 12px;
@@ -66,6 +69,11 @@
      CSS stay in sync without grep-hunting. */
   --page-fade-out: 900ms;
   --page-fade-in: 1800ms;
+
+  /* Staggered enter — jakub.kr “split and stagger entering elements” */
+  --enter-dur: 800ms;
+  --enter-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --enter-stagger-step: 100ms;
 }
 
 /* ── Reset ── */
@@ -80,6 +88,20 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Text wrapping — balance titles, pretty paragraphs (orphan control) */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li,
+figcaption,
+blockquote {
+  text-wrap: pretty;
 }
 
 /* Offset in-page hash targets so they don't land directly under the
@@ -134,7 +156,12 @@ button {
     background-color var(--dur-m) var(--ease-butter),
     border-color var(--dur-m) var(--ease-butter),
     transform var(--dur-l) var(--ease-butter),
-    filter var(--dur-l) var(--ease-butter);
+    filter var(--dur-l) var(--ease-butter),
+    scale 150ms ease-out;
+}
+
+button:active:not(:disabled) {
+  scale: 0.96;
 }
 
 img {
@@ -157,6 +184,24 @@ img[data-fade] {
 
 img[data-fade][data-loaded='true'] {
   opacity: 1;
+}
+
+/* ── Staggered enter ──
+   Opacity + blur + translateY on load. Set `--stagger` per element
+   (1, 2, 3…) via `staggerEnter()`; delay = step × index. */
+
+@keyframes enter {
+  from {
+    transform: translateY(8px);
+    filter: blur(8px);
+    opacity: 0;
+  }
+}
+
+.animate-enter {
+  --delay: var(--enter-stagger-step);
+  animation: enter var(--enter-dur) var(--enter-ease) both;
+  animation-delay: calc(var(--delay) * var(--stagger, 0));
 }
 
 /* ── Page transition ──

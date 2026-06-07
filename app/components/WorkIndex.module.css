@@ -1,7 +1,7 @@
 /* ──────────────────────────────────────────────
    WorkIndex.module.css
-   Work list on the 8-column page grid (cols 3–7).
-   Rows: index | media | name | domain | tag.
+   Work list on the 4-column page grid (cols 1–4).
+   Rows: lead (index + media) | name | domain | tag.
    ────────────────────────────────────────────── */
 
 .list {
@@ -12,7 +12,7 @@
 }
 
 .label {
-  grid-column: 3;
+  grid-column: 1;
   margin: 0 0 20px;
   color: var(--color-muted);
   font-size: var(--caption-size);
@@ -21,7 +21,7 @@
   letter-spacing: var(--caption-ls);
 }
 
-/* ── Row — inherits the page 8-column grid via subgrid ── */
+/* ── Row — inherits the page 4-column grid via subgrid ── */
 
 .row {
   grid-column: 1 / -1;
@@ -36,7 +36,13 @@
   font-weight: var(--body-weight);
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
-  transition: color var(--dur-m) var(--ease-butter);
+  transition:
+    color var(--dur-m) var(--ease-butter),
+    scale 150ms ease-out;
+}
+
+.row:active {
+  scale: 0.96;
 }
 
 .list:hover .row {
@@ -49,7 +55,7 @@
 
 .row::before {
   content: '';
-  grid-column: 3 / 8;
+  grid-column: 1 / 5;
   grid-row: 1;
   align-self: start;
   width: 100%;
@@ -59,13 +65,25 @@
   pointer-events: none;
 }
 
+.rowLead {
+  grid-column: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--grid-gutter);
+  min-width: 0;
+  width: 100%;
+}
+
 .rowIndex {
-  grid-column: 3;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
 }
 
 .rowMedia {
-  grid-column: 4;
   display: block;
+  flex-shrink: 0;
   width: 80px;
 }
 
@@ -77,15 +95,15 @@
 }
 
 .rowName {
-  grid-column: 5;
+  grid-column: 2;
 }
 
 .rowDomain {
-  grid-column: 6;
+  grid-column: 3;
 }
 
 .rowTag {
-  grid-column: 7;
+  grid-column: 4;
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
@@ -114,23 +132,21 @@
   }
 
   .row {
-    grid-template-columns: auto 80px 1fr auto;
+    grid-template-columns: auto 1fr auto;
   }
 
-  .rowIndex {
+  .rowLead {
     grid-column: 1;
-  }
-
-  .rowMedia {
-    grid-column: 2;
+    width: auto;
+    max-width: 120px;
   }
 
   .rowName {
-    grid-column: 3;
+    grid-column: 2;
   }
 
   .rowTag {
-    grid-column: 4;
+    grid-column: 3;
   }
 
   .rowDomain {
