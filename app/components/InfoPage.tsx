@@ -6,11 +6,11 @@ import styles from './InfoPage.module.css'
 import FadeImage from './FadeImage'
 
 const SERVICES = [
-  'Web design & development',
-  'Interaction design & prototyping',
-  'Art direction',
+  'Web Design & Development',
+  'Interaction Design & Prototyping',
+  'Art Direction',
   'Photography',
-  'Design systems',
+  'Design Systems',
 ]
 
 const STACK = ['Next.JS', 'Figma', 'React', 'Tailwind', 'Sanity']

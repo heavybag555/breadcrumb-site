@@ -33,6 +33,8 @@ function itemHref(item: WorkItem): string {
   return '#'
 }
 
+export { itemDomain, itemHref, itemName }
+
 /* ── Work index — list rows with inline project previews ── */
 
 export default function WorkIndex({
@@ -94,6 +96,10 @@ export default function WorkIndex({
           </a>
         )
       })}
+
+      {projects.length > 0 && (
+        <div className={styles.listEndRule} aria-hidden="true" />
+      )}
     </div>
   )
 }

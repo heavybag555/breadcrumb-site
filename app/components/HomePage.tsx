@@ -3,15 +3,15 @@
 import { useEffect, useState } from 'react'
 import styles from './HomePage.module.css'
 import { staggerEnter } from '@/app/lib/staggerEnter'
-import WorkIndex from './WorkIndex'
+import WorkIndex, { itemDomain, itemHref } from './WorkIndex'
 import type { Resource, ResourcesByCategory, WorkItem } from '@/sanity/types'
 
 const SERVICES = [
-  'Web design & development',
-  'Interaction design & prototyping',
-  'Art direction',
+  'Web Design & Development',
+  'Interaction Design & Prototyping',
+  'Art Direction',
   'Photography',
-  'Design systems',
+  'Design Systems',
 ]
 
 type ActivePanel = 'info' | 'resources' | null
@@ -179,65 +179,78 @@ export default function HomePage({
 
   const workStaggerBase = 10
   const footerStaggerBase = workStaggerBase + 1 + projects.length
+  const latestProject = projects[0]
+  const latestDomain = latestProject ? itemDomain(latestProject) : ''
+  const latestHref = latestProject ? itemHref(latestProject) : '#'
+  const latestIsExternal = latestHref !== '#'
 
   return (
     <main className={styles.page}>
-      {/* ── Info reveal — column 3, pushes the whole page down ── */}
+      {/* ── Directory reveal — single height-driving host so switching
+          between Information and Resources is a pure cross-fade with no
+          height dip. Info pane sits in column 1, Resources in column 2. ── */}
       <div
-        className={`${styles.panelReveal} ${styles.panelRevealCol3} ${
-          infoOpen ? styles.panelRevealOpen : ''
+        className={`${styles.panelHost} ${
+          activePanel ? styles.panelHostOpen : ''
         }`}
       >
-        <div className={styles.panelRevealInner}>
-          <section className={styles.infoBlock}>
-            <h2 className={styles.infoBlockTitle}>Information</h2>
-            <p className={styles.infoText}>
-              Benjamin Uribe is a designer, developer, and educator based in Los
-              Angeles. He is the founder of 2u4u.studio, working across concept,
-              design, and development for clients in art, culture, and commerce.
-            </p>
-            <p className={styles.infoText}>
-              He is currently completing postgraduate work in Interaction Design
-              at ArtCenter College of Design, with a focus on building thoughtful
-              digital experiences and sharing what he learns along the way.
-            </p>
-          </section>
-          <section className={styles.infoBlock}>
-            <h2 className={styles.infoBlockTitle}>Services</h2>
-            <ul className={styles.infoList}>
-              {SERVICES.map((service) => (
-                <li key={service}>
-                  <ServiceItem service={service} />
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      </div>
-
-      {/* ── Resources reveal — column 4, pushes the whole page down ── */}
-      <div
-        className={`${styles.panelReveal} ${styles.panelRevealCol4} ${
-          resourcesOpen ? styles.panelRevealOpen : ''
-        }`}
-      >
-        <div className={styles.panelRevealInner}>
-          {resourceSections.map(({ title, items }) => (
-            <section key={title} className={styles.infoBlock}>
-              <h2 className={styles.infoBlockTitle}>{title}</h2>
-              {items.length > 0 ? (
-                <ul className={styles.resourceList}>
-                  {items.map((resource) => (
-                    <li key={resource._id}>
-                      <ResourceLink resource={resource} />
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className={styles.infoText}>—</p>
-              )}
+        <div className={styles.panelHostInner}>
+          <div
+            className={`${styles.panelPane} ${styles.panelPaneInfo} ${
+              infoOpen ? styles.panelPaneActive : ''
+            }`}
+            aria-hidden={!infoOpen}
+          >
+            <section className={styles.infoBlock}>
+              <h2 className={styles.infoBlockTitle}>Information</h2>
+              <p className={styles.infoText}>
+                Benjamin Uribe is a designer, developer, and educator based in
+                Los Angeles. He is the founder of 2u4u.studio, working across
+                concept, design, and development for clients in art, culture,
+                and commerce.
+              </p>
+              <p className={styles.infoText}>
+                He is currently completing postgraduate work in Interaction
+                Design at ArtCenter College of Design, with a focus on building
+                thoughtful digital experiences and sharing what he learns along
+                the way.
+              </p>
             </section>
-          ))}
+            <section className={styles.infoBlock}>
+              <h2 className={styles.infoBlockTitle}>Services</h2>
+              <ul className={styles.infoList}>
+                {SERVICES.map((service) => (
+                  <li key={service}>
+                    <ServiceItem service={service} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
+
+          <div
+            className={`${styles.panelPane} ${styles.panelPaneResources} ${
+              resourcesOpen ? styles.panelPaneActive : ''
+            }`}
+            aria-hidden={!resourcesOpen}
+          >
+            {resourceSections.map(({ title, items }) => (
+              <section key={title} className={styles.infoBlock}>
+                <h2 className={styles.infoBlockTitle}>{title}</h2>
+                {items.length > 0 ? (
+                  <ul className={styles.resourceList}>
+                    {items.map((resource) => (
+                      <li key={resource._id}>
+                        <ResourceLink resource={resource} />
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className={styles.infoText}>—</p>
+                )}
+              </section>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -320,14 +333,16 @@ export default function HomePage({
             style={staggerEnter(8)}
           >
             Latest:{' '}
-            <a
-              href="https://daniel-derro.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.heroDomain}
-            >
-              daniel-derro.com
-            </a>
+            {latestDomain ? (
+              <a
+                href={latestHref}
+                target={latestIsExternal ? '_blank' : undefined}
+                rel={latestIsExternal ? 'noopener noreferrer' : undefined}
+                className={styles.heroDomain}
+              >
+                {latestDomain}
+              </a>
+            ) : null}
           </p>
         </div>
       </section>
