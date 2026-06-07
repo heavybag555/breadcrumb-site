@@ -1,50 +1,45 @@
-/* ── Univers Next Pro ── */
-
-@font-face {
-  font-family: "Univers Next Pro";
-  font-style: normal;
-  font-weight: 300;
-  src: url("/fonts/univers/Univers Next Pro Light.ttf") format("truetype");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Univers Next Pro";
-  font-style: normal;
-  font-weight: 400;
-  src: url("/fonts/univers/UniversNextProRegular.ttf") format("truetype");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Univers Next Pro";
-  font-style: normal;
-  font-weight: 500;
-  src: url("/fonts/univers/Univers Next Pro Medium.ttf") format("truetype");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Univers Next Pro";
-  font-style: normal;
-  font-weight: 700;
-  src: url("/fonts/univers/UniversNextProBold.ttf") format("truetype");
-  font-display: swap;
-}
+/* ── Typeface: Helvetica Neue (system) ──
+   Light-mode redesign uses Helvetica Neue as the single typeface,
+   falling back through the platform Helvetica/Arial stack. */
 
 /* ── Text Styles ── */
 
 :root {
+  /* ── Light-mode palette ──
+     White page, ink-black emphasis, mid-grey body, lighter muted grey.
+     Accent stays the studio orange. */
+  --color-bg: #ffffff;
+  --color-ink: #000000;
+  --color-text: #b0b0b0;
+  --color-muted: #c8c8c8;
+  --color-hero-muted: #d8d8d8;
+  --color-directory: #b8b8b8;
+  --color-text-muted: var(--color-muted);
+  --color-text-dim: var(--color-hero-muted);
+  --color-accent: #ff6700;
+  --color-line: rgba(0, 0, 0, 0.08);
+
+  /* Layout — 6 columns, 20px gutter, 20px page margin */
+  --page-margin: 20px;
+  --page-padding: var(--page-margin);
+  --grid-gutter: 20px;
+  --grid-col-count: 8;
+
+  /* Hero / footer — reference's flat minimal scale (12px / 13.2px) */
+  --hero-size: 12px;
+  --hero-lh: 13.2px;
+  --hero-ls: normal;
+
   /* Heading — 32px / 700 / 36px line-height / -0.96px letter-spacing */
-  --heading-size: 24px;
+  --heading-size: 20px;
   --heading-weight: 500;
-  --heading-lh: 26px;
-  --heading-ls: -0.45px;
+  --heading-lh: 22px;
+  --heading-ls: -0.02em;
 
   /* Body — 18px / 700 / 20px line-height / -0.54px letter-spacing */
   --body-size: 14px;
   --body-weight: 500;
-  --body-lh: 17px;
+  --body-lh: 18px;
   --body-ls: -0.10px;
 
   /* Caption — 11px / 700 / 9px line-height / -0.44px letter-spacing */
@@ -103,14 +98,13 @@ body {
 }
 
 body {
-  font-family: "Univers Next Pro", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: var(--body-weight);
   font-size: var(--body-size);
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
-  color: #595959;
-  background-color: #0e0e0e;
+  color: var(--color-text);
+  background-color: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;

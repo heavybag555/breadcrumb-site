@@ -9,7 +9,7 @@ import writing from './sanity/schemas/writing'
 
 export default defineConfig({
   name: '2u4u-studio',
-  title: '2U4U Studio',
+  title: '2u4u Studio',
   projectId: 'tl235np0',
   dataset: 'production',
   basePath: '/studio',

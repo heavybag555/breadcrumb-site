@@ -1,4 +1,4 @@
-import { getWorkItems } from '@/sanity/queries'
+import { getWorkItems, getResourcesByCategory } from '@/sanity/queries'
 import type { Project, PhotoProject, WorkItem } from '@/sanity/types'
 import HomePage from './components/HomePage'
 
@@ -187,5 +187,7 @@ export default async function Home() {
     }
   }
 
-  return <HomePage projects={items} />
+  let resources = await getResourcesByCategory()
+
+  return <HomePage projects={items} resources={resources} />
 }

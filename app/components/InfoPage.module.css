@@ -1,13 +1,13 @@
 /* ──────────────────────────────────────────────
    InfoPage.module.css
    Block flow layout — matches work page header/footer.
-   8-column proportions | 200px side padding | 20px gutter
+   8-column grid | 20px gutter | 20px page margin
    ────────────────────────────────────────────── */
 
 /* ── Page wrapper (block flow, NOT flex — required for sticky) ── */
 
 .page {
-  padding: 0 200px;
+  padding: 0 var(--page-margin);
   min-height: 100vh;
   position: relative;
   display: flex;
@@ -29,7 +29,7 @@
   font-weight: var(--heading-weight);
   line-height: var(--heading-lh);
   letter-spacing: var(--heading-ls);
-  color: #595959;
+  color: var(--color-text);
   padding-top: 20px;
   z-index: 60;
   width: fit-content;
@@ -41,8 +41,8 @@
   position: fixed;
   top: 20px;
   padding-top: 20px;
-  left: 200px;
-  right: 200px;
+  left: var(--page-margin);
+  right: var(--page-margin);
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -106,14 +106,14 @@
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
   white-space: nowrap;
-  color: #595959;
+  color: var(--color-text);
   transition: color var(--dur-m) var(--ease-butter),
     background-color var(--dur-m) var(--ease-butter);
 }
 
 .navBtnActive {
   background-color: #000;
-  color: #595959;
+  color: var(--color-text);
 }
 
 .navBtn:hover {
@@ -191,15 +191,15 @@
 }
 
 .rowLabel {
-  color: #595959;
+  color: var(--color-text);
 }
 
 .subHeading {
-  color: #595959;
+  color: var(--color-text);
 }
 
 .bodyText {
-  color: #353535;
+  color: var(--color-muted);
 }
 
 .bodyLink {
@@ -212,7 +212,7 @@
 }
 
 .linkArrow {
-  color: #595959;
+  color: var(--color-text);
 }
 
 .paraSpacer {
@@ -234,7 +234,7 @@
 }
 
 .scopeTitle {
-  color: #595959;
+  color: var(--color-text);
 }
 
 /* Resources row: fixed 12px between subsection title and link list */
@@ -254,7 +254,7 @@
 }
 
 .resourceTitleArrow {
-  color: #595959;
+  color: var(--color-text);
   line-height: 1;
 }
 
@@ -269,7 +269,7 @@
 }
 
 .principleNum {
-  color: #595959;
+  color: var(--color-text);
 }
 
 /* ── Notion-style mention link ──────────────────────────────
@@ -283,7 +283,7 @@
   align-items: flex-start;
   gap: 0;
   width: 100%;
-  color: #353535;
+  color: var(--color-muted);
 }
 
 .mention {
@@ -297,7 +297,7 @@
   padding: 4px 8px 4px 6px;
   margin-left: -6px;
   border-radius: 6px;
-  color: #595959;
+  color: var(--color-text);
   text-decoration: none;
   background-color: transparent;
   transition: color var(--dur-m) var(--ease-butter),
@@ -324,7 +324,7 @@
   border-radius: 3px;
   overflow: hidden;
   background-color: #1a1a1a;
-  color: #595959;
+  color: var(--color-text);
   transition: color var(--dur-m) var(--ease-butter);
 }
 
@@ -386,7 +386,7 @@
   align-items: stretch;
   gap: 0;
   width: 100%;
-  color: #353535;
+  color: var(--color-muted);
 }
 
 .writingRow {
@@ -398,7 +398,7 @@
   margin-left: -12px;
   padding: 12px;
   border-radius: 8px;
-  color: #353535;
+  color: var(--color-muted);
   text-decoration: none;
   text-align: left;
   background-color: transparent;
@@ -553,7 +553,7 @@
      blur fade both respect the 24px rounded corners of the card. */
   overflow: hidden;
   background-color: #000;
-  color: #595959;
+  color: var(--color-text);
   border-radius: 24px;
   box-sizing: border-box;
   /* Tighten body-style typography for long-form reading */
@@ -624,7 +624,7 @@
   font-weight: var(--heading-weight);
   line-height: var(--heading-lh);
   letter-spacing: var(--heading-ls);
-  color: #595959;
+  color: var(--color-text);
 }
 
 .lightboxDescription {
@@ -633,7 +633,7 @@
   font-weight: var(--body-weight);
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
-  color: #353535;
+  color: var(--color-muted);
 }
 
 .lightboxDate {
@@ -668,18 +668,18 @@
   font-weight: var(--heading-weight);
   line-height: var(--heading-lh);
   letter-spacing: var(--heading-ls);
-  color: #595959;
+  color: var(--color-text);
 }
 
 .lightboxPara {
   margin: 0 0 16px;
-  color: #595959;
+  color: var(--color-text);
 }
 
 .lightboxList {
   margin: 0 0 16px;
   padding-left: 20px;
-  color: #595959;
+  color: var(--color-text);
 }
 
 .lightboxListItem {
@@ -771,16 +771,15 @@
   display: flex;
   gap: 20px;
   align-items: flex-start;
-  padding: 4px 200px;
-  width: calc(100% + 400px);
-  margin-left: -200px;
+  padding: 4px 0;
+  width: 100%;
   height: auto;
   background-color: #000;
   font-size: var(--body-size);
   font-weight: var(--body-weight);
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
-  color: #595959;
+  color: var(--color-text);
 }
 
 .footerCol {
@@ -825,15 +824,6 @@
 /* ── Responsive ── */
 
 @media (max-width: 1200px) {
-  .page {
-    padding: 0 60px;
-  }
-
-  .navOverlay {
-    left: 60px;
-    right: 60px;
-  }
-
   .nav {
     width: auto;
   }
@@ -845,24 +835,9 @@
   .contentSection {
     margin-top: 120px;
   }
-
-  .footer {
-    padding: 4px 60px;
-    margin-left: -60px;
-    width: calc(100% + 120px);
-  }
 }
 
 @media (max-width: 900px) {
-  .page {
-    padding: 0 24px;
-  }
-
-  .navOverlay {
-    left: 24px;
-    right: 24px;
-  }
-
   .nav {
     width: 100%;
   }
@@ -937,9 +912,8 @@
     align-items: center;
     justify-content: space-between;
     height: auto;
-    padding: 4px 24px;
-    margin-left: -24px;
-    width: calc(100% + 48px);
+    padding: 4px 0;
+    width: 100%;
     gap: 20px;
   }
 

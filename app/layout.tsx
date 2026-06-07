@@ -6,7 +6,7 @@ import PageTransition from './components/PageTransition'
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ?? 'https://2u4u.studio'
 
-const SITE_NAME = '2U4U Studio'
+const SITE_NAME = '2u4u Studio'
 const SITE_DESCRIPTION =
   'Web, Photo, and Interaction Studio based in Los Angeles, CA.'
 const OG_IMAGE = '/images/benuribe.jpg'
@@ -28,11 +28,11 @@ export const metadata: Metadata = {
     'Los Angeles',
     'Creative studio',
     'Benjamin Uribe',
-    '2U4U Studio',
+    '2u4u Studio',
   ],
   authors: [{ name: 'Benjamin Uribe', url: SITE_URL }],
   creator: 'Benjamin Uribe',
-  publisher: '2U4U Studio',
+  publisher: '2u4u Studio',
   category: 'design',
   alternates: {
     canonical: '/',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
         url: OG_IMAGE,
         width: 1919,
         height: 1535,
-        alt: 'Benjamin Uribe — 2U4U Studio',
+        alt: 'Benjamin Uribe — 2u4u Studio',
         type: 'image/jpeg',
       },
     ],

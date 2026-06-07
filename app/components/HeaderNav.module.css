@@ -7,8 +7,8 @@
   position: fixed;
   top: 20px;
   padding-top: 20px;
-  left: 200px;
-  right: 200px;
+  left: 20px;
+  right: 20px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -55,7 +55,7 @@
   width: 0;
   height: 0;
   border-radius: 6px;
-  background-color: #000;
+  background-color: var(--color-ink);
   opacity: 0;
   pointer-events: none;
   z-index: 0;
@@ -81,16 +81,16 @@
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
   white-space: nowrap;
-  color: #595959;
+  color: var(--color-text);
   transition: color var(--dur-l) var(--ease-butter-soft);
 }
 
 .navBtnActive {
-  color: #595959;
+  color: var(--color-bg);
 }
 
 .navBtn:hover {
-  color: #fff;
+  color: var(--color-bg);
 }
 
 .ctaLink {
@@ -137,8 +137,8 @@
   height: 36px;
   padding: 6px;
   border-radius: 50%;
-  background-color: #000;
-  color: #595959;
+  background-color: var(--color-ink);
+  color: var(--color-bg);
   transition: opacity var(--dur-l) var(--ease-butter-soft);
 }
 
@@ -181,7 +181,7 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: #0e0e0e;
+  background: var(--color-bg);
   padding: 100px 24px 40px;
   flex-direction: column;
   gap: 0;
@@ -206,7 +206,7 @@
   font-weight: var(--heading-weight);
   line-height: var(--heading-lh);
   letter-spacing: var(--heading-ls);
-  color: #595959;
+  color: var(--color-text);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -214,12 +214,12 @@
 }
 
 .mobileLinkActive {
-  color: #595959;
+  color: var(--color-ink);
 }
 
 .mobileLink:hover,
 .mobileLink:focus-visible {
-  color: #fff;
+  color: var(--color-ink);
 }
 
 .mobileLinkConnect {
@@ -235,22 +235,12 @@
 /* ── Responsive ── */
 
 @media (max-width: 1200px) {
-  .navOverlay {
-    left: 60px;
-    right: 60px;
-  }
-
   .nav {
     width: auto;
   }
 }
 
 @media (max-width: 900px) {
-  .navOverlay {
-    left: 24px;
-    right: 24px;
-  }
-
   /* Same vertical band as .brand first line (sticky top + padding
      align with overlay; height = line-height centers the icon). */
   .nav {

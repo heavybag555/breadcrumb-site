@@ -71,6 +71,10 @@ export default function HeaderNav() {
 
   const closeMobile = useCallback(() => setMenuOpen(false), [])
 
+  // Homepage hero owns its own centered nav (reference structure),
+  // so the global fixed header is suppressed on '/'.
+  if (pathname === '/') return null
+
   return (
     <>
       <div
