@@ -190,7 +190,7 @@ export default function HomePage({
   ] as const
 
   const workStaggerBase = 10
-  const footerStaggerBase = workStaggerBase + 1 + projects.length
+  const footerStaggerBase = workStaggerBase + 2 + projects.length
   const latestProject = projects[0]
   const latestDomain = latestProject ? itemDomain(latestProject) : ''
   const latestHref = latestProject ? itemHref(latestProject) : '#'

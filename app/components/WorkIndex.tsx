@@ -118,7 +118,11 @@ export default function WorkIndex({
       })}
 
       {projects.length > 0 && (
-        <div className={styles.listEndRule} aria-hidden="true" />
+        <div
+          className={`${styles.listEndRule} animate-enter`}
+          style={staggerEnter(staggerBase + 1 + projects.length)}
+          aria-hidden="true"
+        />
       )}
     </div>
   )
