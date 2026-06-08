@@ -254,7 +254,7 @@ export default function WritingPage({
           style={staggerEnter(4 + entries.length)}
         >
           <a href="/" className={styles.footerLink}>
-            2u4u.studio
+            2u4u Studio
           </a>
         </div>
         <div

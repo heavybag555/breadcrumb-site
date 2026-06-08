@@ -20,12 +20,29 @@ function formatTag(tag: string): string {
   return tag.charAt(0).toUpperCase() + tag.slice(1)
 }
 
-function itemTags(item: WorkItem): string[] {
+type TagKind = 'type' | 'topic' | 'stack'
+
+function itemTagGroups(
+  item: WorkItem
+): { label: string; kind: TagKind }[] {
   const typeTag = item._type === 'photoProject' ? 'Photo' : 'Web'
-  const extra = (item.tags ?? [])
+  const topics = (item.tags ?? [])
     .map(formatTag)
     .filter((tag) => tag.toLowerCase() !== typeTag.toLowerCase())
-  return [typeTag, ...extra]
+    .map((label) => ({ label, kind: 'topic' as const }))
+  const stack =
+    item._type === 'project'
+      ? ((item as Project).stack ?? [])
+          .map(formatTag)
+          .map((label) => ({ label, kind: 'stack' as const }))
+      : []
+  return [{ label: typeTag, kind: 'type' }, ...topics, ...stack]
+}
+
+const TAG_BADGE_CLASS: Record<TagKind, string> = {
+  type: styles.tagBadgeType,
+  topic: styles.tagBadgeTopic,
+  stack: styles.tagBadgeStack,
 }
 
 function itemHref(item: WorkItem): string {
@@ -56,7 +73,7 @@ export default function WorkIndex({
       {projects.map((item, i) => {
         const name = itemName(item)
         const domain = itemDomain(item)
-        const tags = itemTags(item)
+        const tagGroups = itemTagGroups(item)
         const href = itemHref(item)
         const isInternal = href === '#'
 
@@ -87,9 +104,12 @@ export default function WorkIndex({
             <span className={styles.rowName}>{name}</span>
             <span className={styles.rowDomain}>{domain}</span>
             <span className={styles.rowTag}>
-              {tags.map((tag, ti) => (
-                <span key={`${tag}-${ti}`} className={styles.tagBadge}>
-                  {tag}
+              {tagGroups.map(({ label, kind }, ti) => (
+                <span
+                  key={`${kind}-${label}-${ti}`}
+                  className={`${styles.tagBadge} ${TAG_BADGE_CLASS[kind]}`}
+                >
+                  {label}
                 </span>
               ))}
             </span>

@@ -21,7 +21,7 @@
   --reveal-dur: var(--dur-s);
 }
 
-/* ── Hero — directory in cols 1, 2, 4; identity block in cols 2–3, centered ── */
+/* ── Hero — directory in cols 1–4; identity block in cols 1–2 ── */
 
 .hero {
   grid-column: 1 / -1;
@@ -46,6 +46,10 @@
   grid-column: 2;
 }
 
+.heroNavCol5 {
+  grid-column: 3;
+}
+
 .heroNavCol6 {
   grid-column: 4;
 }
@@ -59,7 +63,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
+  gap: 0;
   margin: 0;
   padding: 0;
   font-size: var(--hero-size);
@@ -97,7 +101,7 @@
    collapsed state animates height. ── */
 
 .panelHost {
-  grid-column: 1 / 3;
+  grid-column: 1 / 4;
   display: grid;
   grid-template-rows: 0fr;
   min-width: 0;
@@ -111,7 +115,7 @@
 .panelHostInner {
   overflow: hidden;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   column-gap: var(--grid-gutter);
   min-width: 0;
   min-height: 0;
@@ -138,6 +142,10 @@
 
 .panelPaneResources {
   grid-column: 2;
+}
+
+.panelPaneStack {
+  grid-column: 3;
 }
 
 .panelPaneActive {
@@ -332,7 +340,7 @@
 }
 
 .heroCenter {
-  grid-column: 2 / 4;
+  grid-column: 1 / 3;
   grid-row: 1;
   align-self: start;
   margin-top: calc(var(--page-margin) + var(--hero-lh) + 200px);
@@ -490,7 +498,7 @@
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
   white-space: nowrap;
-  color: #FF6700;
+  color: var(--color-accent);
   transition: color var(--dur-m) var(--ease-butter),
     opacity var(--dur-m) var(--ease-butter);
 }
@@ -751,7 +759,7 @@
   font-weight: var(--caption-weight);
   line-height: var(--caption-lh);
   letter-spacing: var(--caption-ls);
-  color: #FF6700;
+  color: var(--color-accent);
   white-space: nowrap;
 }
 
@@ -829,7 +837,7 @@
   font-weight: var(--caption-weight);
   line-height: var(--caption-lh);
   letter-spacing: var(--caption-ls);
-  color: #FF6700;
+  color: var(--color-accent);
   margin: 0;
 }
 
@@ -861,7 +869,7 @@
 
 .infoLabel {
   line-height: var(--body-lh);
-  color: #FF6700;
+  color: var(--color-accent);
   width: 100%;
 }
 
@@ -895,7 +903,7 @@
 
 .principlesLabel {
   line-height: var(--body-lh);
-  color: #FF6700;
+  color: var(--color-accent);
   width: 100%;
 }
 
@@ -1007,7 +1015,7 @@
   font-weight: var(--body-weight);
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
-  color: #FF6700;
+  color: var(--color-accent);
   transition: opacity var(--dur-m) var(--ease-butter);
 }
 
@@ -1128,7 +1136,7 @@
   /* Header — 2-column layout (panels + hero directory).
      The reveal host stacks its panes into a single column on mobile. */
   .panelHost {
-    grid-column: 1 / 3;
+    grid-column: 1 / -1;
   }
 
   .panelHostInner {
@@ -1136,8 +1144,23 @@
   }
 
   .panelPaneInfo,
-  .panelPaneResources {
+  .panelPaneResources,
+  .panelPaneStack {
     grid-column: 1;
+  }
+
+  /* Drop the blur on mobile (keep opacity + translateY). Animating
+     `filter: blur()` on WebKit leaves small text rasterized soft — see
+     the enter-animation note in globals.css. */
+  .panelPane > .infoBlock {
+    filter: none;
+    transition:
+      opacity var(--reveal-dur) var(--ease-butter-soft),
+      transform var(--reveal-dur) var(--ease-butter-soft);
+  }
+
+  .panelPaneActive > .infoBlock {
+    filter: none;
   }
 
   .hero {
@@ -1161,6 +1184,10 @@
   }
 
   .heroNavCol4 {
+    display: none;
+  }
+
+  .heroNavCol5 {
     display: none;
   }
 

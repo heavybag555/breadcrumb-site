@@ -141,7 +141,7 @@ export default function ResourcesPage({
           style={staggerEnter(5)}
         >
           <a href="/" className={styles.footerLink}>
-            2u4u.studio
+            2u4u Studio
           </a>
         </div>
         <div

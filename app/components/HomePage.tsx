@@ -14,7 +14,18 @@ const SERVICES = [
   'Design Systems',
 ]
 
-type ActivePanel = 'info' | 'resources' | null
+const STACK_FRAMEWORKS = [
+  'React',
+  'Next.js',
+  'Three.js',
+  'WebGL',
+  'Motion',
+  'Anime.js',
+]
+
+const STACK_CMS = ['Sanity', 'Notion', 'Are.na']
+
+type ActivePanel = 'info' | 'resources' | 'stack' | null
 
 function ServiceItem({ service }: { service: string }) {
   const parts = service.split(' & ')
@@ -170,6 +181,7 @@ export default function HomePage({
   const [activePanel, setActivePanel] = useState<ActivePanel>(null)
   const infoOpen = activePanel === 'info'
   const resourcesOpen = activePanel === 'resources'
+  const stackOpen = activePanel === 'stack'
 
   const resourceSections = [
     { title: 'Learning', items: resources.learning },
@@ -187,8 +199,8 @@ export default function HomePage({
   return (
     <main className={styles.page}>
       {/* ── Directory reveal — single height-driving host so switching
-          between Information and Resources is a pure cross-fade with no
-          height dip. Info pane sits in column 1, Resources in column 2. ── */}
+          between Information, Resources, and Stack is a pure cross-fade with no
+          height dip. Panes sit in columns 1, 2, and 3. ── */}
       <div
         className={`${styles.panelHost} ${
           activePanel ? styles.panelHostOpen : ''
@@ -205,7 +217,7 @@ export default function HomePage({
               <h2 className={styles.infoBlockTitle}>Information</h2>
               <p className={styles.infoText}>
                 Benjamin Uribe is a designer, developer, and educator based in
-                Los Angeles. He is the founder of 2u4u.studio, working across
+                Los Angeles. He is the founder of 2u4u Studio, working across
                 concept, design, and development for clients in art, culture,
                 and commerce.
               </p>
@@ -251,6 +263,30 @@ export default function HomePage({
               </section>
             ))}
           </div>
+
+          <div
+            className={`${styles.panelPane} ${styles.panelPaneStack} ${
+              stackOpen ? styles.panelPaneActive : ''
+            }`}
+            aria-hidden={!stackOpen}
+          >
+            <section className={styles.infoBlock}>
+              <h2 className={styles.infoBlockTitle}>Frameworks</h2>
+              <ul className={styles.infoList}>
+                {STACK_FRAMEWORKS.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
+            <section className={styles.infoBlock}>
+              <h2 className={styles.infoBlockTitle}>CMS</h2>
+              <ul className={styles.infoList}>
+                {STACK_CMS.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
+          </div>
         </div>
       </div>
 
@@ -281,13 +317,25 @@ export default function HomePage({
               }
             />
           </div>
+          <div
+            className={`${styles.heroNavCol} ${styles.heroNavCol5} animate-enter`}
+            style={staggerEnter(3)}
+          >
+            <DirectoryToggle
+              label="Stack"
+              isOpen={activePanel === 'stack'}
+              onClick={() =>
+                setActivePanel((p) => (p === 'stack' ? null : 'stack'))
+              }
+            />
+          </div>
         </div>
         <div className={`${styles.heroNavCol} ${styles.heroNavCol6}`}>
           <nav className={styles.heroNav}>
             <a
               href="mailto:2you4youstudio@gmail.com"
               className={`${styles.heroNavLink} ${styles.heroNavExternal} animate-enter`}
-              style={staggerEnter(3)}
+              style={staggerEnter(4)}
             >
               Email
               <HeroExternalArrow />
@@ -297,19 +345,9 @@ export default function HomePage({
               target="_blank"
               rel="noopener noreferrer"
               className={`${styles.heroNavLink} ${styles.heroNavExternal} animate-enter`}
-              style={staggerEnter(4)}
-            >
-              Instagram
-              <HeroExternalArrow />
-            </a>
-            <a
-              href="https://www.are.na/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${styles.heroNavLink} ${styles.heroNavExternal} animate-enter`}
               style={staggerEnter(5)}
             >
-              Are.na
+              Instagram
               <HeroExternalArrow />
             </a>
           </nav>
@@ -318,19 +356,19 @@ export default function HomePage({
         <div className={styles.heroCenter}>
           <h1
             className={`${styles.heroBrand} animate-enter`}
-            style={staggerEnter(6)}
+            style={staggerEnter(7)}
           >
             2u4u Studio
           </h1>
           <p
             className={`${styles.heroText} animate-enter`}
-            style={staggerEnter(7)}
+            style={staggerEnter(8)}
           >
             Design, development, and image studio in Los Angeles.
           </p>
           <p
             className={`${styles.heroTextBody} animate-enter`}
-            style={staggerEnter(8)}
+            style={staggerEnter(9)}
           >
             Latest:{' '}
             {latestDomain ? (

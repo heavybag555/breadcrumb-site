@@ -7,7 +7,7 @@
 :root {
   /* ── Light-mode palette ──
      White page, ink-black emphasis, mid-grey body, lighter muted grey.
-     Accent stays the studio orange. */
+     Accent blue. */
   --color-bg: #ffffff;
   --color-ink: #000000;
   --color-text: #b0b0b0;
@@ -16,7 +16,10 @@
   --color-directory: #b8b8b8;
   --color-text-muted: var(--color-muted);
   --color-text-dim: var(--color-hero-muted);
-  --color-accent: #ff6700;
+  --color-accent: #417dff;
+  --color-tag-type: #417dff;
+  --color-tag-topic: #ff6700;
+  --color-tag-stack: #2d6a4f;
   --color-line: rgba(0, 0, 0, 0.08);
 
   /* Layout — 4 columns inside a centered 840px container,
@@ -198,10 +201,29 @@ img[data-fade][data-loaded='true'] {
   }
 }
 
+/* Blur-free variant for mobile. Animating `filter: blur()` on WebKit
+   promotes the element to a GPU layer that is rasterized once at a
+   snapshot resolution and not reliably re-rendered at full DPR when the
+   animation ends — leaving small text (e.g. the caption-sized work tags)
+   permanently soft. On mobile we keep the opacity + translateY rise but
+   drop the blur so text stays crisp. */
+@keyframes enterNoBlur {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+}
+
 .animate-enter {
   --delay: var(--enter-stagger-step);
   animation: enter var(--enter-dur) var(--enter-ease) both;
   animation-delay: calc(var(--delay) * var(--stagger, 0));
+}
+
+@media (max-width: 900px) {
+  .animate-enter {
+    animation-name: enterNoBlur;
+  }
 }
 
 /* ── Page transition ──

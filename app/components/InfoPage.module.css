@@ -139,7 +139,7 @@
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
   white-space: nowrap;
-  color: #FF6700;
+  color: var(--color-accent);
   transition:
     color var(--dur-m) var(--ease-butter),
     opacity var(--dur-m) var(--ease-butter),
@@ -218,7 +218,7 @@
 }
 
 .bodyLink {
-  color: #FF6700;
+  color: var(--color-accent);
   transition:
     opacity var(--dur-m) var(--ease-butter),
     scale 150ms ease-out;
@@ -455,14 +455,14 @@
   display: block;
 }
 
-/* Title: body typography, accent orange — stays orange on row hover.
+/* Title: body typography, accent — stays accent on row hover.
    Plus sits inline after the title with 4px spacing. */
 .writingCellTitle {
   font-size: var(--body-size);
   font-weight: var(--body-weight);
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
-  color: #ff6700;
+  color: var(--color-accent);
 }
 
 .writingTitleText {
@@ -474,7 +474,7 @@
   display: inline-block;
   margin-inline-start: 4px;
   vertical-align: -0.15em;
-  color: #ff6700;
+  color: var(--color-accent);
 }
 
 /* ── Cursor-follow preview image ─────────────────────────────
@@ -677,7 +677,7 @@
   font-weight: var(--caption-weight);
   line-height: var(--caption-lh);
   letter-spacing: var(--caption-ls);
-  color: #ff6700;
+  color: var(--color-accent);
 }
 
 /* Image breaks out of the article column to span 3 of the panel's 4

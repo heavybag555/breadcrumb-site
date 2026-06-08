@@ -63,7 +63,7 @@ export default function InfoPage() {
             <p className={styles.subHeading}>About</p>
             <p className={styles.bodyText}>
               Benjamin Uribe is a designer, developer, and educator based in Los
-              Angeles. He is the founder of 2u4u.studio and a design engineer at
+              Angeles. He is the founder of 2u4u Studio and a design engineer at
               Fuser, where he builds features for the next generation of
               collaborative creative workspaces and teaches through published
               tutorials and walkthroughs.
@@ -179,7 +179,7 @@ export default function InfoPage() {
           style={staggerEnter(10)}
         >
           <a href="/" className={styles.footerLink}>
-            2u4u.studio
+            2u4u Studio
           </a>
         </div>
         <div
