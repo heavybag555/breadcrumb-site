@@ -30,7 +30,7 @@
 
   /* Hero / footer — reference's flat minimal scale (12px / 13.2px) */
   --hero-size: 12px;
-  --hero-lh: 13.2px;
+  --hero-lh: 14px;
   --hero-ls: normal;
 
   /* Heading — 32px / 700 / 36px line-height / -0.96px letter-spacing */
@@ -40,15 +40,15 @@
   --heading-ls: -0.02em;
 
   /* Body — 18px / 700 / 20px line-height / -0.54px letter-spacing */
-  --body-size: 14px;
+  --body-size: 12px;
   --body-weight: 500;
-  --body-lh: 18px;
+  --body-lh: 16px;
   --body-ls: -0.10px;
 
   /* Caption — 11px / 700 / 9px line-height / -0.44px letter-spacing */
-  --caption-size: 11px;
+  --caption-size: 10px;
   --caption-weight: 500;
-  --caption-lh: 13px;
+  --caption-lh: 12px;
   --caption-ls: -0.05px;
 
   /* Motion — heavy, natural buttery easing.

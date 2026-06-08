@@ -1154,11 +1154,14 @@
     padding-top: var(--page-margin);
   }
 
-  .heroNavCol3,
-  .heroNavCol4 {
+  .heroNavCol3 {
     grid-column: auto;
     grid-row: auto;
     padding-top: 0;
+  }
+
+  .heroNavCol4 {
+    display: none;
   }
 
   .heroNavCol6 {

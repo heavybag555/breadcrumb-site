@@ -114,26 +114,20 @@ export default function ResourcesPage({
       <div className={styles.sections}>
         <div className={`${styles.infoRow} ${styles.resourcesRow}`}>
           <div
-            className={`${styles.col} ${styles.resourcesLabelCol} animate-enter`}
-            style={staggerEnter(2)}
-          >
-            <p className={styles.rowLabel}>Resources</p>
-          </div>
-          <div
             className={`${styles.col} ${styles.resourcesListCol} animate-enter`}
-            style={staggerEnter(3)}
+            style={staggerEnter(2)}
           >
             <ResourceMentionList title="Learning" items={resources.learning} />
           </div>
           <div
             className={`${styles.col} ${styles.resourcesListCol} animate-enter`}
-            style={staggerEnter(4)}
+            style={staggerEnter(3)}
           >
             <ResourceMentionList title="Reading" items={resources.reading} />
           </div>
           <div
             className={`${styles.col} ${styles.resourcesListCol} animate-enter`}
-            style={staggerEnter(5)}
+            style={staggerEnter(4)}
           >
             <ResourceMentionList title="Watching" items={resources.watching} />
           </div>
@@ -144,7 +138,7 @@ export default function ResourcesPage({
       <footer className={`${styles.footer} ${styles.contentSection}`}>
         <div
           className={`${styles.footerCol} animate-enter`}
-          style={staggerEnter(6)}
+          style={staggerEnter(5)}
         >
           <a href="/" className={styles.footerLink}>
             2u4u.studio
@@ -152,7 +146,7 @@ export default function ResourcesPage({
         </div>
         <div
           className={`${styles.footerColCenter} animate-enter`}
-          style={staggerEnter(7)}
+          style={staggerEnter(6)}
         >
           <p className={styles.footerCenter}>
             Web, Photo, and Interaction Studio based in Los Angeles, CA
@@ -160,7 +154,7 @@ export default function ResourcesPage({
         </div>
         <div
           className={`${styles.footerColRight} animate-enter`}
-          style={staggerEnter(8)}
+          style={staggerEnter(7)}
         >
           <p>© 2026</p>
         </div>

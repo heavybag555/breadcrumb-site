@@ -61,15 +61,20 @@ export default function HeaderNav() {
     }
   }, [menuOpen])
 
+  const closeMobile = useCallback(() => setMenuOpen(false), [])
+
+  const navItems =
+    pathname === '/resources' || pathname.startsWith('/resources/')
+      ? ITEMS.filter((item) => item.href !== '/resources')
+      : ITEMS
+
   const activeHref = (() => {
     if (pathname === '/') return '/#work'
-    const match = ITEMS.find(
+    const match = navItems.find(
       (i) => !i.href.startsWith('/#') && pathname.startsWith(i.href),
     )
-    return match?.href ?? '/#work'
+    return match?.href ?? ''
   })()
-
-  const closeMobile = useCallback(() => setMenuOpen(false), [])
 
   // Homepage hero owns its own centered nav (reference structure),
   // so the global fixed header is suppressed on '/'.
@@ -83,7 +88,11 @@ export default function HeaderNav() {
         <nav className={styles.nav}>
           {/* Desktop: inline buttons + CTA (hidden ≤900px) */}
           <div className={styles.desktopNav}>
-            <NavButtons styles={styles} activeHref={activeHref} items={ITEMS} />
+            <NavButtons
+              styles={styles}
+              activeHref={activeHref}
+              items={navItems}
+            />
             <a
               href="mailto:2you4youstudio@gmail.com"
               className={styles.ctaLink}
@@ -154,7 +163,7 @@ export default function HeaderNav() {
         className={`${styles.mobileOverlay} ${menuOpen ? styles.mobileOverlayOpen : ''}`}
         aria-hidden={!menuOpen}
       >
-        {ITEMS.map((item) => (
+        {navItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}

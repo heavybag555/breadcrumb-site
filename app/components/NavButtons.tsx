@@ -29,8 +29,9 @@ export default function NavButtons({
   const didInitRef = useRef(false)
 
   const activeIndex = (() => {
+    if (!activeHref) return -1
     const i = items.findIndex((it) => it.href === activeHref)
-    return i >= 0 ? i : 0
+    return i >= 0 ? i : -1
   })()
 
   const moveTo = (target: HTMLElement | null, animate: boolean) => {
@@ -59,6 +60,11 @@ export default function NavButtons({
   }
 
   const snapToActive = (animate: boolean) => {
+    if (activeIndex < 0) {
+      const ind = indicatorRef.current
+      if (ind) ind.style.opacity = '0'
+      return
+    }
     const el = btnRefs.current[activeIndex]
     if (el) moveTo(el, animate)
   }
