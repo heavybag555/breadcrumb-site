@@ -6,16 +6,16 @@
 
 :root {
   /* ── Light-mode palette ──
-     White page, ink-black emphasis, mid-grey body, lighter muted grey.
+     White page, ink-black emphasis, single grey for all secondary text.
      Accent blue. */
   --color-bg: #ffffff;
   --color-ink: #000000;
-  --color-text: #b0b0b0;
-  --color-muted: #c8c8c8;
-  --color-hero-muted: #d8d8d8;
+  --color-text: #b8b8b8;
+  --color-muted: #b8b8b8;
+  --color-hero-muted: #b8b8b8;
   --color-directory: #b8b8b8;
-  --color-text-muted: var(--color-muted);
-  --color-text-dim: var(--color-hero-muted);
+  --color-text-muted: #b8b8b8;
+  --color-text-dim: #b8b8b8;
   --color-accent: #417dff;
   --color-tag-type: #417dff;
   --color-tag-topic: #ff6700;

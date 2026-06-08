@@ -21,7 +21,7 @@
   --reveal-dur: var(--dur-s);
 }
 
-/* ── Hero — directory in cols 1–4; identity block in cols 1–2 ── */
+/* ── Hero — directory in cols 1–4; identity block spans full width ── */
 
 .hero {
   grid-column: 1 / -1;
@@ -340,27 +340,47 @@
 }
 
 .heroCenter {
-  grid-column: 1 / 3;
+  grid-column: 1 / -1;
   grid-row: 1;
-  align-self: start;
+  align-self: stretch;
   margin-top: calc(var(--page-margin) + var(--hero-lh) + 200px);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   text-align: left;
   gap: 20px;
+  width: 100%;
+  min-width: 0;
+}
+
+.heroBrandWrap {
+  width: 100%;
+  min-width: 0;
 }
 
 .heroBrand {
   margin: 0;
-  font-size: var(--heading-size);
+  display: block;
+  width: max-content;
+  max-width: 100%;
   font-weight: var(--heading-weight);
-  line-height: var(--heading-lh);
+  line-height: 0.95;
   letter-spacing: var(--heading-ls);
   color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.heroCopy {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--grid-col-count), 1fr);
+  column-gap: var(--grid-gutter);
+  align-items: start;
 }
 
 .heroText {
+  grid-column: 1 / 3;
   margin: 0;
   font-size: var(--heading-size);
   font-weight: var(--heading-weight);
@@ -370,6 +390,9 @@
 }
 
 .heroTextBody {
+  grid-column: 4;
+  justify-self: start;
+  text-align: left;
   margin: 0;
   font-size: var(--body-size);
   font-weight: var(--body-weight);
@@ -1200,6 +1223,20 @@
     grid-column: 1 / -1;
     grid-row: 2;
     margin-top: 120px;
+  }
+
+  .heroCopy {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .heroText {
+    grid-column: 1;
+  }
+
+  .heroTextBody {
+    grid-column: 2;
+    justify-self: start;
+    text-align: left;
   }
 
   /* Footer — 2-column layout */

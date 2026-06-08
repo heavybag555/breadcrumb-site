@@ -111,6 +111,26 @@
 
 .rowDomain {
   grid-column: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1;
+  font-size: var(--body-size);
+  letter-spacing: var(--body-ls);
+}
+
+.rowDomainLabel {
+  display: block;
+  line-height: 1;
+}
+
+.rowDomainArrow {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  opacity: 0.6;
+  display: block;
+  transform: translateY(0.06em);
 }
 
 .rowTag {

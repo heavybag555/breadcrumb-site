@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import styles from './HomePage.module.css'
 import { staggerEnter } from '@/app/lib/staggerEnter'
+import FitWidthHeading from './FitWidthHeading'
 import WorkIndex, { itemDomain, itemHref } from './WorkIndex'
 import type { Resource, ResourcesByCategory, WorkItem } from '@/sanity/types'
 
@@ -354,34 +355,37 @@ export default function HomePage({
         </div>
 
         <div className={styles.heroCenter}>
-          <h1
+          <FitWidthHeading
+            wrapClassName={styles.heroBrandWrap}
             className={`${styles.heroBrand} animate-enter`}
             style={staggerEnter(7)}
           >
             2u4u Studio
-          </h1>
-          <p
-            className={`${styles.heroText} animate-enter`}
-            style={staggerEnter(8)}
-          >
-            Design, development, and image studio in Los Angeles.
-          </p>
-          <p
-            className={`${styles.heroTextBody} animate-enter`}
-            style={staggerEnter(9)}
-          >
-            Latest:{' '}
-            {latestDomain ? (
-              <a
-                href={latestHref}
-                target={latestIsExternal ? '_blank' : undefined}
-                rel={latestIsExternal ? 'noopener noreferrer' : undefined}
-                className={styles.heroDomain}
-              >
-                {latestDomain}
-              </a>
-            ) : null}
-          </p>
+          </FitWidthHeading>
+          <div className={styles.heroCopy}>
+            <p
+              className={`${styles.heroText} animate-enter`}
+              style={staggerEnter(8)}
+            >
+              Design, development, and image studio in Los Angeles.
+            </p>
+            <p
+              className={`${styles.heroTextBody} animate-enter`}
+              style={staggerEnter(9)}
+            >
+              Latest:{' '}
+              {latestDomain ? (
+                <a
+                  href={latestHref}
+                  target={latestIsExternal ? '_blank' : undefined}
+                  rel={latestIsExternal ? 'noopener noreferrer' : undefined}
+                  className={styles.heroDomain}
+                >
+                  {latestDomain}
+                </a>
+              ) : null}
+            </p>
+          </div>
         </div>
       </section>
 

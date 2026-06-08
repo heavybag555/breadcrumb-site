@@ -45,6 +45,26 @@ const TAG_BADGE_CLASS: Record<TagKind, string> = {
   stack: styles.tagBadgeStack,
 }
 
+function DomainArrow() {
+  return (
+    <svg
+      className={styles.rowDomainArrow}
+      viewBox="0 0 14 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M3 11L11 3M11 3H4.5M11 3V9.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 function itemHref(item: WorkItem): string {
   if (item._type === 'project') return (item as Project).href ?? '#'
   return '#'
@@ -102,7 +122,14 @@ export default function WorkIndex({
               </span>
             </span>
             <span className={styles.rowName}>{name}</span>
-            <span className={styles.rowDomain}>{domain}</span>
+            <span className={styles.rowDomain}>
+              {domain ? (
+                <>
+                  <span className={styles.rowDomainLabel}>{domain}</span>
+                  <DomainArrow />
+                </>
+              ) : null}
+            </span>
             <span className={styles.rowTag}>
               {tagGroups.map(({ label, kind }, ti) => (
                 <span
