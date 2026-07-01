@@ -144,28 +144,16 @@
 .tagBadge {
   display: inline-flex;
   align-items: center;
-  padding: 6px;
-  border-radius: 8px;
+  padding: 4px 8px;
+  border: 0.5px solid var(--color-text);
+  border-radius: 12px;
+  background-color: transparent;
+  color: var(--color-text);
   font-size: var(--caption-size);
   font-weight: var(--caption-weight);
   line-height: var(--caption-lh);
   letter-spacing: var(--caption-ls);
   white-space: nowrap;
-}
-
-.tagBadgeType {
-  background-color: rgba(65, 125, 255, 0.08);
-  color: var(--color-tag-type);
-}
-
-.tagBadgeTopic {
-  background-color: rgba(255, 103, 0, 0.08);
-  color: var(--color-tag-topic);
-}
-
-.tagBadgeStack {
-  background-color: rgba(45, 106, 79, 0.08);
-  color: var(--color-tag-stack);
 }
 
 /* ── Responsive ── */

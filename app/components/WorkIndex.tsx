@@ -39,12 +39,6 @@ function itemTagGroups(
   return [{ label: typeTag, kind: 'type' }, ...topics, ...stack]
 }
 
-const TAG_BADGE_CLASS: Record<TagKind, string> = {
-  type: styles.tagBadgeType,
-  topic: styles.tagBadgeTopic,
-  stack: styles.tagBadgeStack,
-}
-
 function DomainArrow() {
   return (
     <svg
@@ -134,7 +128,7 @@ export default function WorkIndex({
               {tagGroups.map(({ label, kind }, ti) => (
                 <span
                   key={`${kind}-${label}-${ti}`}
-                  className={`${styles.tagBadge} ${TAG_BADGE_CLASS[kind]}`}
+                  className={styles.tagBadge}
                 >
                   {label}
                 </span>
