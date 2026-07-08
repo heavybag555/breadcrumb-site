@@ -58,7 +58,9 @@ function itemVideo(item: WorkItem): string | undefined {
    /public files through Next's optimizer, both emitting resized WebP/AVIF. */
 
 const GRID_WIDTHS = [384, 640, 828]
-const GRID_SIZES = '(max-width: 560px) 92vw, (max-width: 900px) 46vw, 260px'
+/* Match the page container: 20px margins, 20px gutter at 2-col. */
+const GRID_SIZES =
+  '(max-width: 560px) calc(100vw - 40px), (max-width: 900px) calc((100vw - 60px) / 2), 260px'
 
 function buildSrc(src: string, w: number): string {
   if (src.includes('cdn.sanity.io')) {

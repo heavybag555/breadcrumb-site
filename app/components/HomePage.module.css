@@ -616,6 +616,10 @@
   grid-template-columns: subgrid;
   margin-top: 200px;
   position: relative;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* ── Project grid ── */
