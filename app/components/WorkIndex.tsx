@@ -1,10 +1,11 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
 import { staggerEnter } from '@/app/lib/staggerEnter'
 import styles from './WorkIndex.module.css'
 import type { Project, PhotoProject, WorkItem } from '@/sanity/types'
 
-/* ── Field helpers (web + photo projects share the index row) ── */
+/* ── Field helpers ── */
 
 function itemName(item: WorkItem): string {
   if (item._type === 'photoProject') return item.title
@@ -16,33 +17,16 @@ function itemDomain(item: WorkItem): string {
   return ''
 }
 
-function formatTag(tag: string): string {
-  return tag.charAt(0).toUpperCase() + tag.slice(1)
-}
-
-type TagKind = 'type' | 'topic' | 'stack'
-
-function itemTagGroups(
-  item: WorkItem
-): { label: string; kind: TagKind }[] {
-  const typeTag = item._type === 'photoProject' ? 'Photo' : 'Web'
-  const topics = (item.tags ?? [])
-    .map(formatTag)
-    .filter((tag) => tag.toLowerCase() !== typeTag.toLowerCase())
-    .map((label) => ({ label, kind: 'topic' as const }))
-  const stack =
-    item._type === 'project'
-      ? ((item as Project).stack ?? [])
-          .map(formatTag)
-          .map((label) => ({ label, kind: 'stack' as const }))
-      : []
-  return [{ label: typeTag, kind: 'type' }, ...topics, ...stack]
+function itemMeta(item: WorkItem): string {
+  if (item._type === 'project') return ((item as Project).stack ?? []).join(', ')
+  const photo = item as PhotoProject
+  return [photo.location, photo.year].filter(Boolean).join(', ')
 }
 
 function DomainArrow() {
   return (
     <svg
-      className={styles.rowDomainArrow}
+      className={styles.domainArrow}
       viewBox="0 0 14 14"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -64,9 +48,136 @@ function itemHref(item: WorkItem): string {
   return '#'
 }
 
+function itemVideo(item: WorkItem): string | undefined {
+  return (item as { previewVideoUrl?: string }).previewVideoUrl
+}
+
+/* ── Image optimization ──
+   Grid cells render at ~260px (2x ≈ 520px) so serving multi-MB originals
+   is wasteful. Route Sanity CDN URLs through its image pipeline and local
+   /public files through Next's optimizer, both emitting resized WebP/AVIF. */
+
+const GRID_WIDTHS = [384, 640, 828]
+const GRID_SIZES = '(max-width: 560px) 92vw, (max-width: 900px) 46vw, 260px'
+
+function buildSrc(src: string, w: number): string {
+  if (src.includes('cdn.sanity.io')) {
+    const sep = src.includes('?') ? '&' : '?'
+    return `${src}${sep}w=${w}&fit=max&auto=format&q=75`
+  }
+  if (src.startsWith('/')) {
+    return `/_next/image?url=${encodeURIComponent(src)}&w=${w}&q=75`
+  }
+  return src
+}
+
+function optimized(src: string | undefined) {
+  if (!src) return undefined
+  return {
+    src: buildSrc(src, 828),
+    srcSet: GRID_WIDTHS.map((w) => `${buildSrc(src, w)} ${w}w`).join(', '),
+    sizes: GRID_SIZES,
+  }
+}
+
 export { itemDomain, itemHref, itemName }
 
-/* ── Work index — list rows with inline project previews ── */
+/* ── Grid cell — square frame with padded media ── */
+
+function WorkCard({
+  item,
+  enterIndex,
+}: {
+  item: WorkItem
+  enterIndex: number
+}) {
+  const imgRef = useRef<HTMLImageElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [loaded, setLoaded] = useState(false)
+
+  const domain = itemDomain(item)
+  const meta = itemMeta(item)
+  const href = itemHref(item)
+  const isInternal = href === '#'
+  const videoSrc = itemVideo(item)
+  const src = item.imageUrl ?? undefined
+  const img = optimized(src)
+
+  useEffect(() => {
+    const img = imgRef.current
+    if (img && img.complete && img.naturalWidth > 0) setLoaded(true)
+  }, [src])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) void video.play().catch(() => {})
+        else video.pause()
+      },
+      { rootMargin: '0px 200px', threshold: 0.25 },
+    )
+    io.observe(video)
+    return () => io.disconnect()
+  }, [videoSrc])
+
+  return (
+    <a
+      href={href}
+      target={isInternal ? undefined : '_blank'}
+      rel={isInternal ? undefined : 'noopener noreferrer'}
+      className={`${styles.card} animate-enter`}
+      style={staggerEnter(enterIndex)}
+    >
+      <div className={styles.square}>
+        <div className={styles.preview}>
+          {videoSrc ? (
+            <video
+              ref={videoRef}
+              className={styles.media}
+              data-loaded={loaded}
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={img?.src}
+              onLoadedData={() => setLoaded(true)}
+            >
+              <source src={videoSrc} />
+            </video>
+          ) : img ? (
+            <img
+              ref={imgRef}
+              className={styles.media}
+              data-loaded={loaded}
+              src={img.src}
+              srcSet={img.srcSet}
+              sizes={img.sizes}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              onLoad={() => setLoaded(true)}
+            />
+          ) : null}
+        </div>
+      </div>
+      {(domain || meta) && (
+        <div className={styles.meta}>
+          {domain ? (
+            <span className={styles.domain}>
+              <span>{domain}</span>
+              <DomainArrow />
+            </span>
+          ) : null}
+          {meta ? <span className={styles.metaStack}>{meta}</span> : null}
+        </div>
+      )}
+    </a>
+  )
+}
+
+/* ── Selected work — 3-column grid ── */
 
 export default function WorkIndex({
   projects,
@@ -81,70 +192,18 @@ export default function WorkIndex({
         className={`${styles.label} animate-enter`}
         style={staggerEnter(staggerBase)}
       >
-        Selected work
+        Selected Work
       </p>
 
-      {projects.map((item, i) => {
-        const name = itemName(item)
-        const domain = itemDomain(item)
-        const tagGroups = itemTagGroups(item)
-        const href = itemHref(item)
-        const isInternal = href === '#'
-
-        return (
-          <a
+      <div className={styles.grid}>
+        {projects.map((item, i) => (
+          <WorkCard
             key={item._id}
-            href={href}
-            target={isInternal ? undefined : '_blank'}
-            rel={isInternal ? undefined : 'noopener noreferrer'}
-            className={`${styles.row} animate-enter`}
-            style={staggerEnter(staggerBase + 1 + i)}
-          >
-            <span className={styles.rowLead}>
-              <span className={styles.rowIndex}>
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <span className={styles.rowMedia}>
-                {item.imageUrl ? (
-                  <img
-                    src={item.imageUrl}
-                    alt=""
-                    className={styles.rowMediaImg}
-                    loading="lazy"
-                  />
-                ) : null}
-              </span>
-            </span>
-            <span className={styles.rowName}>{name}</span>
-            <span className={styles.rowDomain}>
-              {domain ? (
-                <>
-                  <span className={styles.rowDomainLabel}>{domain}</span>
-                  <DomainArrow />
-                </>
-              ) : null}
-            </span>
-            <span className={styles.rowTag}>
-              {tagGroups.map(({ label, kind }, ti) => (
-                <span
-                  key={`${kind}-${label}-${ti}`}
-                  className={styles.tagBadge}
-                >
-                  {label}
-                </span>
-              ))}
-            </span>
-          </a>
-        )
-      })}
-
-      {projects.length > 0 && (
-        <div
-          className={`${styles.listEndRule} animate-enter`}
-          style={staggerEnter(staggerBase + 1 + projects.length)}
-          aria-hidden="true"
-        />
-      )}
+            item={item}
+            enterIndex={staggerBase + 1 + i}
+          />
+        ))}
+      </div>
     </div>
   )
 }

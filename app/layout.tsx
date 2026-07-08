@@ -7,6 +7,7 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ?? 'https://2u4u.studio'
 
 const SITE_NAME = '2u4u Studio'
+const TITLE_SEP = ' › '
 const SITE_DESCRIPTION =
   'Web, Photo, and Interaction Studio based in Los Angeles, CA.'
 const OG_IMAGE = '/images/benuribe.jpg'
@@ -14,8 +15,8 @@ const OG_IMAGE = '/images/benuribe.jpg'
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — Web, Photo & Interaction Studio in Los Angeles`,
-    template: `%s — ${SITE_NAME}`,
+    default: `${SITE_NAME}${TITLE_SEP}Web, Photo & Interaction Studio in Los Angeles`,
+    template: `%s${TITLE_SEP}${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — Web, Photo & Interaction Studio`,
+    title: `${SITE_NAME}${TITLE_SEP}Web, Photo & Interaction Studio`,
     description: SITE_DESCRIPTION,
     locale: 'en_US',
     images: [
@@ -59,7 +60,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} — Web, Photo & Interaction Studio`,
+    title: `${SITE_NAME}${TITLE_SEP}Web, Photo & Interaction Studio`,
     description: SITE_DESCRIPTION,
     images: [OG_IMAGE],
     creator: '@2u4u.studio',

@@ -50,6 +50,22 @@ type SeedProject = {
 
 const WEB_SEEDS: SeedProject[] = [
   {
+    _id: 'project-sound-sent',
+    _type: 'project',
+    title: 'sound-sent.com',
+    clientName: 'Soundsent',
+    subtitle: 'Record Label & Media',
+    medium: 'web',
+    bio: 'Los Angeles–based record label, media organization, and brand.',
+    stack: ['Next.js', 'Are.na'],
+    domain: 'sound-sent.com',
+    href: 'https://sound-sent.com',
+    tags: ['music', 'brand'],
+    order: -1,
+    year: '2026',
+    images: ['public/sound-sent.com-record-label-2026/1.png'],
+  },
+  {
     _id: 'project-broosk-online',
     _type: 'project',
     title: 'broosk.online',

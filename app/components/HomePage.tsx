@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import styles from './HomePage.module.css'
 import { staggerEnter } from '@/app/lib/staggerEnter'
 import FitWidthHeading from './FitWidthHeading'
-import WorkIndex, { itemDomain, itemHref } from './WorkIndex'
+import WorkIndex from './WorkIndex'
 import type { Resource, ResourcesByCategory, WorkItem } from '@/sanity/types'
 
 const SERVICES = [
@@ -192,10 +192,6 @@ export default function HomePage({
 
   const workStaggerBase = 10
   const footerStaggerBase = workStaggerBase + 2 + projects.length
-  const latestProject = projects[0]
-  const latestDomain = latestProject ? itemDomain(latestProject) : ''
-  const latestHref = latestProject ? itemHref(latestProject) : '#'
-  const latestIsExternal = latestHref !== '#'
 
   return (
     <main className={styles.page}>
@@ -368,22 +364,6 @@ export default function HomePage({
               style={staggerEnter(8)}
             >
               Design, development, and image studio in Los Angeles.
-            </p>
-            <p
-              className={`${styles.heroTextBody} animate-enter`}
-              style={staggerEnter(9)}
-            >
-              Latest:{' '}
-              {latestDomain ? (
-                <a
-                  href={latestHref}
-                  target={latestIsExternal ? '_blank' : undefined}
-                  rel={latestIsExternal ? 'noopener noreferrer' : undefined}
-                  className={styles.heroDomain}
-                >
-                  {latestDomain}
-                </a>
-              ) : null}
             </p>
           </div>
         </div>

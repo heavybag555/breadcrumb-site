@@ -1,14 +1,14 @@
 /* ──────────────────────────────────────────────
    WorkIndex.module.css
-   Work list on the 4-column page grid (cols 1–4).
-   Rows: lead (index + media) | name | domain | tag.
+   Selected work — 3-column grid of square cells.
+   Media sits inside each square with inner padding.
    ────────────────────────────────────────────── */
 
 .list {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: subgrid;
-  position: relative;
+  min-width: 0;
 }
 
 .label {
@@ -21,110 +21,87 @@
   letter-spacing: var(--caption-ls);
 }
 
-/* ── Row — inherits the page 4-column grid via subgrid ── */
+/* ── 3-column project grid ── */
 
-.row {
+.grid {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: subgrid;
+  grid-template-columns: repeat(3, 1fr);
   column-gap: var(--grid-gutter);
-  align-items: start;
-  padding-block: 8px;
-  border-top: none;
+  row-gap: var(--grid-gutter);
+  min-width: 0;
+}
+
+/* ── Card ── */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
   color: var(--color-ink);
+}
+
+.square {
+  aspect-ratio: 1 / 1;
+  padding: 12px;
+  border: 1px solid var(--color-line);
+  box-sizing: border-box;
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--color-bg);
+}
+
+.media {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  opacity: 0;
+  filter: blur(16px);
+  transition:
+    opacity var(--dur-s) var(--ease-butter-soft),
+    filter var(--dur-m) var(--ease-butter-soft);
+}
+
+.media[data-loaded='true'] {
+  opacity: 1;
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media {
+    filter: none;
+  }
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  margin-top: 8px;
   font-size: var(--body-size);
-  font-weight: var(--body-weight);
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
-  transition:
-    color var(--dur-m) var(--ease-butter),
-    scale 150ms ease-out;
 }
 
-.row:active {
-  scale: 0.96;
-}
-
-.list:hover .row {
-  color: var(--color-text);
-}
-
-.list .row:hover {
-  color: var(--color-ink);
-}
-
-.row::before {
-  content: '';
-  grid-column: 1 / 5;
-  grid-row: 1;
-  align-self: start;
-  width: 100%;
-  height: 0;
-  margin-top: -8px;
-  border-top: 1px solid var(--color-line);
-  pointer-events: none;
-}
-
-/* Closing rule below the final row. Unlike the per-row top dividers
-   (which sit at each row's top padding edge and need a -8px pull), this
-   element sits after the last row in the grid flow, so it already aligns
-   with the last row's bottom edge — no negative margin. */
-.listEndRule {
-  grid-column: 1 / 5;
-  height: 0;
-  border-top: 1px solid var(--color-line);
-  pointer-events: none;
-}
-
-.rowLead {
-  grid-column: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--grid-gutter);
-  min-width: 0;
-  width: 100%;
-}
-
-.rowIndex {
-  flex-shrink: 0;
-  font-variant-numeric: tabular-nums;
-}
-
-.rowMedia {
-  display: block;
-  flex-shrink: 0;
-  width: 80px;
-}
-
-.rowMediaImg {
-  display: block;
-  width: 80px;
-  height: auto;
-  border-radius: 0;
-}
-
-.rowName {
-  grid-column: 2;
-}
-
-.rowDomain {
-  grid-column: 3;
+.domain {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  line-height: 1;
-  font-size: var(--body-size);
-  letter-spacing: var(--body-ls);
+  color: var(--color-ink);
 }
 
-.rowDomainLabel {
-  display: block;
-  line-height: 1;
-}
-
-.rowDomainArrow {
+.domainArrow {
   flex-shrink: 0;
   width: 8px;
   height: 8px;
@@ -133,63 +110,18 @@
   transform: translateY(0.06em);
 }
 
-.rowTag {
-  grid-column: 4;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  justify-content: flex-start;
+.metaStack {
+  color: var(--color-muted);
 }
-
-.tagBadge {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 8px;
-  border: 0.5px solid var(--color-text);
-  border-radius: 12px;
-  background-color: transparent;
-  color: var(--color-text);
-  font-size: var(--caption-size);
-  font-weight: var(--caption-weight);
-  line-height: var(--caption-lh);
-  letter-spacing: var(--caption-ls);
-  white-space: nowrap;
-}
-
-/* ── Responsive ── */
 
 @media (max-width: 900px) {
-  .label {
-    grid-column: 1 / -1;
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
   }
+}
 
-  .row {
-    grid-template-columns: auto 1fr auto;
-  }
-
-  .rowLead {
-    grid-column: 1;
-    width: auto;
-    max-width: 120px;
-  }
-
-  .rowName {
-    grid-column: 2;
-  }
-
-  .rowTag {
-    grid-column: 3;
-  }
-
-  .rowDomain {
-    display: none;
-  }
-
-  .row::before {
-    grid-column: 1 / -1;
-  }
-
-  .listEndRule {
-    grid-column: 1 / -1;
+@media (max-width: 560px) {
+  .grid {
+    grid-template-columns: 1fr;
   }
 }

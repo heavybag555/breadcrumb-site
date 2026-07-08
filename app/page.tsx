@@ -6,6 +6,23 @@ export const revalidate = 60
 
 const LOCAL_WORK_ITEMS: WorkItem[] = [
   {
+    _id: 'local-sound-sent',
+    _type: 'project',
+    title: 'sound-sent.com',
+    clientName: 'Soundsent',
+    subtitle: 'Record Label & Media',
+    medium: 'web',
+    bio: 'Los Angeles–based record label, media organization, and brand.',
+    stack: ['Next.js', 'Are.na'],
+    domain: 'sound-sent.com',
+    href: 'https://sound-sent.com',
+    imageUrl: '/sound-sent.com-record-label-2026/1.png',
+    imageUrls: ['/sound-sent.com-record-label-2026/1.png'],
+    tags: ['music', 'brand'],
+    order: -1,
+    year: '2026',
+  },
+  {
     _id: 'local-1',
     _type: 'project',
     title: 'broosk.online',
