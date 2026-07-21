@@ -1,35 +1,37 @@
-/* ── Typeface: Helvetica Neue (system) ──
-   Light-mode redesign uses Helvetica Neue as the single typeface,
-   falling back through the platform Helvetica/Arial stack. */
+/* ── Typeface: Geist (variable) ──
+   Site-wide via next/font/local; Helvetica stack as fallback. */
 
 /* ── Text Styles ── */
 
 :root {
   /* ── Light-mode palette ──
-     White page, ink-black emphasis, single grey for all secondary text.
+     White page, near-black ink, grey = ink at 50% opacity.
      Accent blue. */
   --color-bg: #ffffff;
-  --color-ink: #000000;
-  --color-text: #b8b8b8;
-  --color-muted: #b8b8b8;
-  --color-hero-muted: #b8b8b8;
-  --color-directory: #b8b8b8;
-  --color-text-muted: #b8b8b8;
-  --color-text-dim: #b8b8b8;
+  --color-ink: #0a0a0a;
+  --color-text: rgba(10, 10, 10, 0.5);
+  --color-muted: rgba(10, 10, 10, 0.5);
+  --color-hero-muted: rgba(10, 10, 10, 0.5);
+  --color-directory: rgba(10, 10, 10, 0.5);
+  --color-text-muted: rgba(10, 10, 10, 0.5);
+  --color-text-dim: rgba(10, 10, 10, 0.5);
   --color-accent: #417dff;
   --color-tag-type: #417dff;
   --color-tag-topic: #ff6700;
   --color-tag-stack: #2d6a4f;
-  --color-line: rgba(0, 0, 0, 0.08);
+  --color-line: rgba(10, 10, 10, 0.08);
 
-  /* Layout — 4 columns inside a centered 840px container,
-     20px gutter, 20px page margin. The 4-col grid is the
-     single content system across all pages. */
+  /* Layout — 8 columns inside a centered 1200px container,
+     20px gutter, 20px page margin. The 8-col grid is the
+     single content system across all pages.
+     Header and work items each span 2 cols. */
   --page-margin: 20px;
   --page-padding: var(--page-margin);
-  --page-max-width: 840px;
+  --page-max-width: 1200px;
   --grid-gutter: 20px;
-  --grid-col-count: 4;
+  --grid-col-count: 8;
+  /* Equal-width tracks — minmax(0, 1fr) prevents content from blowing a column. */
+  --grid-columns: repeat(var(--grid-col-count), minmax(0, 1fr));
 
   /* Hero / footer — reference's flat minimal scale (12px / 13.2px) */
   --hero-size: 12px;
@@ -44,7 +46,7 @@
 
   /* Body — 18px / 700 / 20px line-height / -0.54px letter-spacing */
   --body-size: 12px;
-  --body-weight: 500;
+  --body-weight: 400;
   --body-lh: 16px;
   --body-ls: -0.10px;
 
@@ -123,7 +125,8 @@ body {
 }
 
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: var(--font-geist-sans), "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
   font-weight: var(--body-weight);
   font-size: var(--body-size);
   line-height: var(--body-lh);

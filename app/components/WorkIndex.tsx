@@ -179,7 +179,7 @@ function WorkCard({
   )
 }
 
-/* ── Selected work — 3-column grid ── */
+/* ── Selected work — one card every two page columns ── */
 
 export default function WorkIndex({
   projects,

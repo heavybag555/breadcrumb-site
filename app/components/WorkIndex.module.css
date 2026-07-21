@@ -1,7 +1,7 @@
 /* ──────────────────────────────────────────────
    WorkIndex.module.css
-   Selected work — 3-column grid of square cells.
-   Media sits inside each square with inner padding.
+   Selected work — same 8 equal columns as the page grid;
+   one card every two columns (4 across).
    ────────────────────────────────────────────── */
 
 .list {
@@ -22,11 +22,11 @@
   letter-spacing: var(--caption-ls);
 }
 
-/* ── 3-column project grid ── */
+/* ── Project grid — 8 equal tracks; cards span 2 ── */
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: var(--grid-columns);
   column-gap: var(--grid-gutter);
   row-gap: var(--grid-gutter);
   min-width: 0;
@@ -38,13 +38,16 @@
 /* ── Card ── */
 
 .card {
+  grid-column: span 2;
   display: flex;
   flex-direction: column;
   min-width: 0;
+  width: 100%;
   color: var(--color-ink);
 }
 
 .square {
+  width: 100%;
   aspect-ratio: 1 / 1;
   padding: 12px;
   border: 1px solid var(--color-line);
@@ -121,6 +124,11 @@
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .card {
+    grid-column: auto;
+    width: 100%;
   }
 }
 

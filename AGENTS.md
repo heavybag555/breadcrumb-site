@@ -11,19 +11,19 @@
 - Homepage hero owns its directory nav (Information/Resources/Stack slide-down reveals, Email/Instagram socials); the global fixed header is suppressed on `/`.
 - External directory/social links use an upward-right arrow 4px to the right of the label.
 - Semantic section titles (Information, Services, etc.) use caption style in accent blue (`#417dff`), flush above body content with a 4px gap.
-- Selected work is a media-focused horizontal carousel (not list rows): no Carousel/List toggle, no title overlay on media, no hover scale; cards use 0px border-radius; domain + stack/location meta stacked below media with no gap; domain is black (not accent blue).
+- Selected work is a 3-column grid of square cells (not a carousel or list rows): media uses `object-fit: contain` inside padded squares (no crop); no title overlay, no hover scale; domain + stack/location meta stacked below with no gap; domain is black (not accent blue).
 
 ## Learned Workspace Facts
 
 - Studio header reads "2u4u Studio" (no trailing period); rebranded from "Breadcrumb Studio".
 - Contact email: 2you4youstudio@gmail.com | Instagram: https://www.instagram.com/2u4u.studio/ | Hero socials: Email + Instagram; Are.na appears in Stack panel CMS list only.
-- Founded and operated by Benjamin Uribe, based in Los Angeles. Dev server runs on port 4000.
+- Founded and operated by Benjamin Uribe, based in Los Angeles. Dev server runs on port 3000 (`next dev -p 3000`).
 - Light-mode palette: background `#ffffff`, ink `#000000`, grey text `#b8b8b8`, accent `#417dff`; divider lines `rgba(0,0,0,0.08)`.
 - Typography tokens: Heading (20px/22px/-0.02em, weight 500), Body (12px/16px/-0.10px, weight 500), Caption (10px/12px/-0.05px, weight 500); hero copy uses 12px/14px scale.
 - Sanity project ID: `tl235np0`; embedded studio at `/studio`. Schema types: `project`, `photoProject`, `resource`, `writing`.
 - Site uses a 4-column grid inside a centered 840px container, with 20px gutter and 20px page margin on all pages.
-- Homepage (`/`): full-viewport hero (fit-width brand + tagline + Latest domain badge) with column directory → horizontal selected-work media carousel (400px-tall cards, true aspect-ratio widths, contained left/bleeds right, native scroll; domain + stack below each card) → footer contact CTA; work section ends with `background.jpg` reveal.
+- Homepage (`/`): full-viewport hero (directory toggles + Email/Instagram + centered multi-line hero copy) → Selected Work 3-column square grid → footer contact CTA; work section ends with `background.jpg` reveal.
 - Subpages: `/info` (about/services/stack/interests/principles grid), `/resources` (CMS links by category), `/writing` (CMS entries with lightbox). Other pages use fixed header nav: Work, Info, Resources, Writing.
-- Selected work carousel: 12px card gap, hidden scrollbar, 20px trailing padding; web projects lead then alternating web/photo; photo cards show location/year meta instead of domain/stack.
-- Site SEO: description "Web, Photo, and Interaction Studio based in Los Angeles, CA"; OG preview uses `/images/benuribe.jpg`.
+- Selected work grid: 3 columns desktop / 2 tablet / 1 mobile; 12px inner padding in square cells; `object-fit: contain`; web projects lead then alternating web/photo; photo cards show location/year meta instead of domain/stack; serve resized media via Sanity CDN or Next.js Image (avoid full-resolution originals in small cells).
+- Site SEO: description "Web, Photo, and Interaction Studio based in Los Angeles, CA"; document titles use ` › ` as separator; OG preview uses `/images/benuribe.jpg`; favicon is a solid black circle at `/icon.svg`.
 - Raster assets referenced as `/images/...` must live under `public/images/`. Figma design file key: `LAQL3Co2GY5sagwcHqeVP4`.

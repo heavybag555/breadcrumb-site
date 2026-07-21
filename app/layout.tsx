@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { geistSans } from './fonts'
 import HeaderNav from './components/HeaderNav'
 import PageTransition from './components/PageTransition'
 
@@ -114,8 +115,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className={geistSans.variable}>
+      <body className={geistSans.className}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

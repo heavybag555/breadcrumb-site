@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import styles from './HomePage.module.css'
 import { staggerEnter } from '@/app/lib/staggerEnter'
-import FitWidthHeading from './FitWidthHeading'
 import WorkIndex from './WorkIndex'
 import type { Resource, ResourcesByCategory, WorkItem } from '@/sanity/types'
 
@@ -180,9 +179,37 @@ export default function HomePage({
   resources: ResourcesByCategory
 }) {
   const [activePanel, setActivePanel] = useState<ActivePanel>(null)
+  const [scrollCueVisible, setScrollCueVisible] = useState(true)
   const infoOpen = activePanel === 'info'
   const resourcesOpen = activePanel === 'resources'
   const stackOpen = activePanel === 'stack'
+
+  useEffect(() => {
+    let ticking = false
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        setScrollCueVisible(window.scrollY < 40)
+        ticking = false
+      })
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Mobile only exposes Information + contacts — close desktop-only panels.
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 900px)')
+    const sync = () => {
+      if (!mq.matches) return
+      setActivePanel((p) => (p === 'resources' || p === 'stack' ? null : p))
+    }
+    sync()
+    mq.addEventListener('change', sync)
+    return () => mq.removeEventListener('change', sync)
+  }, [])
 
   const resourceSections = [
     { title: 'Learning', items: resources.learning },
@@ -197,7 +224,7 @@ export default function HomePage({
     <main className={styles.page}>
       {/* ── Directory reveal — single height-driving host so switching
           between Information, Resources, and Stack is a pure cross-fade with no
-          height dip. Panes sit in columns 1, 2, and 3. ── */}
+          height dip. Panes each span 2 columns under their toggles. ── */}
       <div
         className={`${styles.panelHost} ${
           activePanel ? styles.panelHostOpen : ''
@@ -225,7 +252,9 @@ export default function HomePage({
                 the way.
               </p>
             </section>
-            <section className={styles.infoBlock}>
+            <section
+              className={`${styles.infoBlock} ${styles.infoBlockDesktopOnly}`}
+            >
               <h2 className={styles.infoBlockTitle}>Services</h2>
               <ul className={styles.infoList}>
                 {SERVICES.map((service) => (
@@ -234,6 +263,27 @@ export default function HomePage({
                   </li>
                 ))}
               </ul>
+            </section>
+            <section className={styles.infoBlock}>
+              <h2 className={styles.infoBlockTitle}>Contact</h2>
+              <nav className={styles.infoSocials}>
+                <a
+                  href="mailto:2you4youstudio@gmail.com"
+                  className={styles.infoSocialLink}
+                >
+                  Email
+                  <HeroExternalArrow />
+                </a>
+                <a
+                  href="https://www.instagram.com/2u4u.studio/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.infoSocialLink}
+                >
+                  Instagram
+                  <HeroExternalArrow />
+                </a>
+              </nav>
             </section>
           </div>
 
@@ -287,11 +337,11 @@ export default function HomePage({
         </div>
       </div>
 
-      {/* ── Hero: centered identity block (structure after bureaunicolasleuliet.com) ── */}
+      {/* ── Hero: full-viewport, middle-centered body copy ── */}
       <section className={styles.hero}>
         <div className={styles.heroNavColStack}>
           <div
-            className={`${styles.heroNavCol} ${styles.heroNavCol3} animate-enter`}
+            className={`${styles.heroNavCol} ${styles.heroNavCol1} animate-enter`}
             style={staggerEnter(1)}
           >
             <DirectoryToggle
@@ -303,7 +353,7 @@ export default function HomePage({
             />
           </div>
           <div
-            className={`${styles.heroNavCol} ${styles.heroNavCol4} animate-enter`}
+            className={`${styles.heroNavCol} ${styles.heroNavCol2} ${styles.heroNavDesktopOnly} animate-enter`}
             style={staggerEnter(2)}
           >
             <DirectoryToggle
@@ -315,7 +365,7 @@ export default function HomePage({
             />
           </div>
           <div
-            className={`${styles.heroNavCol} ${styles.heroNavCol5} animate-enter`}
+            className={`${styles.heroNavCol} ${styles.heroNavCol3} ${styles.heroNavDesktopOnly} animate-enter`}
             style={staggerEnter(3)}
           >
             <DirectoryToggle
@@ -326,46 +376,98 @@ export default function HomePage({
               }
             />
           </div>
-        </div>
-        <div className={`${styles.heroNavCol} ${styles.heroNavCol6}`}>
-          <nav className={styles.heroNav}>
-            <a
-              href="mailto:2you4youstudio@gmail.com"
-              className={`${styles.heroNavLink} ${styles.heroNavExternal} animate-enter`}
-              style={staggerEnter(4)}
-            >
-              Email
-              <HeroExternalArrow />
-            </a>
-            <a
-              href="https://www.instagram.com/2u4u.studio/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${styles.heroNavLink} ${styles.heroNavExternal} animate-enter`}
-              style={staggerEnter(5)}
-            >
-              Instagram
-              <HeroExternalArrow />
-            </a>
-          </nav>
+          <div
+            className={`${styles.heroNavCol} ${styles.heroNavCol4}`}
+          >
+            <nav className={styles.heroNav}>
+              <a
+                href="mailto:2you4youstudio@gmail.com"
+                className={`${styles.heroNavLink} ${styles.heroNavExternal} animate-enter`}
+                style={staggerEnter(4)}
+              >
+                Email
+                <HeroExternalArrow />
+              </a>
+              <a
+                href="https://www.instagram.com/2u4u.studio/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.heroNavLink} ${styles.heroNavExternal} animate-enter`}
+                style={staggerEnter(5)}
+              >
+                Instagram
+                <HeroExternalArrow />
+              </a>
+            </nav>
+          </div>
         </div>
 
         <div className={styles.heroCenter}>
-          <FitWidthHeading
-            wrapClassName={styles.heroBrandWrap}
-            className={`${styles.heroBrand} animate-enter`}
-            style={staggerEnter(7)}
+          <div
+            className={`${styles.heroCopy} animate-enter`}
+            style={staggerEnter(6)}
           >
-            2u4u Studio
-          </FitWidthHeading>
-          <div className={styles.heroCopy}>
-            <p
-              className={`${styles.heroText} animate-enter`}
-              style={staggerEnter(8)}
-            >
-              Design, development, and image studio in Los Angeles.
+            <p className={styles.heroText}>
+              <span className={styles.heroEm}>2u4u</span> builds things for
+              artists.
+            </p>
+            <p className={styles.heroText}>
+              Founded and operated by{' '}
+              <a
+                href="https://benjaminuribe.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.heroEmLink}
+              >
+                Ben Uribe
+              </a>
+              .
+            </p>
+            <p className={styles.heroText}>
+              Based in Los Angeles, California.
             </p>
           </div>
+          <a
+            href="#work"
+            className={`${styles.heroScroll} animate-enter${
+              scrollCueVisible ? '' : ` ${styles.heroScrollHidden}`
+            }`}
+            style={staggerEnter(7)}
+            aria-label="Selected work"
+            aria-hidden={!scrollCueVisible}
+            tabIndex={scrollCueVisible ? undefined : -1}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              viewBox="0 0 48 48"
+              aria-hidden="true"
+            >
+              <path d="M0 0h48v48H0z" fill="none" />
+              <defs>
+                <mask id="heroScrollMask">
+                  <g fill="none" strokeLinejoin="round" strokeWidth="4">
+                    <path
+                      fill="#fff"
+                      stroke="#fff"
+                      d="M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4S4 12.954 4 24s8.954 20 20 20Z"
+                    />
+                    <path
+                      stroke="#000"
+                      strokeLinecap="round"
+                      d="m33 21l-9 9l-9-9"
+                    />
+                  </g>
+                </mask>
+              </defs>
+              <path
+                fill="currentColor"
+                d="M0 0h48v48H0z"
+                mask="url(#heroScrollMask)"
+              />
+            </svg>
+          </a>
         </div>
       </section>
 
