@@ -50,6 +50,38 @@ type SeedProject = {
 
 const WEB_SEEDS: SeedProject[] = [
   {
+    _id: 'project-nayeli-yazmin',
+    _type: 'project',
+    title: 'nayeliyazmin.com',
+    clientName: 'Nayeli Yazmin',
+    subtitle: 'Portfolio & Art',
+    medium: 'web',
+    bio: 'Multidisciplinary artist and scholar whose work is informed by her familial archive, found photography, and Chicana visual culture.',
+    stack: ['Next.js', 'Are.na'],
+    domain: 'nayeliyazmin.com',
+    href: 'https://nayeliyazmin.com',
+    tags: ['portfolio', 'art'],
+    order: -3,
+    year: '2026',
+    images: ['public/nayeliyazmin.com-portfolio-art-2026/1.png'],
+  },
+  {
+    _id: 'project-rgl-practice',
+    _type: 'project',
+    title: 'rglpractice.com',
+    clientName: 'RGL',
+    subtitle: 'Architecture & Research',
+    medium: 'web',
+    bio: 'New York–based architecture and research practice building spaces that exist ecologically, culturally, socially, and physically.',
+    stack: ['Next.js', 'Sanity'],
+    domain: 'rglpractice.com',
+    href: 'https://rglpractice.com',
+    tags: ['architecture', 'research'],
+    order: -2,
+    year: '2026',
+    images: ['public/rglpractice.com-architecture-research-2026/1.png'],
+  },
+  {
     _id: 'project-sound-sent',
     _type: 'project',
     title: 'sound-sent.com',
@@ -225,12 +257,25 @@ async function uploadImage(filePath: string) {
 }
 
 async function run() {
-  const totalCount = WEB_SEEDS.length + PHOTO_SEEDS.length
+  const only = new Set(
+    (process.env.SEED_IDS ?? '')
+      .split(',')
+      .map((id) => id.trim())
+      .filter(Boolean),
+  )
+  const webSeeds = only.size
+    ? WEB_SEEDS.filter((seed) => only.has(seed._id))
+    : WEB_SEEDS
+  const photoSeeds = only.size
+    ? PHOTO_SEEDS.filter((seed) => only.has(seed._id))
+    : PHOTO_SEEDS
+
+  const totalCount = webSeeds.length + photoSeeds.length
   console.log(
-    `Seeding ${totalCount} items (${WEB_SEEDS.length} web + ${PHOTO_SEEDS.length} photo) into "${dataset}" (project ${projectId})...\n`
+    `Seeding ${totalCount} items (${webSeeds.length} web + ${photoSeeds.length} photo) into "${dataset}" (project ${projectId})...\n`
   )
 
-  for (const seed of WEB_SEEDS) {
+  for (const seed of webSeeds) {
     console.log(`→ [Web] ${seed.clientName} (${seed.title})`)
     const images = []
     for (const p of seed.images) {
@@ -258,7 +303,7 @@ async function run() {
     console.log(`  ✓ saved ${seed._id}\n`)
   }
 
-  for (const seed of PHOTO_SEEDS) {
+  for (const seed of photoSeeds) {
     console.log(`→ [Photo] ${seed.title} — ${seed.location}, ${seed.year}`)
     const images = []
     for (const entry of seed.images) {

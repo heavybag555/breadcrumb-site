@@ -14,6 +14,8 @@ const nextConfig = {
       'string_decoder/': 'string_decoder/',
     },
   },
+  // Keep the Next cache off iCloud File Provider (this repo lives on Desktop).
+  distDir: process.env.NODE_ENV === 'development' ? '.next.nosync' : '.next',
   reactStrictMode: true,
   images: {
     remotePatterns: [

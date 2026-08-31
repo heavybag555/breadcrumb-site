@@ -8,6 +8,7 @@ node_modules/
 
 # Next.js
 /.next/
+/.next.nosync/
 /out/
 
 # Production
@@ -33,3 +34,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+
+# Flock generated colocated schema
+flock.schema.json

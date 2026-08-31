@@ -6,6 +6,40 @@ export const revalidate = 60
 
 const LOCAL_WORK_ITEMS: WorkItem[] = [
   {
+    _id: 'local-nayeli-yazmin',
+    _type: 'project',
+    title: 'nayeliyazmin.com',
+    clientName: 'Nayeli Yazmin',
+    subtitle: 'Portfolio & Art',
+    medium: 'web',
+    bio: 'Multidisciplinary artist and scholar whose work is informed by her familial archive, found photography, and Chicana visual culture.',
+    stack: ['Next.js', 'Are.na'],
+    domain: 'nayeliyazmin.com',
+    href: 'https://nayeliyazmin.com',
+    imageUrl: '/nayeliyazmin.com-portfolio-art-2026/1.png',
+    imageUrls: ['/nayeliyazmin.com-portfolio-art-2026/1.png'],
+    tags: ['portfolio', 'art'],
+    order: -3,
+    year: '2026',
+  },
+  {
+    _id: 'local-rgl-practice',
+    _type: 'project',
+    title: 'rglpractice.com',
+    clientName: 'RGL',
+    subtitle: 'Architecture & Research',
+    medium: 'web',
+    bio: 'New York–based architecture and research practice building spaces that exist ecologically, culturally, socially, and physically.',
+    stack: ['Next.js', 'Sanity'],
+    domain: 'rglpractice.com',
+    href: 'https://rglpractice.com',
+    imageUrl: '/rglpractice.com-architecture-research-2026/1.png',
+    imageUrls: ['/rglpractice.com-architecture-research-2026/1.png'],
+    tags: ['architecture', 'research'],
+    order: -2,
+    year: '2026',
+  },
+  {
     _id: 'local-sound-sent',
     _type: 'project',
     title: 'sound-sent.com',
@@ -187,6 +221,22 @@ export default async function Home() {
   if (items.length === 0) {
     items = LOCAL_WORK_ITEMS
   } else {
+    const existingDomains = new Set(
+      items
+        .filter((item): item is Project => item._type === 'project')
+        .map((item) => item.domain)
+        .filter(Boolean),
+    )
+    const missingWeb = LOCAL_WORK_ITEMS.filter(
+      (item): item is Project =>
+        item._type === 'project' &&
+        !!item.domain &&
+        !existingDomains.has(item.domain),
+    )
+    if (missingWeb.length > 0) {
+      items = [...items, ...missingWeb].sort((a, b) => a.order - b.order)
+    }
+
     const hasPhotos = items.some((item) => item._type === 'photoProject')
     if (!hasPhotos) {
       const webItems = items
