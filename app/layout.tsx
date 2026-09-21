@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { geistSans } from './fonts'
 import HeaderNav from './components/HeaderNav'
@@ -125,6 +126,7 @@ export default function RootLayout({
         />
         <HeaderNav />
         <PageTransition>{children}</PageTransition>
+        <Analytics />
       </body>
     </html>
   )
