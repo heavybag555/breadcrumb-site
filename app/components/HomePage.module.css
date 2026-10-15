@@ -7,17 +7,28 @@
 /* ── Page wrapper (block flow, NOT flex) ── */
 
 .page {
-  padding: 0 200px;
+  padding: 0 calc(200px + env(safe-area-inset-right, 0px)) 0 calc(200px + env(safe-area-inset-left, 0px));
   min-height: 100vh;
   position: relative;
   --text-fade: 1;
+}
+
+/* Canvas sits under the fixed end photo (z-index: -1) and under in-flow
+   content, and above the body edge color used for bottom overscroll. */
+.page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-color: var(--page-background);
+  pointer-events: none;
 }
 
 /* ── Brand — always sticky at top-left ── */
 
 .brand {
   position: sticky;
-  top: 20px;
+  top: calc(20px + env(safe-area-inset-top, 0px));
   font-size: var(--heading-size);
   font-weight: var(--heading-weight);
   line-height: var(--heading-lh);
@@ -676,9 +687,9 @@
   display: flex;
   gap: 20px;
   align-items: flex-start;
-  padding: 4px 200px;
-  width: calc(100% + 400px);
-  margin-left: -200px;
+  padding: 4px calc(200px + env(safe-area-inset-right, 0px)) calc(4px + env(safe-area-inset-bottom, 0px)) calc(200px + env(safe-area-inset-left, 0px));
+  width: calc(100% + 400px + env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px));
+  margin-left: calc(-200px - env(safe-area-inset-left, 0px));
   height: auto;
   background-color: #000;
   font-size: var(--body-size);
@@ -731,7 +742,7 @@
 
 @media (max-width: 1200px) {
   .page {
-    padding: 0 60px;
+    padding: 0 calc(60px + env(safe-area-inset-right, 0px)) 0 calc(60px + env(safe-area-inset-left, 0px));
   }
 
   .navOverlay {
@@ -752,9 +763,9 @@
   }
 
   .footer {
-    padding: 4px 60px;
-    margin-left: -60px;
-    width: calc(100% + 120px);
+    padding: 4px calc(60px + env(safe-area-inset-right, 0px)) calc(4px + env(safe-area-inset-bottom, 0px)) calc(60px + env(safe-area-inset-left, 0px));
+    margin-left: calc(-60px - env(safe-area-inset-left, 0px));
+    width: calc(100% + 120px + env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px));
   }
 
   .projectRow {
@@ -772,7 +783,7 @@
 
 @media (max-width: 900px) {
   .page {
-    padding: 0 24px;
+    padding: 0 calc(24px + env(safe-area-inset-right, 0px)) 0 calc(24px + env(safe-area-inset-left, 0px));
   }
 
   .navOverlay {
@@ -903,9 +914,9 @@
     align-items: center;
     justify-content: space-between;
     height: auto;
-    padding: 4px 24px;
-    margin-left: -24px;
-    width: calc(100% + 48px);
+    padding: 4px calc(24px + env(safe-area-inset-right, 0px)) calc(4px + env(safe-area-inset-bottom, 0px)) calc(24px + env(safe-area-inset-left, 0px));
+    margin-left: calc(-24px - env(safe-area-inset-left, 0px));
+    width: calc(100% + 48px + env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px));
     gap: 20px;
   }
 
