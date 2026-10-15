@@ -5,10 +5,10 @@
 
 .navOverlay {
   position: fixed;
-  top: 20px;
+  top: calc(20px + env(safe-area-inset-top, 0px));
   padding-top: 20px;
-  left: 200px;
-  right: 200px;
+  left: max(200px, env(safe-area-inset-left, 0px));
+  right: max(200px, env(safe-area-inset-right, 0px));
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -182,7 +182,11 @@
   position: fixed;
   inset: 0;
   background: #0e0e0e;
-  padding: 100px 24px 40px;
+  padding:
+    calc(100px + env(safe-area-inset-top, 0px))
+    max(24px, env(safe-area-inset-right, 0px))
+    calc(40px + env(safe-area-inset-bottom, 0px))
+    max(24px, env(safe-area-inset-left, 0px));
   flex-direction: column;
   gap: 0;
   z-index: 49;
@@ -236,8 +240,8 @@
 
 @media (max-width: 1200px) {
   .navOverlay {
-    left: 60px;
-    right: 60px;
+    left: max(60px, env(safe-area-inset-left, 0px));
+    right: max(60px, env(safe-area-inset-right, 0px));
   }
 
   .nav {
@@ -247,8 +251,8 @@
 
 @media (max-width: 900px) {
   .navOverlay {
-    left: 24px;
-    right: 24px;
+    left: max(24px, env(safe-area-inset-left, 0px));
+    right: max(24px, env(safe-area-inset-right, 0px));
   }
 
   /* Same vertical band as .brand first line (sticky top + padding

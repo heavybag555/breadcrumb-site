@@ -1,8 +1,9 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import HeaderNav from './components/HeaderNav'
 import PageTransition from './components/PageTransition'
+import SafariEdgeBackground from './components/SafariEdgeBackground'
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ?? 'https://2u4u.studio'
@@ -11,6 +12,13 @@ const SITE_NAME = '2U4U Studio'
 const SITE_DESCRIPTION =
   'Web, Photo, and Interaction Studio based in Los Angeles, CA.'
 const OG_IMAGE = '/images/benuribe.jpg'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#0e0e0e',
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -122,6 +130,7 @@ export default function RootLayout({
             __html: JSON.stringify(organizationJsonLd),
           }}
         />
+        <SafariEdgeBackground />
         <HeaderNav />
         <PageTransition>{children}</PageTransition>
         <Analytics />

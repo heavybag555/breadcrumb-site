@@ -7,11 +7,16 @@
 /* ── Page wrapper (block flow, NOT flex — required for sticky) ── */
 
 .page {
-  padding: 0 200px;
+  --gutter: 200px;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
   min-height: 100vh;
   position: relative;
   display: flex;
   flex-direction: column;
+  background-color: var(--page-background);
+  isolation: isolate;
 }
 
 /* Pushes the footer to the bottom of the viewport on short pages
@@ -24,7 +29,7 @@
 
 .brand {
   position: sticky;
-  top: 20px;
+  top: calc(20px + env(safe-area-inset-top, 0px));
   font-size: var(--heading-size);
   font-weight: var(--heading-weight);
   line-height: var(--heading-lh);
@@ -771,9 +776,17 @@
   display: flex;
   gap: 20px;
   align-items: flex-start;
-  padding: 4px 200px;
-  width: calc(100% + 400px);
-  margin-left: -200px;
+  position: relative;
+  z-index: 2;
+  padding-top: 4px;
+  padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+  width: calc(
+    100% + max(var(--gutter), env(safe-area-inset-left, 0px)) +
+      max(var(--gutter), env(safe-area-inset-right, 0px))
+  );
+  margin-left: calc(-1 * max(var(--gutter), env(safe-area-inset-left, 0px)));
   height: auto;
   background-color: #000;
   font-size: var(--body-size);
@@ -826,7 +839,7 @@
 
 @media (max-width: 1200px) {
   .page {
-    padding: 0 60px;
+    --gutter: 60px;
   }
 
   .navOverlay {
@@ -846,16 +859,11 @@
     margin-top: 120px;
   }
 
-  .footer {
-    padding: 4px 60px;
-    margin-left: -60px;
-    width: calc(100% + 120px);
-  }
 }
 
 @media (max-width: 900px) {
   .page {
-    padding: 0 24px;
+    --gutter: 24px;
   }
 
   .navOverlay {
@@ -937,9 +945,6 @@
     align-items: center;
     justify-content: space-between;
     height: auto;
-    padding: 4px 24px;
-    margin-left: -24px;
-    width: calc(100% + 48px);
     gap: 20px;
   }
 

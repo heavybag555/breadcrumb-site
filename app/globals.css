@@ -71,6 +71,12 @@
      CSS stay in sync without grep-hunting. */
   --page-fade-out: 900ms;
   --page-fade-in: 1800ms;
+
+  /* Page canvas. Edge strips and the document backgrounds are painted
+     from this until scroll sampling replaces them. */
+  --page-background: #0e0e0e;
+  --edge-top-background: var(--page-background);
+  --edge-bottom-background: var(--page-background);
 }
 
 /* ── Reset ── */
@@ -85,6 +91,7 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--page-background);
 }
 
 /* Offset in-page hash targets so they don't land directly under the
@@ -92,7 +99,7 @@ html {
    Module id selectors are scoped. */
 :target,
 #work {
-  scroll-margin-top: 80px;
+  scroll-margin-top: calc(80px + env(safe-area-inset-top, 0px));
 }
 
 html,
@@ -110,7 +117,7 @@ body {
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
   color: #595959;
-  background-color: #0e0e0e;
+  background-color: var(--page-background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -205,4 +212,49 @@ img[data-fade][data-loaded='true'] {
     --heading-size: 24px;
     --heading-lh: 30px;
   }
+}
+
+/* ── Mobile Safari edge strips ──
+   Fixed bands Safari samples behind the status bar and bottom toolbar.
+   Painted from the same custom properties as the document backgrounds.
+   They sit behind page content (negative z-index, pointer-events: none)
+   so type and photographs are not covered. Joe Bell's inward fade is
+   omitted: a 48px wash would tint photos and exclusion-blend text. */
+
+.edge-top,
+.edge-bottom {
+  position: absolute;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.edge-top::after,
+.edge-bottom::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+  pointer-events: none;
+  /* Behind page content so the band never crops type or photographs.
+     Safari still reads the color when this fixed layer is the edge hit,
+     and html/body carry the same colors when content covers it. */
+  z-index: -1;
+}
+
+.edge-top::after {
+  top: 0;
+  height: max(12px, env(safe-area-inset-top, 0px));
+  background-color: var(--edge-top-background);
+}
+
+.edge-bottom::after {
+  bottom: 0;
+  height: max(12px, env(safe-area-inset-bottom, 0px));
+  background-color: var(--edge-bottom-background);
 }
