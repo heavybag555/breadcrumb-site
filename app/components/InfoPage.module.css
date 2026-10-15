@@ -7,11 +7,22 @@
 /* ── Page wrapper (block flow, NOT flex — required for sticky) ── */
 
 .page {
-  padding: 0 200px;
+  padding: 0 calc(200px + env(safe-area-inset-right, 0px)) 0 calc(200px + env(safe-area-inset-left, 0px));
   min-height: 100vh;
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+/* Same canvas layer as the work page: under content, above the body
+   edge color, without a stacking context that would trap mix-blend. */
+.page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-color: var(--page-background);
+  pointer-events: none;
 }
 
 /* Pushes the footer to the bottom of the viewport on short pages
@@ -24,7 +35,7 @@
 
 .brand {
   position: sticky;
-  top: 20px;
+  top: calc(20px + env(safe-area-inset-top, 0px));
   font-size: var(--heading-size);
   font-weight: var(--heading-weight);
   line-height: var(--heading-lh);
@@ -507,7 +518,7 @@
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   z-index: 2000;
-  padding: 40px 0;
+  padding: max(40px, env(safe-area-inset-top, 0px)) env(safe-area-inset-right, 0px) max(40px, env(safe-area-inset-bottom, 0px)) env(safe-area-inset-left, 0px);
   animation: lightboxFadeIn var(--dur-xl) var(--ease-butter-soft) both;
   will-change: opacity, backdrop-filter;
 }
@@ -740,7 +751,7 @@
 
 @media (max-width: 900px) {
   .lightboxOverlay {
-    padding: 24px;
+    padding: max(24px, env(safe-area-inset-top, 0px)) max(24px, env(safe-area-inset-right, 0px)) max(24px, env(safe-area-inset-bottom, 0px)) max(24px, env(safe-area-inset-left, 0px));
   }
 
   .lightboxPanel {
@@ -771,9 +782,9 @@
   display: flex;
   gap: 20px;
   align-items: flex-start;
-  padding: 4px 200px;
-  width: calc(100% + 400px);
-  margin-left: -200px;
+  padding: 4px calc(200px + env(safe-area-inset-right, 0px)) calc(4px + env(safe-area-inset-bottom, 0px)) calc(200px + env(safe-area-inset-left, 0px));
+  width: calc(100% + 400px + env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px));
+  margin-left: calc(-200px - env(safe-area-inset-left, 0px));
   height: auto;
   background-color: #000;
   font-size: var(--body-size);
@@ -826,7 +837,7 @@
 
 @media (max-width: 1200px) {
   .page {
-    padding: 0 60px;
+    padding: 0 calc(60px + env(safe-area-inset-right, 0px)) 0 calc(60px + env(safe-area-inset-left, 0px));
   }
 
   .navOverlay {
@@ -847,15 +858,15 @@
   }
 
   .footer {
-    padding: 4px 60px;
-    margin-left: -60px;
-    width: calc(100% + 120px);
+    padding: 4px calc(60px + env(safe-area-inset-right, 0px)) calc(4px + env(safe-area-inset-bottom, 0px)) calc(60px + env(safe-area-inset-left, 0px));
+    margin-left: calc(-60px - env(safe-area-inset-left, 0px));
+    width: calc(100% + 120px + env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px));
   }
 }
 
 @media (max-width: 900px) {
   .page {
-    padding: 0 24px;
+    padding: 0 calc(24px + env(safe-area-inset-right, 0px)) 0 calc(24px + env(safe-area-inset-left, 0px));
   }
 
   .navOverlay {
@@ -937,9 +948,9 @@
     align-items: center;
     justify-content: space-between;
     height: auto;
-    padding: 4px 24px;
-    margin-left: -24px;
-    width: calc(100% + 48px);
+    padding: 4px calc(24px + env(safe-area-inset-right, 0px)) calc(4px + env(safe-area-inset-bottom, 0px)) calc(24px + env(safe-area-inset-left, 0px));
+    margin-left: calc(-24px - env(safe-area-inset-left, 0px));
+    width: calc(100% + 48px + env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px));
     gap: 20px;
   }
 

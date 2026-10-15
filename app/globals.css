@@ -71,6 +71,13 @@
      CSS stay in sync without grep-hunting. */
   --page-fade-out: 900ms;
   --page-fade-in: 1800ms;
+
+  /* Page canvas. Edge strips, overscroll, and theme-color start here
+     and are replaced together when a full-width surface scrolls into
+     an edge. */
+  --page-background: #0e0e0e;
+  --edge-top-background: var(--page-background);
+  --edge-bottom-background: var(--page-background);
 }
 
 /* ── Reset ── */
@@ -85,6 +92,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Top overscroll and browsers that sample the root. */
+  background-color: var(--edge-top-background);
 }
 
 /* Offset in-page hash targets so they don't land directly under the
@@ -92,7 +101,7 @@ html {
    Module id selectors are scoped. */
 :target,
 #work {
-  scroll-margin-top: 80px;
+  scroll-margin-top: calc(80px + env(safe-area-inset-top, 0px));
 }
 
 html,
@@ -110,7 +119,9 @@ body {
   line-height: var(--body-lh);
   letter-spacing: var(--body-ls);
   color: #595959;
-  background-color: #0e0e0e;
+  /* Bottom overscroll. Page canvases paint --page-background on a
+     layer under their content, so this edge color does not recolor the page. */
+  background-color: var(--edge-bottom-background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -205,4 +216,48 @@ img[data-fade][data-loaded='true'] {
     --heading-size: 24px;
     --heading-lh: 30px;
   }
+}
+
+/* ── Mobile Safari edge strips ──
+   Safari extends the background of a fixed element that touches the
+   viewport edge behind the status bar and bottom toolbar. The strips
+   are full-width, non-interactive, and at least 12px (or the safe-area
+   inset) tall. They paint above the document background and below
+   in-flow content (z-index: -1) so text, controls, and photographs stay
+   clear of a solid bar. A hard edge matches this flat canvas; a fade
+   gradient would fog the sticky exclusion type. */
+
+.edge-top,
+.edge-bottom {
+  position: absolute;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.edge-top::after,
+.edge-bottom::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.edge-top::after {
+  top: 0;
+  height: max(12px, env(safe-area-inset-top, 0px));
+  background: var(--edge-top-background);
+}
+
+.edge-bottom::after {
+  bottom: 0;
+  height: max(12px, env(safe-area-inset-bottom, 0px));
+  background: var(--edge-bottom-background);
 }
